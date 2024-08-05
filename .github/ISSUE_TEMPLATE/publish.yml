@@ -4,15 +4,15 @@ labels: "🎨 퍼블리싱"
 body:
   - type: textarea
     attributes:
-      label: 📌 설명
-      description: 구현해야 하는 페이지나 컴포넌트에 대한 설명을 적어주세요.
-      placeholder: - 설명
+      label: "📌 설명"
+      description: "구현해야 하는 페이지나 컴포넌트에 대한 설명을 적어주세요."
+      placeholder: "- 설명"
     validations:
       required: true
   - type: textarea
     attributes:
-      label: 📝 작업 내용
-      description: 퍼블리싱을 위한 작업 내용을 작성해 주세요!
-      placeholder: - [ ] 작업 내용
+      label: "📝 작업 내용"
+      description: "퍼블리싱을 위한 작업 내용을 작성해 주세요!"
+      placeholder: "- [ ] 작업 내용"
     validations:
       required: true
