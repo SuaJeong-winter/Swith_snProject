@@ -1,0 +1,18 @@
+name: "✨ 기능"
+description: "Feature"
+labels: "✨ 기능"
+body:
+  - type: textarea
+    attributes:
+      label: 📌 설명
+      description: 새로운 기능에 대한 설명을 작성해주세요!
+      placeholder: - 설명
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 📝 작업 내용
+      description: 새로운 기능을 구현하기 위한 작업 내용을 작성해 주세요!
+      placeholder: - [ ] 작업 내용
+    validations:
+      required: true
