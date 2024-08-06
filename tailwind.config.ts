@@ -20,8 +20,6 @@ const config = {
     extend: {
       colors: {
         border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
@@ -32,25 +30,21 @@ const config = {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+        meetie: {
+          blue: {
+            1: 'hsl(var(--meetie-blue-1))',
+            2: 'hsl(var(--meetie-blue-2))',
+            3: 'hsl(var(--meetie-blue-3))',
+            4: 'hsl(var(--meetie-blue-4))',
+            5: 'hsl(var(--meetie-blue-5))',
+          },
+          gray: {
+            20: 'hsl(var(--meetie-gray-20))',
+            40: 'hsl(var(--meetie-gray-40))',
+            60: 'hsl(var(--meetie-gray-60))',
+            75: 'hsl(var(--meetie-gray-75))',
+            90: 'hsl(var(--meetie-gray-90))',
+          },
         },
       },
       borderRadius: {
@@ -58,23 +52,8 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
 } satisfies Config
 
 export default config
