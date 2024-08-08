@@ -21,7 +21,7 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         default:
-          'data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary',
+          'border-b-2 border-background data-[state=active]:border-primary data-[state=active]:text-primary',
         small:
           'px-2 py-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground',
       },
