@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { cn } from '~/utils/cn'
+import StudyRoomIcon from '~/assets/icon_studyroom.svg'
+import SearchIcon from '~/assets/icon_search.svg'
+import MyPageIcon from '~/assets/icon_mypage.svg'
 
 const links = [
-  { name: '스터디룸', icon: <></>, path: '/' },
-  { name: '탐색', icon: <></>, path: '/explore' },
-  { name: '마이', icon: <></>, path: '/my' },
+  { name: '스터디룸', icon: <StudyRoomIcon className="h-6 w-6" />, path: '/' },
+  { name: '탐색', icon: <SearchIcon className="h-6 w-6" />, path: '/explore' },
+  { name: '마이', icon: <MyPageIcon className="h-6 w-6" />, path: '/my' },
 ] as const
 
 export default function BottomNavBar() {
@@ -24,6 +27,7 @@ export default function BottomNavBar() {
               pathname.startsWith(link.path) && 'text-primary',
             )}
           >
+            {link.icon}
             {link.name}
           </div>
         </Link>
