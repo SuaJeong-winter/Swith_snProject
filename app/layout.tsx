@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import '~/styles/globals.css'
+import { cn } from '~/utils/cn'
 
-const inter = Inter({ subsets: ['latin'] })
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={cn('bg-black', pretendard.className)}>
+        <div className="relative mx-auto w-full max-w-[375px]">{children}</div>
+      </body>
     </html>
   )
 }
