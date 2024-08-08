@@ -1,4 +1,11 @@
 import { Button } from '~/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card'
 import { Chip } from '~/components/ui/chip'
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
@@ -90,6 +97,16 @@ export default function Home() {
             텍스트
           </Chip>
           <Chip variant="muted">자기 개발</Chip>
+        </div>
+        <div className="flex flex-col gap-4">
+          <span>Cards</span>
+          <Card>
+            <CardHeader>
+              <CardDescription>Description</CardDescription>
+              <CardTitle>Title</CardTitle>
+            </CardHeader>
+            <CardContent>Content</CardContent>
+          </Card>
         </div>
       </div>
     </div>
