@@ -1,3 +1,4 @@
+import BottomNavBar from '~/components/common/bottom-nav-bar'
 import { Button } from '~/components/ui/button'
 import {
   Card,
@@ -11,7 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
 export default function Home() {
   return (
-    <div className="flex h-dvh w-full items-center justify-center bg-[#F7F3FF]">
+    <div className="flex h-dvh w-full flex-col items-center justify-center bg-[#F7F3FF]">
       <div className="flex flex-col gap-8">
         <div className="grid grid-cols-2 items-center justify-center gap-4">
           <span className="col-span-2 w-full">Buttons</span>
@@ -109,6 +110,7 @@ export default function Home() {
           </Card>
         </div>
       </div>
+      <BottomNavBar />
     </div>
   )
 }

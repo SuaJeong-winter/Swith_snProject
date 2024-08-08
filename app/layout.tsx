@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={cn('bg-black', pretendard.className)}>
-        <div className="mx-auto w-full max-w-[375px]">{children}</div>
+        <div className="relative mx-auto w-full max-w-[375px]">{children}</div>
       </body>
     </html>
   )
