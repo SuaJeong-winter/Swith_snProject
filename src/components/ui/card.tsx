@@ -23,9 +23,9 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-col space-y-1.5 p-4', className)}
+    className={cn('flex flex-col space-y-2 p-4', className)}
     {...props}
-  />
+  /> //하단 간격 수정
 ))
 CardHeader.displayName = 'CardHeader'
 
@@ -36,11 +36,11 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      'text-base font-semibold leading-none tracking-tight text-meetie-gray-75',
+      'text-lg font-semibold leading-none tracking-tight text-meetie-gray-75',
       className,
     )}
     {...props}
-  />
+  /> // 폰트크기수정
 ))
 CardTitle.displayName = 'CardTitle'
 
@@ -60,7 +60,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('p-4 pt-0', className)} {...props} />
+  <div ref={ref} className={cn('p-4 pt-0 text-sm', className)} {...props} /> // 폰트크기수정
 ))
 CardContent.displayName = 'CardContent'
 
