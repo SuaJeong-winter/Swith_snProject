@@ -5,7 +5,6 @@ import BgRocket from '~/assets/main/bg_rocket.svg'
 import LoginGoogle from '~/assets/main/login_google.svg'
 import LoginKakao from '~/assets/main/login_kakao.svg'
 import LoginNaver from '~/assets/main/login_naver.svg'
-import LoginMeetie from '~/assets/main/login_meetie.svg'
 
 export default function Home() {
   return (
@@ -29,26 +28,7 @@ export default function Home() {
           <Link href="/" className="rounded-full">
             <LoginGoogle />
           </Link>
-          <Link
-            href="/"
-            className="flex aspect-square h-[46px] w-[46px] items-center justify-center rounded-full bg-meetie-gray-75 text-white"
-          >
-            <LoginMeetie />
-          </Link>
         </div>
-      </div>
-      <div className="mt-24 flex gap-3 text-xs font-medium text-slate-300">
-        <Link href="/" className="transition-colors hover:text-slate-400">
-          회원가입하기
-        </Link>
-        <span>|</span>
-        <Link href="/" className="transition-colors hover:text-slate-400">
-          아이디 찾기
-        </Link>
-        <span>|</span>
-        <Link href="/" className="transition-colors hover:text-slate-400">
-          비밀번호 찾기
-        </Link>
       </div>
     </div>
   )
