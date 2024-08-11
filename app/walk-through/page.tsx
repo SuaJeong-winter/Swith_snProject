@@ -21,7 +21,7 @@ export default function WalkThrough() {
         </span>
       </div>
       <div className="absolute bottom-10 w-full px-4">
-        <Button className="w-full font-semibold">나와 비슷한 팀원 찾기</Button>
+        <Button className="w-full font-semibold">다음</Button>
       </div>
     </div>
   )
