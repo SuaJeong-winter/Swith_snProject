@@ -13,7 +13,8 @@ const chipVariants = cva(
           'border border-meetie-gray-20 bg-transparent hover:bg-primary/10 hover:text-primary data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:border-primary',
         secondary:
           'border border-meetie-gray-20 bg-background hover:bg-primary/10 hover:text-primary data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:border-primary',
-        muted: 'bg-meetie-gray-20',
+        muted:
+          'bg-meetie-gray-20 border border-meetie-gray-40/80 text-meetie-gray-40/80',
       },
       size: {
         default: 'px-3 py-2',
