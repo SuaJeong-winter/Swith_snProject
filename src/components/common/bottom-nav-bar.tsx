@@ -10,7 +10,7 @@ import MyPageIcon from '~/assets/icon_mypage.svg'
 
 const links = [
   { name: '스터디룸', icon: <StudyRoomIcon className="h-6 w-6" />, path: '/' },
-  { name: '탐색', icon: <SearchIcon className="h-6 w-6" />, path: '/explore' },
+  { name: '탐색', icon: <SearchIcon className="h-6 w-6" />, path: '/search' }, //explore 에서 search로 변경함
   { name: '마이', icon: <MyPageIcon className="h-6 w-6" />, path: '/my' },
 ] as const
 
