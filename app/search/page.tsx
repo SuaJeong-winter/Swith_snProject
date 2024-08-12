@@ -4,6 +4,8 @@ import SearchIcon from '~/assets/icon_search.svg'
 import CalendarMini from '~/assets/icon_calendar-mini.svg'
 import BookmarkOff from '~/assets/icon_bookmark-off.svg'
 import BookmarkOn from '~/assets/icon_bookmark-on.svg'
+import { Badge } from '~/components/ui/badge'
+
 import StudyCreateIcon from '~/assets/icon_study-create.svg'
 import { Chip } from '~/components/ui/chip'
 import {
@@ -13,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import { Checkbox } from '~/components/ui/checkbox'
 
 export default function searchPage() {
   return (
@@ -51,8 +54,10 @@ export default function searchPage() {
         <Chip>#사이드프로젝트</Chip>
       </section>
       <section className="bg-[#FAFAFA] p-3">
-        <input type="checkbox" name="recruit" id="recruit" />
-        <label htmlFor="recruit">모집중만 보기</label>
+        <div className="mb-3 flex items-center space-x-2">
+          <Checkbox id="recruitNow" />
+          <label htmlFor="recruitNow">모집중만 보기</label>
+        </div>
         <div className="flex flex-col gap-5">
           <Card>
             <CardHeader>
@@ -66,8 +71,8 @@ export default function searchPage() {
             <CardContent>
               {/* 태그 */}
               <div>
-                <Chip>#온라인</Chip>
-                <Chip>#백엔드</Chip>
+                <Badge>온라인</Badge>
+                <Badge>백엔드</Badge>
               </div>
               <span className="font-bold text-primary">마감 0일 전</span>
               <CalendarMini className="mb-1 ml-3 mr-1 inline" />
@@ -86,8 +91,8 @@ export default function searchPage() {
             <CardContent>
               {/* 태그 */}
               <div>
-                <Chip>#온라인</Chip>
-                <Chip>#백엔드</Chip>
+                <Badge>온라인</Badge>
+                <Badge>백엔드</Badge>
               </div>
               <span className="font-bold text-primary">마감 0일 전</span>
               <CalendarMini className="mb-1 ml-3 mr-1 inline" />
@@ -106,8 +111,8 @@ export default function searchPage() {
             <CardContent>
               {/* 태그 */}
               <div>
-                <Chip>#온라인</Chip>
-                <Chip>#백엔드</Chip>
+                <Badge>온라인</Badge>
+                <Badge>백엔드</Badge>
               </div>
               <span className="font-bold text-primary">마감 0일 전</span>
               <CalendarMini className="mb-1 ml-3 mr-1 inline" />
@@ -126,8 +131,8 @@ export default function searchPage() {
             <CardContent>
               {/* 태그 */}
               <div>
-                <Chip>#온라인</Chip>
-                <Chip>#백엔드</Chip>
+                <Badge>온라인</Badge>
+                <Badge>백엔드</Badge>
               </div>
               <span className="font-bold text-primary">마감 0일 전</span>
               <CalendarMini className="mb-1 ml-3 mr-1 inline" />
@@ -137,7 +142,7 @@ export default function searchPage() {
         </div>
       </section>
       {/* 플로팅 버튼 -> 스터디 생성 */}
-      <div className="fixed bottom-20 right-16 z-50 rounded-full bg-gradient-to-br from-[#8655FF] to-[#d3c2ff] p-3.5">
+      <div className="fixed bottom-20 right-1/4 z-50 rounded-full bg-gradient-to-br from-[#8655FF] to-[#d3c2ff] p-3.5">
         <StudyCreateIcon />
       </div>
       <BottomNavBar />
