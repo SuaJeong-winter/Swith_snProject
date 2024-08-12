@@ -40,7 +40,7 @@ export default function searchPage() {
           <TabsTrigger value="find-mate">팀원 찾기</TabsTrigger>
         </TabsList>
       </Tabs>
-      {/* 검색 필터 */}
+      {/* 스터디 검색 필터 */}
       <section className="flex flex-wrap justify-evenly gap-2 bg-background px-3 py-4">
         <Chip>#전체</Chip>
         <Chip>#온라인</Chip>
