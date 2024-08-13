@@ -6,6 +6,13 @@ import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 
+const PERIODS = [
+  '1개월 이내',
+  '1개월~3개월',
+  '3개월~6개월',
+  '6개월 이상',
+] as const
+
 export default function PeriodStep() {
   const [period, setPeriod] = useState<string | null>(null)
 
@@ -31,18 +38,11 @@ export default function PeriodStep() {
           className="mt-16 flex flex-col items-start gap-3"
           onValueChange={(value) => setPeriod(value)}
         >
-          <ChipGroupItem value="1개월 이내" variant="secondary">
-            1개월 이내
-          </ChipGroupItem>
-          <ChipGroupItem value="1개월~3개월" variant="secondary">
-            1개월~3개월
-          </ChipGroupItem>
-          <ChipGroupItem value="3개월~6개월" variant="secondary">
-            3개월~6개월
-          </ChipGroupItem>
-          <ChipGroupItem value="6개월 이상" variant="secondary">
-            6개월 이상
-          </ChipGroupItem>
+          {PERIODS.map((value) => (
+            <ChipGroupItem key={value} value={value} variant="secondary">
+              {value}
+            </ChipGroupItem>
+          ))}
         </ChipGroup>
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">

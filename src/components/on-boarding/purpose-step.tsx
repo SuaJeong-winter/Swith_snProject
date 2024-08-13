@@ -6,6 +6,13 @@ import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 
+const PURPOSES = [
+  '자기 개발',
+  '툴 능력 향상',
+  '해당 분야의 네트워킹 확장',
+  '취미',
+] as const
+
 export default function PurposeStep({
   onNext,
 }: {
@@ -35,18 +42,11 @@ export default function PurposeStep({
           className="mt-16 flex flex-col items-start gap-3"
           onValueChange={(value) => setPurpose(value)}
         >
-          <ChipGroupItem value="자기 개발" variant="secondary">
-            자기 개발
-          </ChipGroupItem>
-          <ChipGroupItem value="툴 능력 향상" variant="secondary">
-            툴 능력 향상
-          </ChipGroupItem>
-          <ChipGroupItem value="해당 분야의 네트워킹 확장" variant="secondary">
-            해당 분야의 네트워킹 확장
-          </ChipGroupItem>
-          <ChipGroupItem value="취미" variant="secondary">
-            취미
-          </ChipGroupItem>
+          {PURPOSES.map((value) => (
+            <ChipGroupItem key={value} value={value} variant="secondary">
+              {value}
+            </ChipGroupItem>
+          ))}
         </ChipGroup>
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">

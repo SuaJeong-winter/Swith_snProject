@@ -9,6 +9,12 @@ import ChipDesigner from '~/assets/on-boarding/chip_designer.svg'
 import ChipDeveloper from '~/assets/on-boarding/chip_developer.svg'
 import ChipPM from '~/assets/on-boarding/chip_pm.svg'
 
+const JOBS = [
+  { value: '디자이너', icon: ChipDesigner },
+  { value: '개발자', icon: ChipDeveloper },
+  { value: '기획자', icon: ChipPM },
+] as const
+
 export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
   const [job, setJob] = useState<string | null>(null)
 
@@ -34,27 +40,16 @@ export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
           className="mt-16 grid w-full grid-cols-3 gap-2"
           onValueChange={(value) => setJob(value)}
         >
-          <ChipGroupItem
-            value="디자이너"
-            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
-          >
-            <ChipDesigner />
-            디자이너
-          </ChipGroupItem>
-          <ChipGroupItem
-            value="개발자"
-            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
-          >
-            <ChipDeveloper />
-            개발자
-          </ChipGroupItem>
-          <ChipGroupItem
-            value="기획자"
-            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
-          >
-            <ChipPM />
-            기획자
-          </ChipGroupItem>
+          {JOBS.map(({ value, icon }) => (
+            <ChipGroupItem
+              key={value}
+              value={value}
+              className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
+            >
+              {icon()}
+              {value}
+            </ChipGroupItem>
+          ))}
         </ChipGroup>
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">

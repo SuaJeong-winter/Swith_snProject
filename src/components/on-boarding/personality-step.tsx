@@ -6,6 +6,13 @@ import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 
+const PERSONALITIES = [
+  ['주도적인', '열정적인', '손이 빠른'],
+  ['시간을 지키는', '꼼꼼한', '모험적인', '신중한'],
+  ['커뮤니케이션에 능숙한', '논리적인', '파워 J'],
+  ['분석적인', '동기부여가 필요한', '완벽주의'],
+] as const
+
 export default function PersonalityStep({
   onNext,
 }: {
@@ -35,53 +42,18 @@ export default function PersonalityStep({
           className="mt-16 flex-col items-start gap-3 tracking-tighter"
           onValueChange={(value) => setPersonality(value)}
         >
-          <div className="flex gap-2">
-            <ChipGroupItem value="주도적인" className="rounded-xl">
-              주도적인
-            </ChipGroupItem>
-            <ChipGroupItem value="열정적인" className="rounded-xl">
-              열정적인
-            </ChipGroupItem>
-            <ChipGroupItem value="손이 빠른" className="rounded-xl">
-              손이 빠른
-            </ChipGroupItem>
-          </div>
-          <div className="flex gap-2">
-            <ChipGroupItem value="시간을 지키는" className="rounded-xl">
-              시간을 지키는
-            </ChipGroupItem>
-            <ChipGroupItem value="꼼꼼한" className="rounded-xl">
-              꼼꼼한
-            </ChipGroupItem>
-            <ChipGroupItem value="모험적인" className="rounded-xl">
-              모험적인
-            </ChipGroupItem>
-            <ChipGroupItem value="신중한" className="rounded-xl">
-              신중한
-            </ChipGroupItem>
-          </div>
-          <div className="flex gap-2">
-            <ChipGroupItem value="커뮤니케이션에 능숙한" className="rounded-xl">
-              커뮤니케이션에 능숙한
-            </ChipGroupItem>
-            <ChipGroupItem value="논리적인" className="rounded-xl">
-              논리적인
-            </ChipGroupItem>
-            <ChipGroupItem value="파워 J" className="rounded-xl">
-              파워 J
-            </ChipGroupItem>
-          </div>
-          <div className="flex gap-2">
-            <ChipGroupItem value="분석적인" className="rounded-xl">
-              분석적인
-            </ChipGroupItem>
-            <ChipGroupItem value="동기부여가 필요한" className="rounded-xl">
-              동기부여가 필요한
-            </ChipGroupItem>
-            <ChipGroupItem value="완벽주의" className="rounded-xl">
-              완벽주의
-            </ChipGroupItem>
-          </div>
+          {PERSONALITIES.map((group, index) => (
+            <div
+              key={`personality-group-${index.toString()}`}
+              className="flex gap-2"
+            >
+              {group.map((value) => (
+                <ChipGroupItem key={value} value={value} className="rounded-xl">
+                  {value}
+                </ChipGroupItem>
+              ))}
+            </div>
+          ))}
         </ChipGroup>
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">
