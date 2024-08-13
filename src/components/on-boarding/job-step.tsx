@@ -5,6 +5,9 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
+import ChipDesigner from '~/assets/on-boarding/chip_designer.svg'
+import ChipDeveloper from '~/assets/on-boarding/chip_developer.svg'
+import ChipPM from '~/assets/on-boarding/chip_pm.svg'
 
 export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
   const [job, setJob] = useState<string | null>(null)
@@ -33,20 +36,23 @@ export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
         >
           <ChipGroupItem
             value="디자이너"
-            className="border-meetie-gray-20/40 bg-meetie-gray-20/40"
+            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
           >
+            <ChipDesigner />
             디자이너
           </ChipGroupItem>
           <ChipGroupItem
             value="개발자"
-            className="border-meetie-gray-20/40 bg-meetie-gray-20/40"
+            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
           >
+            <ChipDeveloper />
             개발자
           </ChipGroupItem>
           <ChipGroupItem
             value="기획자"
-            className="border-meetie-gray-20/40 bg-meetie-gray-20/40"
+            className="flex flex-col gap-5 border-meetie-gray-20/40 bg-meetie-gray-20/40 py-6"
           >
+            <ChipPM />
             기획자
           </ChipGroupItem>
         </ChipGroup>
