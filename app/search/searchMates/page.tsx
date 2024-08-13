@@ -13,6 +13,8 @@ import {
 } from '~/components/ui/card'
 import { Chip } from '~/components/ui/chip'
 import Image from 'next/image'
+import ChatList from '~/components/studyroom/chatlist'
+import Chatting from '~/components/studyroom/chatting'
 
 export default function searchMatesPage() {
   return (
@@ -122,6 +124,10 @@ export default function searchMatesPage() {
           </Card>
         </div>
       </section>
+      <div className="mb-16">
+        <ChatList />
+        <Chatting />
+      </div>
       <BottomNavBar />
     </>
   )
