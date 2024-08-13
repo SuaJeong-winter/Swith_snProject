@@ -111,6 +111,12 @@ export default function Home() {
         </div>
       </div>
       <BottomNavBar />
+      <div>
+        {/* 테스트용 나중에 삭제하 것 */}
+        <a href="/create">스터디 생성 페이지로 이동</a>
+        <br />
+        <a href="/apply">스터디 지원 페이지로 이동</a>
+      </div>
     </div>
   )
 }
