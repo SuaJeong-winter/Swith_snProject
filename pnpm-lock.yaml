@@ -29,6 +29,9 @@ importers:
       '@radix-ui/react-toggle-group':
         specifier: ^1.1.0
         version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@use-funnel/next':
+        specifier: ^0.0.1
+        version: 0.0.1(next@14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1434,6 +1437,17 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@use-funnel/core@0.0.1':
+    resolution: {integrity: sha512-9zAtSW7gEwY0nNUIysfxcyOPK8DS3i3aKMasPEy9UnmQ8//A635/hYfA2/o+jXgluEV3U7CC/oGnsN55HeskBw==}
+    peerDependencies:
+      react: ^17 || ^18
+
+  '@use-funnel/next@0.0.1':
+    resolution: {integrity: sha512-xUkq+RGwo74YF/3azdOnTSQUTjqJXL9JVwB3JXABgB5XegX8WHdxopXgIQoFr0GQOGDtOhBye3Q0M7i9KygvrQ==}
+    peerDependencies:
+      next: '>=12'
+      react: ^17 || ^18
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -5001,6 +5015,16 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@use-funnel/core@0.0.1(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+
+  '@use-funnel/next@0.0.1(next@14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@use-funnel/core': 0.0.1(react@18.3.1)
+      next: 14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
 
   JSONStream@1.3.5:
     dependencies:
