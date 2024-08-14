@@ -1,80 +1,73 @@
-import BtnBackIcon from '~/assets/btn_back.svg'
-import { Input } from '~/components/ui/input'
-import { Progress } from '~/components/ui/progress'
-import { Textarea } from '~/components/ui/textarea'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu'
-import { Button } from '~/components/ui/button'
 import Link from 'next/link'
-
-// 확인 주소 http://localhost:3000/create
+import BtnBackIcon from '~/assets/btn_back.svg'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
 
 export default function CreatePage() {
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center justify-center bg-[#F7F3FF] py-24">
-      <div className="relative h-40 w-full bg-slate-600">
-        <div className="absolute inset-x-0 top-0 flex flex-row">
-          {/* 헤더 */}
-          <a href="/">
-            <BtnBackIcon />
-          </a>
-          <h2>스터디 만들기</h2>
-        </div>
+    <section className="flex min-h-dvh flex-col bg-white pb-8">
+      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
+        <a href="/search">
+          <BtnBackIcon />
+        </a>
+        <h2 className="font-bold">스터디 만들기</h2>
+        <p>
+          1 / <span className="text-gray-300">2</span>{' '}
+        </p>
       </div>
-      <div>
-        {/* 관련 오류 해결 안됨 */}
-        <Progress value={2} />
-      </div>
-      <div>
-        <div>
-          <h2>모집 직군 </h2>
-          <DropdownMenu>
-            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <div>{/* 여기는 progress bar */}</div>
+      <div className="space-y-0 px-3">
+        <div className="space-y-2 pt-20">
+          <h2 className="font-bold">모집 직군</h2>
+          <h2 className="font-medium">hello</h2>
         </div>
-
-        <div>
-          <h2>주제</h2>
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">주제</h2>
           <Input
             placeholder="스터디의 주제를 작성해주세요"
             className="required"
             maxLength={20}
           />
         </div>
-        <div>
-          <h2>목표</h2>
-          <Input placeholder="스터디의 목표를 간단히 작성해주세요" />
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">목표</h2>
+          <Input
+            placeholder="스터디의 목표를 간단히 작성해주세요"
+            className="required"
+            maxLength={20}
+          />
         </div>
-        <div>
-          <h2>소개</h2>
-          <Textarea placeholder="스터디를 설명해보세요" />
-        </div>
-        <div className="flex">
-          <Button variant="secondary" className="flex-1">
-            이전
-          </Button>
-          <Link href="createsec">
-            <Button className="border-1 flex-[2] border-solid bg-meetie-blue-2">
-              다음
-            </Button>
-          </Link>
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">소개</h2>
+          <Textarea
+            placeholder="스터디를 설명해보세요"
+            className="resize-none"
+            rows={6}
+          />
         </div>
       </div>
-    </div>
+
+      <div className="fixed bottom-8 flex items-center justify-center space-x-2 px-[20px]">
+        <Link href="search">
+          <Button
+            variant="secondary"
+            className="w-[110px] flex-initial border-[1px] border-gray-200"
+          >
+            이전
+          </Button>
+        </Link>
+        <Link href="createsec">
+          <Button className="w-[220px] flex-initial border-[1px] border-solid">
+            다음
+          </Button>
+        </Link>
+
+        {/* 비활성화 상태일때 */}
+        {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+          다음_off
+        </Button> */}
+      </div>
+    </section>
   )
 }
