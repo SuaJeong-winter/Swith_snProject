@@ -98,7 +98,7 @@ export default function ApprovalPage() {
         ) : (
           <Link href="/waiting">
             <Button className="border-1 w-60 flex-[2] border-solid">
-              스터디 신청하기
+              대기중인 요청 확인
             </Button>
           </Link>
         )}
