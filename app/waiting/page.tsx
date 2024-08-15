@@ -2,6 +2,7 @@ import Link from 'next/link'
 import BtnBackIcon from '~/assets/btn_back.svg'
 import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
 import MpProfile from '~/assets/mp_profile.svg'
+import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
 
@@ -40,9 +41,15 @@ export default function WaitingListPage() {
           </div>
           <p>한줄 자기소개 들어갈 부분</p>
           <div className="grid h-[10px] grid-cols-4 gap-1 text-xs">
-            <Chip>온라인</Chip>
-            <Chip>오프라인</Chip>
-            <Chip>프론트엔드</Chip>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              온라인
+            </Badge>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              오프라인
+            </Badge>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              프론트엔드
+            </Badge>
           </div>
         </div>
         <div>2024년 06월 07일</div>
@@ -65,14 +72,20 @@ export default function WaitingListPage() {
           </div>
           <p>한줄 자기소개 들어갈 부분</p>
           <div className="grid h-[10px] grid-cols-4 gap-1 text-xs">
-            <Chip>온라인</Chip>
-            <Chip>오프라인</Chip>
-            <Chip>프론트엔드</Chip>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              온라인
+            </Badge>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              오프라인
+            </Badge>
+            <Badge className="h-[30px] w-[80px] justify-center bg-meetie-blue-1">
+              프론트엔드
+            </Badge>
           </div>
         </div>
       </div>
 
-      <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
+      <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
         <div>
           <p>참여 가능 인원</p>
           <p>
@@ -81,7 +94,7 @@ export default function WaitingListPage() {
           </p>
         </div>
         <Button className="border-1 w-60 flex-[2] border-solid">
-          대기중인 요청 확인
+          전체 수락하기
         </Button>
       </div>
     </section>
