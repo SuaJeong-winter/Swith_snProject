@@ -25,6 +25,8 @@ export default function CreatePageSecond() {
 
   const [count, setCount] = React.useState<number>(0)
 
+  const [inputType, setInputType] = React.useState('text')
+
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
   }
@@ -33,9 +35,14 @@ export default function CreatePageSecond() {
     setCount(count > 0 ? count - 1 : 0) // 최소 0명으로 제한
   }
 
+  const handleFocus = () => {
+    setInputType('time')
+  }
+
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
+      <div className="fixed h-4 w-[375px] bg-white"></div>
+      <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
         <a href="/create">
           <BtnBackIcon />
         </a>
@@ -148,49 +155,29 @@ export default function CreatePageSecond() {
           <div className="items-center">
             <h2 className="invisible font-bold leading-3">정기일정</h2>
             <Input
-              placeholder="스터디의 주제를 작성해주세요"
-              className="required"
-              type="time"
+              placeholder="시간 선택"
+              className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
+              onFocus={handleFocus}
+              type={inputType}
             />
-            {/* <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={'outline'}
-                  className={cn(
-                    'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
-                    !regulardate && 'text-muted-foreground',
-                  )}
-                >
-                  {regulardate ? (
-                    format(regulardate, 'yyyy년 MM월 dd일')
-                  ) : (
-                    <span className="text-gray-400">시간기능으로 수정필요</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto bg-white p-0">
-                <Calendar
-                  mode="single"
-                  selected={regulardate}
-                  onSelect={setRegularDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover> */}
           </div>
         </div>
 
         <div className="pt-10">
           <h2 className="font-bold leading-3">스터디 모집 인원</h2>
-          <div className="mx-[30px] mt-3 flex flex-row space-x-[120px]">
+          <div className="mx-auto mt-3 flex flex-row space-x-[100px]">
             <div>
-              <button onClick={handleDecrease}>-</button>
+              <Button onClick={handleDecrease} className="w-[50px] text-base">
+                -
+              </Button>
             </div>
-            <div>
+            <div className="my-3 text-lg">
               <span style={{ margin: '0 10px' }}>{count}</span>
             </div>
             <div>
-              <button onClick={handleIncrease}>+</button>
+              <Button onClick={handleIncrease} className="w-[50px] text-base">
+                +
+              </Button>
             </div>
           </div>
         </div>
@@ -216,9 +203,10 @@ export default function CreatePageSecond() {
         <p className="pt-2 text-xs text-meetie-blue-4">
           최대 4개까지 선택이 가능합니다
         </p>
+        <div className="space-y-2 pt-40"></div>
       </div>
 
-      <div className="fixed bottom-8 flex items-center justify-center space-x-2 px-[20px]">
+      <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
         <Link href="create">
           <Button
             variant="secondary"
