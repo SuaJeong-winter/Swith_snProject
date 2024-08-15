@@ -1,3 +1,8 @@
+'use client'
+
+import { useToast } from '~/components/ui/use-toast'
+import { Toaster } from '~/components/ui/toaster'
+
 import Link from 'next/link'
 import BtnBackIcon from '~/assets/btn_back.svg'
 import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
@@ -9,9 +14,14 @@ import { Chip } from '~/components/ui/chip'
 export default function WaitingListPage() {
   const applynum: number = 1
   const maxnum = 4
+  const { toast } = useToast()
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
+      <div className="fixed bottom-[80px] left-1/2 -translate-x-1/2 transform">
+        <Toaster />
+      </div>
+
+      <div className="fixed top-4 flex flex-row space-x-[108px] px-3 pt-3">
         <Link href="approval">
           <BtnBackIcon />
         </Link>
@@ -93,7 +103,19 @@ export default function WaitingListPage() {
             명
           </p>
         </div>
-        <Button className="border-1 w-60 flex-[2] border-solid">
+        <Button
+          className="w-60 flex-[2] border border-solid"
+          onClick={() => {
+            toast({
+              description: '⚠️신청자가 수락가능 인원보다 많습니다',
+              style: {
+                background: 'gray-300',
+                width: '100px',
+              },
+            })
+            console.log('hi')
+          }}
+        >
           전체 수락하기
         </Button>
       </div>
