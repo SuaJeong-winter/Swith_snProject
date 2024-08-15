@@ -16,6 +16,7 @@ import BtnBackIcon from '~/assets/btn_back.svg'
 import { Textarea } from '~/components/ui/textarea'
 import Link from 'next/link'
 import { Chip } from '~/components/ui/chip'
+import { Input } from '~/components/ui/input'
 
 export default function CreatePageSecond() {
   const [startdate, setStartDate] = React.useState<Date>()
@@ -146,7 +147,12 @@ export default function CreatePageSecond() {
           </div>
           <div className="items-center">
             <h2 className="invisible font-bold leading-3">정기일정</h2>
-            <Popover>
+            <Input
+              placeholder="스터디의 주제를 작성해주세요"
+              className="required"
+              type="time"
+            />
+            {/* <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={'outline'}
@@ -170,7 +176,7 @@ export default function CreatePageSecond() {
                   initialFocus
                 />
               </PopoverContent>
-            </Popover>
+            </Popover> */}
           </div>
         </div>
 

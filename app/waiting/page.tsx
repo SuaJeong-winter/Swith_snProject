@@ -6,6 +6,8 @@ import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
 
 export default function WaitingListPage() {
+  const applynum: number = 1
+  const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
@@ -68,6 +70,19 @@ export default function WaitingListPage() {
             <Chip>프론트엔드</Chip>
           </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
+        <div>
+          <p>참여 가능 인원</p>
+          <p>
+            <span className="text-meetie-blue-4">{applynum}명 </span>/ {maxnum}
+            명
+          </p>
+        </div>
+        <Button className="border-1 w-60 flex-[2] border-solid">
+          대기중인 요청 확인
+        </Button>
       </div>
     </section>
   )
