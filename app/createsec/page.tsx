@@ -15,6 +15,7 @@ import {
 import BtnBackIcon from '~/assets/btn_back.svg'
 import { Textarea } from '~/components/ui/textarea'
 import Link from 'next/link'
+import { Chip } from '~/components/ui/chip'
 
 export default function CreatePageSecond() {
   const [startdate, setStartDate] = React.useState<Date>()
@@ -24,7 +25,7 @@ export default function CreatePageSecond() {
   const [count, setCount] = React.useState<number>(0)
 
   const handleIncrease = () => {
-    setCount(count + 1)
+    setCount(count < 11 ? count + 1 : 10)
   }
 
   const handleDecrease = () => {
@@ -143,14 +144,48 @@ export default function CreatePageSecond() {
               </PopoverContent>
             </Popover>
           </div>
+          <div className="items-center">
+            <h2 className="invisible font-bold leading-3">정기일정</h2>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={'outline'}
+                  className={cn(
+                    'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
+                    !regulardate && 'text-muted-foreground',
+                  )}
+                >
+                  {regulardate ? (
+                    format(regulardate, 'yyyy년 MM월 dd일')
+                  ) : (
+                    <span className="text-gray-400">시간기능으로 수정필요</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto bg-white p-0">
+                <Calendar
+                  mode="single"
+                  selected={regulardate}
+                  onSelect={setRegularDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
 
         <div className="pt-10">
           <h2 className="font-bold leading-3">스터디 모집 인원</h2>
-          <div className="mt-3 h-[45px] w-[1] items-center justify-center rounded-md border-[1px] border-gray-400">
-            <button onClick={handleDecrease}>-</button>
-            <span style={{ margin: '0 10px' }}>{count}</span>
-            <button onClick={handleIncrease}>+</button>
+          <div className="mx-[30px] mt-3 flex flex-row space-x-[120px]">
+            <div>
+              <button onClick={handleDecrease}>-</button>
+            </div>
+            <div>
+              <span style={{ margin: '0 10px' }}>{count}</span>
+            </div>
+            <div>
+              <button onClick={handleIncrease}>+</button>
+            </div>
           </div>
         </div>
 
@@ -160,7 +195,17 @@ export default function CreatePageSecond() {
 
         <div className="pt-10">
           <h2 className="font-bold leading-3">관련 태그</h2>
-          <div className="mt-3 h-[80px] w-[1] items-center justify-center rounded-md border-[1px] border-gray-400"></div>
+          <div className="grid grid-cols-4 gap-1 pt-4 text-xs">
+            <Chip>온라인</Chip>
+            <Chip>오프라인</Chip>
+            <Chip>프론트엔드</Chip>
+            <Chip>백엔드</Chip>
+            <Chip>UX/UI</Chip>
+            <Chip>PM</Chip>
+            <Chip>어플</Chip>
+            <Chip>웹</Chip>
+            <Chip className="w-[120px]">사이드 프로젝트</Chip>
+          </div>
         </div>
         <p className="pt-2 text-xs text-meetie-blue-4">
           최대 4개까지 선택이 가능합니다
