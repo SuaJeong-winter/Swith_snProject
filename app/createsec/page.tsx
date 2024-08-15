@@ -25,7 +25,7 @@ export default function CreatePageSecond() {
   const [count, setCount] = React.useState<number>(0)
 
   const handleIncrease = () => {
-    setCount(count < 11 ? count + 1 : 10)
+    setCount(count < 10 ? count + 1 : 10)
   }
 
   const handleDecrease = () => {

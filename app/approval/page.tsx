@@ -1,5 +1,6 @@
 import BtnBackIcon from '~/assets/btn_back.svg'
 import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
+import MpProfile from '~/assets/mp_profile.svg'
 
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
@@ -12,10 +13,11 @@ export default function ApprovalPage() {
   const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
-        <a href="# ">
+      <div className="fixed h-4 w-[375px] bg-white"></div>
+      <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
+        <Link href="#">
           <BtnBackIcon />
-        </a>
+        </Link>
         <h2 className="invisible font-bold">스터디 지원하기</h2>
         <BtnMoreVertical />
       </div>
@@ -45,9 +47,16 @@ export default function ApprovalPage() {
             온라인 강의
           </Chip>
         </div>
+        <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
+          <MpProfile />
+          <div className="text-base text-black">
+            <p>김서희</p>
+            <p>작성일 2024.08.13 09:41</p>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-[100px] h-1 w-[375px] border-transparent bg-slate-200"></div>
+      <div className="mt-[10px] h-1 w-[375px] border-transparent bg-slate-200"></div>
 
       <div className="px-3">
         <div className="space-y-2 pt-10">
