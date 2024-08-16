@@ -7,15 +7,17 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import AssignmentComplete from '~/components/studyroom/assignment-complete'
+import AssignmentDetail from '~/components/studyroom/assignment-detail'
+import AssignmentList from '~/components/studyroom/assignment-list'
 
 export default function Assignment() {
   return (
     <>
-      <div className="flex flex-row space-x-28 border-b-2 bg-background p-3 align-baseline">
+      <div className="flex flex-row space-x-32 border-b-2 bg-background p-3 align-baseline">
         <a href="/studyroom">
           <BtnBackIcon />
         </a>
-        <h2 className="font-bold">과제인증</h2>
+        <h2 className="font-bold">과제 인증</h2>
       </div>
       <section className="bg-background px-3">
         <div className="py-6">
@@ -49,8 +51,12 @@ export default function Assignment() {
           임시 저장
         </Button>
       </section>
-
+      {/* 과제 인증 화면 컴포넌트 */}
       <AssignmentComplete />
+      {/* 과제 상세 컴포넌트 - 추후 라우터 [id]로 분리 */}
+      <AssignmentDetail />
+      {/* 과제 리스트 */}
+      <AssignmentList />
     </>
   )
 }
