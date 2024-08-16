@@ -3,6 +3,7 @@ import * as TogglePrimitive from '@radix-ui/react-toggle'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '~/utils/cn'
+import ChipCheck from '~/assets/chip_check.svg'
 
 const chipVariants = cva(
   'inline-flex items-center justify-center rounded-lg text-normal font-normal ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-2',
@@ -12,7 +13,7 @@ const chipVariants = cva(
         default:
           'border border-meetie-gray-20 bg-transparent hover:bg-primary/10 hover:text-primary data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:border-primary',
         secondary:
-          'border border-meetie-gray-20 bg-background hover:bg-primary/10 hover:text-primary data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:border-primary',
+          'border border-meetie-gray-20 bg-background hover:bg-primary/10 hover:text-primary data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:border-primary [&>svg]:hover:text-primary/50 [&>svg]:data-[state=on]:text-primary [&>svg]:text-meetie-gray-20',
         muted:
           'bg-meetie-gray-20 border border-meetie-gray-40/80 text-meetie-gray-40/80',
       },
@@ -31,12 +32,15 @@ const Chip = React.forwardRef<
   React.ElementRef<typeof TogglePrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
     VariantProps<typeof chipVariants>
->(({ className, variant, size, ...props }, ref) => (
+>(({ className, variant, size, children, ...props }, ref) => (
   <TogglePrimitive.Root
     ref={ref}
     className={cn(chipVariants({ variant, size, className }))}
     {...props}
-  />
+  >
+    {variant === 'secondary' && <ChipCheck />}
+    {children}
+  </TogglePrimitive.Root>
 ))
 
 Chip.displayName = TogglePrimitive.Root.displayName
