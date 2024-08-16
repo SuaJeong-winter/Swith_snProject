@@ -1,80 +1,142 @@
-import BtnBackIcon from '~/assets/btn_back.svg'
-import { Input } from '~/components/ui/input'
-import { Progress } from '~/components/ui/progress'
-import { Textarea } from '~/components/ui/textarea'
+'use client'
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu'
-import { Button } from '~/components/ui/button'
 import Link from 'next/link'
+import BtnBackIcon from '~/assets/btn_back.svg'
+import BtnCheckOnIcon from '~/assets/btn_check_on.svg'
+import BtnCheckOffIcon from '~/assets/btn_check_off.svg'
 
-// 확인 주소 http://localhost:3000/create
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/ui/drawer'
+import { useState } from 'react'
 
 export default function CreatePage() {
-  return (
-    <div className="flex min-h-dvh w-full flex-col items-center justify-center bg-[#F7F3FF] py-24">
-      <div className="relative h-40 w-full bg-slate-600">
-        <div className="absolute inset-x-0 top-0 flex flex-row">
-          {/* 헤더 */}
-          <a href="/">
-            <BtnBackIcon />
-          </a>
-          <h2>스터디 만들기</h2>
-        </div>
-      </div>
-      <div>
-        {/* 관련 오류 해결 안됨 */}
-        <Progress value={2} />
-      </div>
-      <div>
-        <div>
-          <h2>모집 직군 </h2>
-          <DropdownMenu>
-            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+  const [isChecked, setIsChecked] = useState([false, false, false])
 
-        <div>
-          <h2>주제</h2>
+  const handleToggle = (index: number) => {
+    setIsChecked((prev) =>
+      prev.map((state, i) => (i === index ? !state : state)),
+    )
+  }
+
+  return (
+    <section className="flex min-h-dvh flex-col bg-white pb-8">
+      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
+        <a href="/search">
+          <BtnBackIcon />
+        </a>
+        <h2 className="font-bold">스터디 만들기</h2>
+        <p>
+          1 / <span className="text-gray-300">2</span>{' '}
+        </p>
+      </div>
+      <div>{/* 여기는 progress bar */}</div>
+      <div className="space-y-0 px-3">
+        <div className="space-y-2 pt-20">
+          <h2 className="font-bold">모집 직군</h2>
+          <Drawer>
+            <div className="h-[40px] rounded-md border-2 border-gray-200 py-2 pl-3 text-sm text-gray-400">
+              <DrawerTrigger>모집 직군을 선택해주세요</DrawerTrigger>
+            </div>
+            <DrawerContent className="mx-auto w-[375px]">
+              <DrawerHeader>
+                <DrawerTitle className="flex flex-row space-x-[200px]">
+                  <p>모집 직군</p>
+                  <p
+                    className="text-xs text-gray-400 underline"
+                    onClick={() => {
+                      setIsChecked([true, true, true])
+                    }}
+                  >
+                    전체 선택
+                  </p>
+                </DrawerTitle>
+                <DrawerDescription>
+                  모집하고 싶은 직군을 선택해주세요
+                  <div className="my-3 h-[170px] space-y-2 rounded-md bg-white">
+                    <div
+                      className="flex h-[50px] flex-row space-x-[210px] rounded-md border-2 border-gray-200 bg-white px-6 py-3"
+                      onClick={() => handleToggle(0)}
+                    >
+                      <p className="text-lg font-medium">기획자</p>
+                      {isChecked[0] ? <BtnCheckOnIcon /> : <BtnCheckOffIcon />}
+                    </div>
+                    <div
+                      className="flex h-[50px] flex-row space-x-[195px] rounded-md border-2 border-gray-200 bg-white px-6 py-3"
+                      onClick={() => handleToggle(1)}
+                    >
+                      <p className="text-lg font-medium">디자이너</p>
+                      {isChecked[1] ? <BtnCheckOnIcon /> : <BtnCheckOffIcon />}
+                    </div>
+                    <div
+                      className="flex h-[50px] flex-row space-x-[210px] rounded-md border-2 border-gray-200 bg-white px-6 py-3"
+                      onClick={() => handleToggle(2)}
+                    >
+                      <p className="text-lg font-medium">개발자</p>
+                      {isChecked[2] ? <BtnCheckOnIcon /> : <BtnCheckOffIcon />}
+                    </div>
+                  </div>
+                </DrawerDescription>
+              </DrawerHeader>
+            </DrawerContent>
+          </Drawer>
+        </div>
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">주제</h2>
           <Input
             placeholder="스터디의 주제를 작성해주세요"
             className="required"
             maxLength={20}
           />
         </div>
-        <div>
-          <h2>목표</h2>
-          <Input placeholder="스터디의 목표를 간단히 작성해주세요" />
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">목표</h2>
+          <Input
+            placeholder="스터디의 목표를 간단히 작성해주세요"
+            className="required"
+            maxLength={20}
+          />
         </div>
-        <div>
-          <h2>소개</h2>
-          <Textarea placeholder="스터디를 설명해보세요" />
-        </div>
-        <div className="flex">
-          <Button variant="secondary" className="flex-1">
-            이전
-          </Button>
-          <Link href="createsec">
-            <Button className="border-1 flex-[2] border-solid bg-meetie-blue-2">
-              다음
-            </Button>
-          </Link>
+        <div className="space-y-2 pt-10">
+          <h2 className="font-bold">소개</h2>
+          <Textarea
+            placeholder="스터디를 설명해보세요"
+            className="resize-none"
+            rows={6}
+          />
         </div>
       </div>
-    </div>
+
+      <div className="fixed bottom-8 flex items-center justify-center space-x-2 px-[20px]">
+        <Link href="search">
+          <Button
+            variant="secondary"
+            className="w-[110px] flex-initial border-[1px] border-gray-200"
+          >
+            이전
+          </Button>
+        </Link>
+        <Link href="createsec">
+          <Button className="w-[220px] flex-initial border-[1px] border-solid">
+            다음
+          </Button>
+        </Link>
+
+        {/* 비활성화 상태일때 */}
+        {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+          다음_off
+        </Button> */}
+      </div>
+    </section>
   )
 }

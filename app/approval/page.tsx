@@ -1,24 +1,23 @@
-import Link from 'next/link'
 import BtnBackIcon from '~/assets/btn_back.svg'
 import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
 import MpProfile from '~/assets/mp_profile.svg'
+
+import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
 
-//  스터디 신청자 페이지
-
-export default function ApplyIntroPage() {
+export default function ApprovalPage() {
   const AppliedStudyTitle = '피그마 정복하기'
   const TestText = '받아온 데이터 출력하기'
-  const applynum = 2
+  const applynum: number = 1
   const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       <div className="fixed h-4 w-[375px] bg-white"></div>
       <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
-        <a href="search">
+        <Link href="#">
           <BtnBackIcon />
-        </a>
+        </Link>
         <h2 className="invisible font-bold">스터디 지원하기</h2>
         <BtnMoreVertical />
       </div>
@@ -84,6 +83,12 @@ export default function ApplyIntroPage() {
           <h2 className="font-bold">스터디 기간</h2>
           <h2 className="font-medium">{TestText}</h2>
         </div>
+        <div className="space-y-2 px-[120px] pt-8">
+          <Link href="established ">
+            <p className="text-meetie-blue-4 underline">스터디 마감하기</p>
+          </Link>
+        </div>
+
         <div className="space-y-2 pt-20"></div>
       </div>
 
@@ -95,11 +100,31 @@ export default function ApplyIntroPage() {
             명
           </p>
         </div>
-        <Link href="/apply">
-          <Button className="border-1 w-60 flex-[2] border-solid">
-            스터디 신청하기
+        {applynum === 0 ? (
+          <Button className="border-1 w-[240px] border-solid bg-gray-400">
+            아직 대기 인원이 없습니다
           </Button>
-        </Link>
+        ) : (
+          <Link href="/waiting">
+            <Button className="border-1 w-60 flex-[2] border-solid">
+              대기중인 요청 확인
+            </Button>
+          </Link>
+        )}
+        {/* if (applynum===0)
+        {
+          <Button className="border-1 w-60 flex-[2] border-solid">
+            아직 대기 인원이 없습니다
+          </Button>
+        }
+        else
+        {
+          <Link href="/apply">
+            <Button className="border-1 w-60 flex-[2] border-solid">
+              스터디 신청하기
+            </Button>
+          </Link>
+        } */}
       </div>
     </section>
   )

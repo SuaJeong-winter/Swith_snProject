@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Button } from '~/components/ui/button'
+import WalkThroughCarousel from '~/components/walk-through/walk-through-carousel'
 
 export default function WalkThrough() {
   return (
@@ -10,19 +10,7 @@ export default function WalkThrough() {
           SKIP
         </Link>
       </div>
-      <div className="flex w-full flex-col px-4">
-        <h2 className="mt-7 text-2xl font-semibold text-meetie-gray-90">
-          다양한 IT 직군과의
-          <br />
-          견고한 스터디를 경험해보세요.
-        </h2>
-        <span className="mt-6 text-sm text-meetie-gray-90">
-          다른 학습자들과 소통하며 함께 성장하세요!
-        </span>
-      </div>
-      <div className="absolute bottom-10 w-full px-4">
-        <Button className="w-full font-semibold">다음</Button>
-      </div>
+      <WalkThroughCarousel />
     </div>
   )
 }

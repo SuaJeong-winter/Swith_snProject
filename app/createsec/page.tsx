@@ -1,165 +1,231 @@
 'use client'
 
 import * as React from 'react'
-import BtnBackIcon from '~/assets/btn_back.svg'
-import { Input } from '~/components/ui/input'
-import { Progress } from '~/components/ui/progress'
+import { format } from 'date-fns'
+import { Calendar as CalendarIcon } from 'lucide-react'
+
+import { cn } from '../../src/utils/cn'
+import { Button } from '~/components/ui/button'
 import { Calendar } from '~/components/ui/calendar'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu'
-import { Button } from '~/components/ui/button'
+import BtnBackIcon from '~/assets/btn_back.svg'
 import { Textarea } from '~/components/ui/textarea'
-import { Calendar as CalendarIcon } from 'lucide-react'
-
-import { format } from 'date-fns'
-import { cn } from '~/utils/cn'
-import { Chip } from '~/components/ui/chip'
 import Link from 'next/link'
+import { Chip } from '~/components/ui/chip'
+import { Input } from '~/components/ui/input'
 
 export default function CreatePageSecond() {
+  const [startdate, setStartDate] = React.useState<Date>()
+  const [enddate, setEndDate] = React.useState<Date>()
+  const [regulardate, setRegularDate] = React.useState<Date>()
+
   const [count, setCount] = React.useState<number>(0)
 
+  const [inputType, setInputType] = React.useState('text')
+
   const handleIncrease = () => {
-    setCount(count + 1)
+    setCount(count < 10 ? count + 1 : 10)
   }
 
   const handleDecrease = () => {
     setCount(count > 0 ? count - 1 : 0) // 최소 0명으로 제한
   }
-  const [date, setDate] = React.useState<Date>()
-  const [date2, setDate2] = React.useState<Date>()
+
+  const handleFocus = () => {
+    setInputType('time')
+  }
 
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center justify-center bg-[#F7F3FF] py-24">
-      <div className="flex flex-row">
-        {/* 헤더 */}
-        <a href="/">
+    <section className="flex min-h-dvh flex-col bg-white pb-8">
+      <div className="fixed h-4 w-[375px] bg-white"></div>
+      <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
+        <a href="/create">
           <BtnBackIcon />
         </a>
-        <h2>스터디 만들기</h2>
+        <h2 className="font-bold">스터디 만들기</h2>
+        <p>
+          2 / <span className="text-gray-300">2</span>
+        </p>
       </div>
-      <div>
-        {/* 관련 오류 해결 안됨 */}
-        <Progress value={2} />
-      </div>
-      <div>
-        <div>
-          <h2>진행방식과 커리큘럼</h2>
-          <Textarea placeholder="스터디의 진행 방식과 커리큘럼을 작성해주세요" />
+      <div>{/* 여기는 progress bar */}</div>
+      <div className="space-y-0 px-3">
+        <div className="space-y-2 pt-20">
+          <h2 className="font-bold">진행방식과 커리큘럼</h2>
+          <Textarea
+            placeholder="스터디의 진행방식과 커리큘럼을 소개해주세요"
+            className="resize-none border-gray-400"
+            rows={6}
+          />
         </div>
 
-        <div className="flex flex-row">
-          <div>
-            <h2>시작일</h2>
+        <div className="flex flex-row space-x-3 pt-10">
+          <div className="items-center">
+            <h2 className="font-bold leading-3">시작일</h2>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={'outline'}
                   className={cn(
-                    'w-[1] justify-start text-left font-normal',
-                    !date && 'text-muted-foreground',
+                    'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
+                    !enddate && 'text-muted-foreground',
                   )}
                 >
-                  {date ? format(date, 'PPP') : <span>날짜 선택</span>}
+                  {enddate ? (
+                    format(enddate, 'yyyy년 MM월 dd일')
+                  ) : (
+                    <span className="text-gray-400">날짜 선택</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto bg-white p-0">
                 <Calendar
                   mode="single"
-                  selected={date}
-                  onSelect={setDate}
+                  selected={enddate}
+                  onSelect={setEndDate}
                   initialFocus
                 />
               </PopoverContent>
             </Popover>
           </div>
-          <div>
-            <h2>마감일</h2>
+          <div className="items-center">
+            <h2 className="font-bold leading-3">종료일</h2>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={'outline'}
                   className={cn(
-                    'w-[1] justify-start text-left font-normal',
-                    !date2 && 'text-muted-foreground',
+                    'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
+                    !startdate && 'text-muted-foreground',
                   )}
                 >
-                  {date2 ? format(date2, 'PPP') : <span>날짜 선택</span>}
+                  {startdate ? (
+                    format(startdate, 'yyyy년 MM월 dd일')
+                  ) : (
+                    <span className="text-gray-400">날짜 선택</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto bg-white p-0">
                 <Calendar
                   mode="single"
-                  selected={date2}
-                  onSelect={setDate2}
+                  selected={startdate}
+                  onSelect={setStartDate}
                   initialFocus
                 />
               </PopoverContent>
             </Popover>
           </div>
         </div>
-        <p className="text-left">스터디 시작일이 모집 마감일로 설정됩니다</p>
-        <div>
-          <h2>스터디 모집인원</h2>
-          <div>
-            <button onClick={handleDecrease}>-</button>
-            <span style={{ margin: '0 10px' }}>{count}</span>
-            <button onClick={handleIncrease}>+</button>
+        <p className="pt-2 text-xs text-meetie-blue-4">
+          스터디 시작일이 모집 마감일로 설정됩니다
+        </p>
+        <div className="flex flex-row space-x-3 pt-10">
+          <div className="items-center">
+            <h2 className="font-bold leading-3">정기일정</h2>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={'outline'}
+                  className={cn(
+                    'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
+                    !regulardate && 'text-muted-foreground',
+                  )}
+                >
+                  {regulardate ? (
+                    format(regulardate, 'yyyy년 MM월 dd일')
+                  ) : (
+                    <span className="text-gray-400">날짜 선택</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto bg-white p-0">
+                <Calendar
+                  mode="single"
+                  selected={regulardate}
+                  onSelect={setRegularDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
-          <p className="text-xs">4~8명이 적당한 스터디 인원이에요</p>
-        </div>
-        <div>
-          <h2>관련태그</h2>
-
-          <div className="... h-42 grid grid-cols-3 content-evenly gap-2">
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              온라인
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              오프라인
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              프론트엔드
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              UX/UI
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              PM
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              어플
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              웹
-            </Chip>
-            <Chip data-state="on" className="border-1 text-xs text-black">
-              사이드프로젝트
-            </Chip>
+          <div className="items-center">
+            <h2 className="invisible font-bold leading-3">정기일정</h2>
+            <Input
+              placeholder="시간 선택"
+              className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
+              onFocus={handleFocus}
+              type={inputType}
+            />
           </div>
-          <p className="text-xs">최대 10개까지 선택이 가능해요</p>
         </div>
-        <div className="flex">
-          <Link href="create">
-            <Button variant="secondary" className="flex-1">
-              이전
-            </Button>
-          </Link>
 
-          <Button className="border-1 flex-[2] border-solid">작성완료 </Button>
+        <div className="pt-10">
+          <h2 className="font-bold leading-3">스터디 모집 인원</h2>
+          <div className="mx-auto mt-3 flex flex-row space-x-[100px]">
+            <div>
+              <Button onClick={handleDecrease} className="w-[50px] text-base">
+                -
+              </Button>
+            </div>
+            <div className="my-3 text-lg">
+              <span style={{ margin: '0 10px' }}>{count}</span>
+            </div>
+            <div>
+              <Button onClick={handleIncrease} className="w-[50px] text-base">
+                +
+              </Button>
+            </div>
+          </div>
         </div>
+
+        <p className="pt-2 text-xs text-meetie-blue-4">
+          4~8명이 적당한 스터디 인원이에요
+        </p>
+
+        <div className="pt-10">
+          <h2 className="font-bold leading-3">관련 태그</h2>
+          <div className="grid grid-cols-4 gap-1 pt-4 text-xs">
+            <Chip>온라인</Chip>
+            <Chip>오프라인</Chip>
+            <Chip>프론트엔드</Chip>
+            <Chip>백엔드</Chip>
+            <Chip>UX/UI</Chip>
+            <Chip>PM</Chip>
+            <Chip>어플</Chip>
+            <Chip>웹</Chip>
+            <Chip className="w-[120px]">사이드 프로젝트</Chip>
+          </div>
+        </div>
+        <p className="pt-2 text-xs text-meetie-blue-4">
+          최대 4개까지 선택이 가능합니다
+        </p>
+        <div className="space-y-2 pt-40"></div>
       </div>
-    </div>
+
+      <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+        <Link href="create">
+          <Button
+            variant="secondary"
+            className="w-[110px] flex-initial border-[1px] border-gray-200"
+          >
+            이전
+          </Button>
+        </Link>
+        <Link href="approval">
+          <Button className="w-[220px] flex-initial border-[1px] border-solid">
+            작성완료
+          </Button>
+        </Link>
+
+        {/* 비활성화 상태일때 */}
+        {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+          내용이 부족해요!
+        </Button> */}
+      </div>
+    </section>
   )
 }
