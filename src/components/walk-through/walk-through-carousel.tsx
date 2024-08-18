@@ -2,11 +2,13 @@
 
 import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback, useState } from 'react'
+import Link from 'next/link'
 
-import { Button } from '~/components/ui/button'
+import { Button, buttonVariants } from '~/components/ui/button'
 import WalkThrough1 from '~/assets/walk-through/walk-through-1.svg'
 import WalkThrough2 from '~/assets/walk-through/walk-through-2.svg'
 import WalkThrough3 from '~/assets/walk-through/walk-through-3.svg'
+import { cn } from '~/utils/cn'
 
 export default function WalkThroughCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false })
@@ -63,7 +65,12 @@ export default function WalkThroughCarousel() {
       </div>
       <div className="absolute bottom-10 w-full px-4">
         {isLast ? (
-          <Button className="w-full font-semibold">프로필 만들기</Button>
+          <Link
+            href="/on-boarding"
+            className={cn(buttonVariants(), 'w-full font-semibold')}
+          >
+            프로필 만들기
+          </Link>
         ) : (
           <Button className="w-full font-semibold" onClick={scrollNext}>
             다음
