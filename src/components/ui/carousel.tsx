@@ -202,7 +202,8 @@ const CarouselPrevious = React.forwardRef<
     <Button
       ref={ref}
       variant={variant}
-      size={size}
+      size="default"
+      // 일단 size={default}로 수정했습니다 추후 필요시 수정
       className={cn(
         'absolute h-8 w-8 rounded-full',
         orientation === 'horizontal'
@@ -231,7 +232,8 @@ const CarouselNext = React.forwardRef<
     <Button
       ref={ref}
       variant={variant}
-      size={size}
+      size="default"
+      // 여기도 size 수정
       className={cn(
         'absolute h-8 w-8 rounded-full',
         orientation === 'horizontal'
