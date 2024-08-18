@@ -17,6 +17,7 @@ import { Textarea } from '~/components/ui/textarea'
 import Link from 'next/link'
 import { Chip } from '~/components/ui/chip'
 import { Input } from '~/components/ui/input'
+import { Progress } from '~/components/ui/progress'
 
 export default function CreatePageSecond() {
   const [startdate, setStartDate] = React.useState<Date>()
@@ -26,6 +27,9 @@ export default function CreatePageSecond() {
   const [count, setCount] = React.useState<number>(0)
 
   const [inputType, setInputType] = React.useState('text')
+
+  // 프로그래스 바
+  const [progress, setProgress] = React.useState(100)
 
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
@@ -51,9 +55,12 @@ export default function CreatePageSecond() {
           2 / <span className="text-gray-300">2</span>
         </p>
       </div>
-      <div>{/* 여기는 progress bar */}</div>
+
+      <div className="pt-20">
+        <Progress value={progress} className="w-[375px]" />
+      </div>
       <div className="space-y-0 px-3">
-        <div className="space-y-2 pt-20">
+        <div className="space-y-2 pt-10">
           <h2 className="font-bold">진행방식과 커리큘럼</h2>
           <Textarea
             placeholder="스터디의 진행방식과 커리큘럼을 소개해주세요"
