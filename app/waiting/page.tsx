@@ -18,7 +18,7 @@ export default function WaitingListPage() {
   const { toast } = useToast()
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed bottom-[80px] left-1/3 -translate-x-1/2 transform">
+      <div className="fixed bottom-[80px] mx-[50px] -translate-x-1/2 transform">
         <Toaster />
       </div>
 
