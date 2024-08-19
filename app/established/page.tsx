@@ -33,79 +33,79 @@ export default function EstablishedPage() {
         </div>
       </div>
       <div className="space-y-2 pt-20">
-        <div className="flex h-[250px] w-[375px] flex-row space-x-3 bg-meetie-blue-5 py-[20px]">
-          <Carousel>
-            <CarouselContent>
-              <CarouselItem className="basis-1/5">
-                <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                  <div className="px-[8px] pt-[20px]">
-                    <div className="relative h-[100px] w-[130px] px-[5px]">
-                      <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
-                      <MpProfile className="absolute left-9 right-6 top-[34px]" />
-                    </div>
-
-                    <p className="px-[40px] text-lg text-black"> 김서희</p>
-                    <p className="px-[40px] text-sm text-black">디자이너</p>
+        {/* <div > */}
+        <Carousel className="flex h-[250px] w-[375px] flex-row space-x-1 py-[20px]">
+          <CarouselContent>
+            <CarouselItem className="basis-1/10">
+              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
+                <div className="px-[8px] pt-[20px]">
+                  <div className="relative h-[100px] w-[130px] px-[5px]">
+                    <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
+                    <MpProfile className="absolute left-9 right-6 top-[34px]" />
                   </div>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/5">
-                <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                  <div className="px-[8px] pt-[20px]">
-                    <div className="relative h-[100px] w-[130px] px-[5px]">
-                      <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
-                      <MpProfile className="absolute left-9 right-6 top-[34px]" />
-                    </div>
 
-                    <p className="px-[40px] text-lg text-black"> 김서희</p>
-                    <p className="px-[40px] text-sm text-black">디자이너</p>
-                  </div>
+                  <p className="px-[40px] text-lg text-black"> 김서희</p>
+                  <p className="px-[40px] text-sm text-black">디자이너</p>
                 </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/5">
-                <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                  <div className="px-[8px] pt-[20px]">
-                    <div className="relative h-[100px] w-[130px] px-[5px]">
-                      <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
-                      <MpProfile className="absolute left-9 right-6 top-[34px]" />
-                    </div>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="basis-1/10">
+              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
+                <div className="px-[8px] pt-[20px]">
+                  <div className="relative h-[100px] w-[130px] px-[5px]">
+                    <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
+                    <MpProfile className="absolute left-9 right-6 top-[34px]" />
+                  </div>
 
-                    <p className="px-[40px] text-lg text-black"> 김서희</p>
-                    <p className="px-[40px] text-sm text-black">디자이너</p>
-                  </div>
+                  <p className="px-[40px] text-lg text-black"> 김서희</p>
+                  <p className="px-[40px] text-sm text-black">디자이너</p>
                 </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/5">
-                <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                  <div className="px-[8px] pt-[20px]">
-                    <div className="relative h-[100px] w-[130px] px-[5px]">
-                      <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
-                      <MpProfile className="absolute left-9 right-6 top-[34px]" />
-                    </div>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="basis-1/10">
+              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
+                <div className="px-[8px] pt-[20px]">
+                  <div className="relative h-[100px] w-[130px] px-[5px]">
+                    <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
+                    <MpProfile className="absolute left-9 right-6 top-[34px]" />
+                  </div>
 
-                    <p className="px-[40px] text-lg text-black"> 김서희</p>
-                    <p className="px-[40px] text-sm text-black">디자이너</p>
-                  </div>
+                  <p className="px-[40px] text-lg text-black"> 김서희</p>
+                  <p className="px-[40px] text-sm text-black">디자이너</p>
                 </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/3">
-                <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                  <div className="px-[15px] pt-1">
-                    <IconTrophy />
-                    <p className="px-[1px] text-sm text-black">
-                      피그마 정복하기 🔥
-                    </p>
-                    <p className="px-[30px] text-sm text-black">멤버 5</p>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="basis-1/10">
+              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
+                <div className="px-[8px] pt-[20px]">
+                  <div className="relative h-[100px] w-[130px] px-[5px]">
+                    <MeetieMaster className="absolute left-4 right-4 top-1 w-full object-cover" />
+                    <MpProfile className="absolute left-9 right-6 top-[34px]" />
                   </div>
-                </div>
-              </CarouselItem>
 
-              {/* <CarouselItem>...</CarouselItem> */}
-            </CarouselContent>
-            {/* <CarouselPrevious /> */}
-            {/* <CarouselNext /> */}
-          </Carousel>
-        </div>
+                  <p className="px-[40px] text-lg text-black"> 김서희</p>
+                  <p className="px-[40px] text-sm text-black">디자이너</p>
+                </div>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="basis-1/10">
+              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
+                <div className="px-[15px] pt-1">
+                  <IconTrophy />
+                  <p className="px-[1px] text-sm text-black">
+                    피그마 정복하기 🔥
+                  </p>
+                  <p className="px-[30px] text-sm text-black">멤버 5</p>
+                </div>
+              </div>
+            </CarouselItem>
+
+            {/* <CarouselItem>...</CarouselItem> */}
+          </CarouselContent>
+          {/* <CarouselPrevious /> */}
+          {/* <CarouselNext /> */}
+        </Carousel>
+        {/* </div> */}
       </div>
       <div className="fixed bottom-8 flex items-center justify-center space-x-4 px-3">
         <Button className="border-1 w-[350px] border-solid">
