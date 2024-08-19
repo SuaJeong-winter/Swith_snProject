@@ -18,16 +18,20 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/ui/drawer'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { Progress } from '~/components/ui/progress'
 
 export default function CreatePage() {
-  const [isChecked, setIsChecked] = useState([false, false, false])
+  const [isChecked, setIsChecked] = React.useState([false, false, false])
 
   const handleToggle = (index: number) => {
     setIsChecked((prev) =>
       prev.map((state, i) => (i === index ? !state : state)),
     )
   }
+
+  // 프로그래스 바
+  const [progress, setProgress] = React.useState(50)
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
@@ -37,12 +41,15 @@ export default function CreatePage() {
         </a>
         <h2 className="font-bold">스터디 만들기</h2>
         <p>
-          1 / <span className="text-gray-300">2</span>{' '}
+          1 / <span className="text-gray-300">2</span>
         </p>
       </div>
-      <div>{/* 여기는 progress bar */}</div>
+      <div className="pt-20">
+        <Progress value={progress} className="w-[375px]" />
+      </div>
+
       <div className="space-y-0 px-3">
-        <div className="space-y-2 pt-20">
+        <div className="space-y-2 pt-10">
           <h2 className="font-bold">모집 직군</h2>
           <Drawer>
             <div className="h-[40px] rounded-md border-2 border-gray-200 py-2 pl-3 text-sm text-gray-400">
