@@ -22,7 +22,7 @@ import React, { useState } from 'react'
 import { Progress } from '~/components/ui/progress'
 
 export default function CreatePage() {
-  const [isChecked, setIsChecked] = useState([false, false, false])
+  const [isChecked, setIsChecked] = React.useState([false, false, false])
 
   const handleToggle = (index: number) => {
     setIsChecked((prev) =>
@@ -31,7 +31,7 @@ export default function CreatePage() {
   }
 
   // 프로그래스 바
-  const [progress, setProgress] = useState(50)
+  const [progress, setProgress] = React.useState(50)
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
