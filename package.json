@@ -24,7 +24,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.45.1",
-    "@use-funnel/next": "^0.0.1",
+    "@use-funnel/browser": "^0.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
