@@ -1,12 +1,30 @@
-import Link from 'next/link'
+'use client'
+
+import { redirect } from 'next/navigation'
 
 import BgBackground from '~/assets/main/bg_background.svg'
 import BgRocket from '~/assets/main/bg_rocket.svg'
 import LoginGoogle from '~/assets/main/login_google.svg'
 import LoginKakao from '~/assets/main/login_kakao.svg'
-import LoginNaver from '~/assets/main/login_naver.svg'
+import LoginGitHub from '~/assets/main/login_github.svg'
+import { createClient } from '~/utils/supabase/client'
 
 export default function Home() {
+  const supabase = createClient()
+
+  const signInWithOauth = async (provider: 'github' | 'google' | 'kakao') => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: '/auth/callback',
+      },
+    })
+
+    if (error) redirect('/')
+
+    redirect(data.url)
+  }
+
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-gradient-to-b from-[hsla(239,100%,95%,1)] from-0% to-background to-50%">
       <div className="flex flex-col items-center gap-2">
@@ -19,15 +37,18 @@ export default function Home() {
         <BgBackground />
         <BgRocket className="absolute -top-1 left-24" />
         <div className="absolute -bottom-4 left-1/2 flex -translate-x-1/2 gap-6">
-          <Link href="/" className="rounded-full">
-            <LoginNaver />
-          </Link>
-          <Link href="/" className="rounded-full">
-            <LoginKakao />
-          </Link>
-          <Link href="/" className="rounded-full">
-            <LoginGoogle />
-          </Link>
+          <LoginGitHub
+            className="cursor-pointer rounded-full"
+            onClick={async () => await signInWithOauth('github')}
+          />
+          <LoginKakao
+            className="cursor-pointer rounded-full"
+            onClick={async () => await signInWithOauth('kakao')}
+          />
+          <LoginGoogle
+            className="cursor-pointer rounded-full"
+            onClick={async () => await signInWithOauth('google')}
+          />
         </div>
       </div>
     </div>
