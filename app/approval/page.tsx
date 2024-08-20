@@ -1,10 +1,11 @@
 import BtnBackIcon from '~/assets/btn_back.svg'
-import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
+
 import MpProfile from '~/assets/mp_profile.svg'
 
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
+import { StudyHeaderNoText } from '~/components/studycreate/study-header'
 
 export default function ApprovalPage() {
   const AppliedStudyTitle = '피그마 정복하기'
@@ -13,17 +14,9 @@ export default function ApprovalPage() {
   const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed h-4 w-[375px] bg-white"></div>
-      <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
-        <Link href="#">
-          <BtnBackIcon />
-        </Link>
-        <h2 className="invisible font-bold">스터디 지원하기</h2>
-        <BtnMoreVertical />
-      </div>
-
+      <StudyHeaderNoText />
       <div className="px-3">
-        <div className="flex flex-row items-center space-x-4 space-y-2 pt-20">
+        <div className="flex flex-row items-center space-x-4 space-y-2 pt-[60px]">
           <h2 className="text-lg font-bold"> {AppliedStudyTitle}</h2>
           <Button
             className="m-8 w-[60px] rounded-3xl"

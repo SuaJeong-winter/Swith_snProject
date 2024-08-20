@@ -1,12 +1,6 @@
-import BtnBackIcon from '~/assets/btn_back.svg'
-import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
+import StudyHeader from '~/components/studycreate/study-header'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
-
-//Btn BackIcon 클릭 시 기능 추가
-//BtnMoreVertical클릭 시 기능 추가
-//TextArea 관련 글자 수 실시간 확인 기능 추가
-//신청서 제출하기 버튼 클릭 시 기능 추가
 
 export default function ApplyPage() {
   const AppliedStudyTitle = '피그마 정복하기'
@@ -14,13 +8,7 @@ export default function ApplyPage() {
   const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
-        <a href="/applyintro">
-          <BtnBackIcon />
-        </a>
-        <h2 className="font-bold">스터디 지원하기</h2>
-        <BtnMoreVertical />
-      </div>
+      <StudyHeader title="스터디 지원하기" />
       <div className="fixed top-16 h-1 w-[375px] border-transparent bg-slate-200"></div>
 
       <div className="px-3">

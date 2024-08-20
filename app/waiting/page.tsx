@@ -11,6 +11,7 @@ import MpProfile from '~/assets/mp_profile.svg'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
+import StudyHeader from '~/components/studycreate/study-header'
 
 export default function WaitingListPage() {
   const applynum: number = 1
@@ -22,13 +23,14 @@ export default function WaitingListPage() {
         <Toaster />
       </div>
 
-      <div className="fixed top-4 flex flex-row space-x-[108px] px-3 pt-3">
+      {/* <div className="fixed top-4 flex flex-row space-x-[108px] px-3 pt-3">
         <Link href="approval">
           <BtnBackIcon />
         </Link>
         <h2 className="font-bold">대기중인 요청</h2>
         <BtnMoreVertical />
-      </div>
+      </div> */}
+      <StudyHeader href="approval" />
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
 
       <div className="mt-6 space-y-2 px-3">

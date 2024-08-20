@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import BtnBackIcon from '~/assets/btn_back.svg'
+
 import BtnCheckOnIcon from '~/assets/btn_check_on.svg'
 import BtnCheckOffIcon from '~/assets/btn_check_off.svg'
 
@@ -20,6 +20,7 @@ import {
 } from '~/components/ui/drawer'
 import React, { useState } from 'react'
 import { Progress } from '~/components/ui/progress'
+import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 
 export default function CreatePage() {
   const [isChecked, setIsChecked] = React.useState([false, false, false])
@@ -35,21 +36,12 @@ export default function CreatePage() {
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
-        <a href="/search">
-          <BtnBackIcon />
-        </a>
-        <h2 className="font-bold">스터디 만들기</h2>
-        <p>
-          1 / <span className="text-gray-300">2</span>
-        </p>
-      </div>
-      <div className="pt-20">
+      <StudyHeaderProgress />
+      <div className="fixed mt-[60px]">
         <Progress value={progress} className="w-[375px]" />
       </div>
-
       <div className="space-y-0 px-3">
-        <div className="space-y-2 pt-10">
+        <div className="space-y-2 pt-[100px]">
           <h2 className="font-bold">모집 직군</h2>
           <Drawer>
             <div className="h-[40px] rounded-md border-2 border-gray-200 py-2 pl-3 text-sm text-gray-400">
