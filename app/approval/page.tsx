@@ -1,5 +1,3 @@
-import BtnBackIcon from '~/assets/btn_back.svg'
-
 import MpProfile from '~/assets/mp_profile.svg'
 
 import Link from 'next/link'

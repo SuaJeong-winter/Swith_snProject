@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 
-import BtnCheckOnIcon from '~/assets/btn_check_on.svg'
-import BtnCheckOffIcon from '~/assets/btn_check_off.svg'
+import BtnCheckOnIcon from '~/assets/createStudy/btn_check_on.svg'
+import BtnCheckOffIcon from '~/assets/createStudy/btn_check_off.svg'
 
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
