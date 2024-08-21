@@ -1,7 +1,5 @@
-import SearchIcon from '~/assets/icon_search.svg'
-import RefreshBtn from '~/assets/icon_refresh.svg'
-import OpenProfile from '~/assets/icon_arrow-circle.svg'
-import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
+import RefreshBtn from '~/assets/searchStudy/icon_refresh.svg'
+import OpenProfile from '~/assets/searchStudy/icon_arrow-circle.svg'
 import BottomNavBar from '~/components/common/bottom-nav-bar'
 import { Button } from '~/components/ui/button'
 import {
@@ -16,30 +14,13 @@ import Image from 'next/image'
 import ChatList from '~/components/studyroom/chatlist'
 import Chatting from '~/components/studyroom/chatting'
 import TaskDeadline from '~/components/studyroom/task-deadline'
+import SearchHeader from '~/components/searchstudy/search-header'
 
 export default function searchMatesPage() {
   return (
     <>
-      <section className="bg-background pb-8">
-        <h1 className="p-4 text-lg font-bold">탐색하기</h1>
-        <form
-          action=""
-          className="relative flex w-full items-center justify-center"
-        >
-          <input
-            type="text"
-            placeholder="어떤 팀원을 찾고 싶나요?"
-            className="w-11/12 rounded-md border border-border bg-[#F3F3F3] px-3 py-2 pl-9"
-          />
-          <SearchIcon className="absolute left-6 top-1/4 h-5 w-5" />
-        </form>
-      </section>
-      <Tabs defaultValue="find-study">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="find-study">스터디 찾기</TabsTrigger>
-          <TabsTrigger value="find-mate">팀원 찾기</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <SearchHeader />
+
       {/* 팀원 검색 필터 */}
       <section className="flex flex-wrap justify-evenly gap-2 bg-background px-3 py-4">
         <RefreshBtn />
