@@ -12,11 +12,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
-import BtnBackIcon from '~/assets/btn_back.svg'
 import { Textarea } from '~/components/ui/textarea'
 import Link from 'next/link'
 import { Chip } from '~/components/ui/chip'
 import { Input } from '~/components/ui/input'
+import { Progress } from '~/components/ui/progress'
+import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 
 export default function CreatePageSecond() {
   const [startdate, setStartDate] = React.useState<Date>()
@@ -26,6 +27,9 @@ export default function CreatePageSecond() {
   const [count, setCount] = React.useState<number>(0)
 
   const [inputType, setInputType] = React.useState('text')
+
+  // 프로그래스 바
+  const [progress, setProgress] = React.useState(100)
 
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
@@ -41,19 +45,12 @@ export default function CreatePageSecond() {
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed h-4 w-[375px] bg-white"></div>
-      <div className="fixed mt-4 flex h-[50px] flex-row space-x-[108px] bg-white px-3 pt-3">
-        <a href="/create">
-          <BtnBackIcon />
-        </a>
-        <h2 className="font-bold">스터디 만들기</h2>
-        <p>
-          2 / <span className="text-gray-300">2</span>
-        </p>
+      <StudyHeaderProgress progressNum={2} href="create" />
+      <div className="fixed mt-[60px]">
+        <Progress value={progress} className="w-[375px]" />
       </div>
-      <div>{/* 여기는 progress bar */}</div>
       <div className="space-y-0 px-3">
-        <div className="space-y-2 pt-20">
+        <div className="space-y-2 pt-[100px]">
           <h2 className="font-bold">진행방식과 커리큘럼</h2>
           <Textarea
             placeholder="스터디의 진행방식과 커리큘럼을 소개해주세요"

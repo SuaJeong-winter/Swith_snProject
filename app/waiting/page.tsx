@@ -3,13 +3,11 @@
 import { useToast } from '~/components/ui/use-toast'
 import { Toaster } from '~/components/ui/toaster'
 
-import Link from 'next/link'
-import BtnBackIcon from '~/assets/btn_back.svg'
-import BtnMoreVertical from '~/assets/icon_more-vertical.svg'
+import IconBell from '~/assets/createStudy/icon_bell.svg'
 import MpProfile from '~/assets/mp_profile.svg'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
-import { Chip } from '~/components/ui/chip'
+import StudyHeader from '~/components/studycreate/study-header'
 
 export default function WaitingListPage() {
   const applynum: number = 1
@@ -17,17 +15,10 @@ export default function WaitingListPage() {
   const { toast } = useToast()
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed bottom-[80px] left-1/2 -translate-x-1/2 transform">
+      <div className="fixed bottom-[80px] mx-[50px] -translate-x-1/2 transform">
         <Toaster />
       </div>
-
-      <div className="fixed top-4 flex flex-row space-x-[108px] px-3 pt-3">
-        <Link href="approval">
-          <BtnBackIcon />
-        </Link>
-        <h2 className="font-bold">대기중인 요청</h2>
-        <BtnMoreVertical />
-      </div>
+      <StudyHeader href="approval" />
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
 
       <div className="mt-6 space-y-2 px-3">
@@ -104,16 +95,22 @@ export default function WaitingListPage() {
           </p>
         </div>
         <Button
-          className="w-60 flex-[2] border border-solid"
+          className="w-60 flex-[2] rounded-md border border-solid"
           onClick={() => {
             toast({
-              description: '⚠️신청자가 수락가능 인원보다 많습니다',
+              description: (
+                <div className="flex items-center">
+                  <IconBell />
+                  <span>신청자가 수락 가능 인원보다 많습니다</span>
+                </div>
+              ),
               style: {
                 background: 'gray-300',
-                width: '100px',
+                width: '300px',
+                height: '30px',
+                marginBottom: '10px',
               },
             })
-            console.log('hi')
           }}
         >
           전체 수락하기

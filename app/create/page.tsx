@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import BtnBackIcon from '~/assets/btn_back.svg'
-import BtnCheckOnIcon from '~/assets/btn_check_on.svg'
-import BtnCheckOffIcon from '~/assets/btn_check_off.svg'
+
+import BtnCheckOnIcon from '~/assets/createStudy/btn_check_on.svg'
+import BtnCheckOffIcon from '~/assets/createStudy/btn_check_off.svg'
 
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -18,10 +18,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/ui/drawer'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { Progress } from '~/components/ui/progress'
+import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 
 export default function CreatePage() {
-  const [isChecked, setIsChecked] = useState([false, false, false])
+  const [isChecked, setIsChecked] = React.useState([false, false, false])
 
   const handleToggle = (index: number) => {
     setIsChecked((prev) =>
@@ -29,20 +31,17 @@ export default function CreatePage() {
     )
   }
 
+  // 프로그래스 바
+  const [progress, setProgress] = React.useState(50)
+
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed top-4 flex flex-row space-x-28 px-3 pt-3">
-        <a href="/search">
-          <BtnBackIcon />
-        </a>
-        <h2 className="font-bold">스터디 만들기</h2>
-        <p>
-          1 / <span className="text-gray-300">2</span>{' '}
-        </p>
+      <StudyHeaderProgress />
+      <div className="fixed mt-[60px]">
+        <Progress value={progress} className="w-[375px]" />
       </div>
-      <div>{/* 여기는 progress bar */}</div>
       <div className="space-y-0 px-3">
-        <div className="space-y-2 pt-20">
+        <div className="space-y-2 pt-[100px]">
           <h2 className="font-bold">모집 직군</h2>
           <Drawer>
             <div className="h-[40px] rounded-md border-2 border-gray-200 py-2 pl-3 text-sm text-gray-400">

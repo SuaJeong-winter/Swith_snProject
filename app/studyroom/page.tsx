@@ -7,7 +7,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardContent,
 } from '~/components/ui/card'
 import ArrowBtn from '~/assets/studyRoom/arrowBtn.svg'
 import StudyroomCalendar from '~/components/studyroom/study-calendar'
@@ -46,7 +45,7 @@ export default function studyRoomPage() {
             </section>
           </section>
           <section className="bg-background">
-            <Tabs defaultValue="studyroom">
+            <Tabs defaultValue="study-calendar">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="study-calendar">캘린더</TabsTrigger>
                 <TabsTrigger value="study-mission">과제</TabsTrigger>

@@ -29,13 +29,15 @@ export default function Home() {
         </div>
         <div className="items-right flex pl-8 pt-3">
           <div className="items-left flex flex-col pt-7">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="w-4/1 border text-purple-600"
-            >
-              공개 프로필
-            </Button>
+            <Link href="open-profile">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="w-4/1 border text-purple-600"
+              >
+                공개 프로필
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -78,7 +80,7 @@ export default function Home() {
         <span className="text-lg font-bold">내 능력 현황</span>
       </div>
       <div className="items-left flex flex-col p-3 pt-4">
-        <Link href="/" className="">
+        <Link href="my-ability" className="">
           <MeetieMaster className="justify-between" />
         </Link>
         <span className="align-center pl-9 pt-3 text-xs font-semibold text-gray-500">
