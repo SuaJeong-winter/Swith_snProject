@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
+import type { FormState } from '../../../app/on-boarding/page'
 
 const PERIODS = [
   '1개월 이내',
@@ -13,8 +14,16 @@ const PERIODS = [
   '6개월 이상',
 ] as const
 
-export default function PeriodStep() {
+export default function PeriodStep({
+  context,
+}: {
+  context: FormState & { job: string; purpose: string[]; personality: string[] }
+}) {
   const [period, setPeriod] = useState<string | null>(null)
+
+  const handleSubmit = () => {
+    console.log({ ...context, period })
+  }
 
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
@@ -53,7 +62,11 @@ export default function PeriodStep() {
           <Button variant="secondary" className="w-2/5 border">
             이전
           </Button>
-          <Button className="w-3/5 font-semibold" disabled={!period}>
+          <Button
+            className="w-3/5 font-semibold"
+            disabled={!period}
+            onClick={handleSubmit}
+          >
             이제 마지막이에요
           </Button>
         </div>
