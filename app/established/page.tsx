@@ -1,8 +1,6 @@
 'use client'
 
 import IconTrophy from '~/assets/createStudy/icon_trophy.svg'
-import MeetieMaster from '~/assets/icon_profile-deco.svg'
-import MpProfile from '~/assets/mp_profile.svg'
 import { Button } from '~/components/ui/button'
 import {
   Carousel,
@@ -11,9 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '~/components/ui/carousel'
-import StudyHeader, {
-  StudyHeaderNoText,
-} from '~/components/studycreate/study-header'
+import { StudyHeaderNoText } from '~/components/studycreate/study-header'
+import ProfileCard from '~/components/common/profile-card'
 
 export default function EstablishedPage() {
   return (
@@ -34,56 +31,16 @@ export default function EstablishedPage() {
         <Carousel className="flex h-[250px] w-[375px] flex-row space-x-1 py-[20px]">
           <CarouselContent>
             <CarouselItem className="basis-1/10">
-              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                <div className="pt-[20px]">
-                  <div className="relative h-[100px] w-[130px] px-[5px]">
-                    <MeetieMaster className="absolute left-1 right-1 top-1 w-full object-cover" />
-                    <MpProfile className="absolute left-[41px] right-6 top-[30px]" />
-                  </div>
-
-                  <p className="px-[48px] text-lg text-black"> 김서희</p>
-                  <p className="px-[48px] text-sm text-black">디자이너</p>
-                </div>
-              </div>
+              <ProfileCard username="제이" userjobtype="디자이너" />
             </CarouselItem>
             <CarouselItem className="basis-1/10">
-              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                <div className="pt-[20px]">
-                  <div className="relative h-[100px] w-[130px] px-[5px]">
-                    <MeetieMaster className="absolute left-1 right-1 top-1 w-full object-cover" />
-                    <MpProfile className="absolute left-[41px] right-6 top-[30px]" />
-                  </div>
-
-                  <p className="px-[48px] text-lg text-black"> 김서희</p>
-                  <p className="px-[48px] text-sm text-black">디자이너</p>
-                </div>
-              </div>
+              <ProfileCard />
             </CarouselItem>
             <CarouselItem className="basis-1/10">
-              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                <div className="pt-[20px]">
-                  <div className="relative h-[100px] w-[130px] px-[5px]">
-                    <MeetieMaster className="absolute left-1 right-1 top-1 w-full object-cover" />
-                    <MpProfile className="absolute left-[41px] right-6 top-[30px]" />
-                  </div>
-
-                  <p className="px-[48px] text-lg text-black"> 김서희</p>
-                  <p className="px-[48px] text-sm text-black">디자이너</p>
-                </div>
-              </div>
+              <ProfileCard />
             </CarouselItem>
             <CarouselItem className="basis-1/10">
-              <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
-                <div className="pt-[20px]">
-                  <div className="relative h-[100px] w-[130px] px-[5px]">
-                    <MeetieMaster className="absolute left-1 right-1 top-1 w-full object-cover" />
-                    <MpProfile className="absolute left-[41px] right-6 top-[30px]" />
-                  </div>
-
-                  <p className="px-[48px] text-lg text-black"> 김서희</p>
-                  <p className="px-[48px] text-sm text-black">디자이너</p>
-                </div>
-              </div>
+              <ProfileCard />
             </CarouselItem>
             <CarouselItem className="basis-1/10">
               <div className="h-[203px] w-[146px] rounded-lg bg-gradient-to-r from-meetie-blue-1 via-white to-meetie-blue-1">
