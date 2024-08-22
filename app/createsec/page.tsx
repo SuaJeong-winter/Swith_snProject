@@ -18,6 +18,7 @@ import { Chip } from '~/components/ui/chip'
 import { Input } from '~/components/ui/input'
 import { Progress } from '~/components/ui/progress'
 import { StudyHeaderProgress } from '~/components/studycreate/study-header'
+import CreateProgress from '~/components/studycreate/create-progress'
 
 export default function CreatePageSecond() {
   const [startdate, setStartDate] = React.useState<Date>()
@@ -27,9 +28,6 @@ export default function CreatePageSecond() {
   const [count, setCount] = React.useState<number>(0)
 
   const [inputType, setInputType] = React.useState('text')
-
-  // 프로그래스 바
-  const [progress, setProgress] = React.useState(100)
 
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
@@ -47,7 +45,7 @@ export default function CreatePageSecond() {
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       <StudyHeaderProgress progressNum={2} href="create" />
       <div className="fixed mt-[60px]">
-        <Progress value={progress} className="w-[375px]" />
+        <CreateProgress currentProgress={100} />
       </div>
       <div className="space-y-0 px-3">
         <div className="space-y-2 pt-[100px]">

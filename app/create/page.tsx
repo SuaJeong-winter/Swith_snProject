@@ -1,25 +1,17 @@
-'use client'
-
 import Link from 'next/link'
-
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
-
-import React from 'react'
-import { Progress } from '~/components/ui/progress'
 import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 import RecruitDrawer from '~/components/studycreate/create-drawer'
+import CreateProgress from '~/components/studycreate/create-progress'
 
 export default function CreatePage() {
-  // 프로그래스 바
-  const [progress, setProgress] = React.useState(50)
-
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       <StudyHeaderProgress />
       <div className="fixed mt-[60px]">
-        <Progress value={progress} className="w-[375px]" />
+        <CreateProgress currentProgress={50} />
       </div>
       <div className="space-y-0 px-3">
         <div className="space-y-2 pt-[100px]">
