@@ -1,6 +1,6 @@
 'use client'
 
-import { createFunnelSteps, useFunnel } from '@use-funnel/next'
+import { createFunnelSteps, useFunnel } from '@use-funnel/browser'
 
 import JobStep from '~/components/on-boarding/job-step'
 import PersonalityStep from '~/components/on-boarding/personality-step'
