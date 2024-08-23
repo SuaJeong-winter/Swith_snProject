@@ -13,6 +13,7 @@ import {
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
 import { Input } from '~/components/ui/input'
+import Link from 'next/link'
 
 export default function MeetupAdd() {
   const [regulardate, setRegularDate] = React.useState<Date>()
@@ -80,6 +81,9 @@ export default function MeetupAdd() {
           />
         </div>
       </div>
+      <Link href="/studyroom">
+        <Button className="fixed bottom-8 w-[350px]">작성완료</Button>
+      </Link>
     </>
   )
 }
