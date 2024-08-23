@@ -27,6 +27,17 @@ export default function AssignmentAdd() {
   const [regularDate, setRegularDate] = useState<Date>()
   const [inputType, setInputType] = useState('text')
 
+  const handleFocus = () => {
+    setInputType('time')
+  }
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      const formattedDate = date.toISOString()
+      setRegularDate(date)
+      setValue('regularDate', formattedDate)
+    }
+  }
+
   const onSubmit = (data: any) => {
     const deadline = new Date(
       `${format(data.regularDate, 'yyyy-MM-dd')}T${data.submissionTime}`,
@@ -39,17 +50,6 @@ export default function AssignmentAdd() {
     console.log(newObject)
   }
 
-  const handleFocus = () => {
-    setInputType('time')
-  }
-
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      const formattedDate = date.toISOString()
-      setRegularDate(date)
-      setValue('regularDate', formattedDate)
-    }
-  }
   return (
     <>
       <div className="space-y-0">
