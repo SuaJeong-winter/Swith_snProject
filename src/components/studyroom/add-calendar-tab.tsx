@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import AssignmentAdd from '~/components/studyroom/assignment-add'
-import MeetupAdd from '~/components/studyroom/meetup-add'
+import AssignmentAdd from '~/components/studyroom/add-assignment'
+import MeetupAdd from '~/components/studyroom/add-meetup'
 
 export default function CalendarTab() {
   return (

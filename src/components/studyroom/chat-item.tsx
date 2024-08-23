@@ -32,35 +32,6 @@ export default function chatItem() {
           </span>
         </div>
       </li>
-      {/* 일반 채팅 */}
-      <li className="mt-5 flex justify-between px-4 py-2">
-        {/* 임시 프로필 이미지 dummy */}
-        <div className="mb-2 h-10 w-10 rounded-full bg-black">
-          <p> </p>
-        </div>
-        {/* 채팅 이력 있을 경우 */}
-        <div>
-          <h5 className="font-bold">박가현</h5>
-          <p className="text-sm">반가워요 ~ 😊 앞으로 잘 부탁드립니다 😊</p>
-        </div>
-        <div className="flex flex-col items-end justify-between">
-          <p className="text-xs text-meetie-gray-40">오후 6:40</p>
-          <span className="rounded-md bg-primary px-2 py-1 text-xs text-white">
-            1
-          </span>
-        </div>
-      </li>
-      <li className="mt-5 flex justify-start px-4 py-2">
-        {/* 임시 프로필 이미지 dummy */}
-        <div className="mb-2 h-10 w-10 rounded-full bg-black">
-          <p> </p>
-        </div>
-        {/* 채팅 이력 없는 경우 */}
-        <div className="ml-2">
-          <h5 className="font-bold">루시</h5>
-          <p className="text-sm text-meetie-gray-40">대화를 시작해보세요!</p>
-        </div>
-      </li>
     </>
   )
 }
