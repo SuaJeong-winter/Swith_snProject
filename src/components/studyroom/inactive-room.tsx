@@ -1,7 +1,3 @@
-import CalendarMini from '~/assets/icon_calendar-mini.svg'
-import BookmarkOff from '~/assets/icon_bookmark-off.svg'
-import BookmarkOn from '~/assets/icon_bookmark-on.svg'
-import { Badge } from '~/components/ui/badge'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
 
@@ -75,88 +71,6 @@ export default function InactiveStudyRoom() {
           스터디룸
         </h1>
         {/* 스터디룸 리스트 컴포넌트 */}
-        <div className="flex flex-col gap-5">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-        </div>
       </section>
     </section>
   )

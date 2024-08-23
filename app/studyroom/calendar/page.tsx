@@ -1,7 +1,7 @@
 import BtnBackIcon from '~/assets/btn_back.svg'
 import { Button } from '~/components/ui/button'
 import Link from 'next/link'
-import CalendarTab from '~/components/studyroom/calendar-tab'
+import CalendarTab from '~/components/studyroom/add-calendar-tab'
 
 export default function CalendarPage() {
   return (

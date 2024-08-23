@@ -3,11 +3,12 @@ import IconCheck from '~/assets/icon_check-white.svg'
 import Particle01 from '~/assets/bg_particle-01.svg'
 import Particle02 from '~/assets/bg_particle-02.svg'
 import Particle03 from '~/assets/bg_particle-03.svg'
+import Link from 'next/link'
 
 export default function AssignmentComplete() {
   return (
     <>
-      <section className="relative bg-background p-3">
+      <section className="relative h-dvh bg-background px-3 py-36">
         <div className="flex flex-col items-center justify-center py-20 text-3xl font-bold">
           <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-bl from-[#7273FF] to-[#B8B9FF]">
             <IconCheck />
@@ -15,7 +16,10 @@ export default function AssignmentComplete() {
           <h1>과제 인증 완료!</h1>
           <p className="mt-2 text-primary">{`+ ${10}P`}</p>
         </div>
-        <Button className="mb-3 w-full">스터디룸으로 가기</Button>
+        <Link href="/studyroom">
+          <Button className="mb-3 w-full">스터디룸으로 가기</Button>
+        </Link>
+        {/* 과제 인증 상세페이지로 라우트 예정 */}
         <Button className="w-full" variant="outline">
           과제 인증 확인하기
         </Button>
