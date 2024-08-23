@@ -1,5 +1,6 @@
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
+import StudyCard from '~/components/searchstudy/study-card'
 
 import {
   Card,
@@ -70,7 +71,27 @@ export default function InactiveStudyRoom() {
           <br />
           스터디룸
         </h1>
-        {/* 스터디룸 리스트 컴포넌트 */}
+        {/* 스터디 리스트 */}
+        <div className="flex flex-col gap-5 pb-14">
+          <StudyCard
+            title="자바 중급 스터디"
+            type="개발"
+            tags={['온라인', '백엔드']}
+            key="01"
+          />
+          <StudyCard
+            title="자바 중급 스터디"
+            type="디자이너"
+            tags={['오토레이아웃', '과제인증필수']}
+            key="02"
+          />
+          <StudyCard
+            title="하반기 영상 공모전 대비 스터디"
+            type="디자이너"
+            tags={['C4D', '블렌더', '3D디자인']}
+            key="03"
+          />
+        </div>
       </section>
     </section>
   )

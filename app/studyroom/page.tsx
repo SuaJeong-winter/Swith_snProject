@@ -4,7 +4,7 @@ import StudyroomContent from '~/components/studyroom/studyroom-content'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
 export default function studyRoomPage() {
-  const activeStudyRoomLength = 5
+  const activeStudyRoomLength = 0
   const doneStudyRoomLength = 0
 
   return (
