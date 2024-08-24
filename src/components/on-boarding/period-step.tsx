@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
-import type { FormState } from '../../../app/on-boarding/page'
+import type { FormState } from '~/components/on-boarding/on-boarding-funnel'
 
 const PERIODS = [
   '1개월 이내',
@@ -17,7 +17,11 @@ const PERIODS = [
 export default function PeriodStep({
   context,
 }: {
-  context: FormState & { job: string; purpose: string[]; personality: string[] }
+  context: FormState & {
+    job: string
+    purpose: string[]
+    personality: string[]
+  }
 }) {
   const [period, setPeriod] = useState<string | null>(null)
 
