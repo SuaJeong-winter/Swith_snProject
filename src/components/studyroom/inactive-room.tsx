@@ -1,9 +1,6 @@
-import CalendarMini from '~/assets/icon_calendar-mini.svg'
-import BookmarkOff from '~/assets/icon_bookmark-off.svg'
-import BookmarkOn from '~/assets/icon_bookmark-on.svg'
-import { Badge } from '~/components/ui/badge'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
+import StudyCard from '~/components/searchstudy/study-card'
 
 import {
   Card,
@@ -74,88 +71,26 @@ export default function InactiveStudyRoom() {
           <br />
           스터디룸
         </h1>
-        {/* 스터디룸 리스트 컴포넌트 */}
-        <div className="flex flex-col gap-5">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between">
-                <CardDescription>개발</CardDescription>
-                <BookmarkOff />
-                {/* <BookmarkOn /> */}
-              </div>
-              <CardTitle>자바 중급 스터디 모집</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* 태그 */}
-              <div>
-                <Badge>온라인</Badge>
-                <Badge>백엔드</Badge>
-              </div>
-              <span className="font-bold text-primary">마감 0일 전</span>
-              <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-              <span>24.00.00(월) ~ 24.00.00</span>
-            </CardContent>
-          </Card>
+        {/* 스터디 리스트 */}
+        <div className="flex flex-col gap-5 pb-14">
+          <StudyCard
+            title="자바 중급 스터디"
+            type="개발"
+            tags={['온라인', '백엔드']}
+            key="01"
+          />
+          <StudyCard
+            title="자바 중급 스터디"
+            type="디자이너"
+            tags={['오토레이아웃', '과제인증필수']}
+            key="02"
+          />
+          <StudyCard
+            title="하반기 영상 공모전 대비 스터디"
+            type="디자이너"
+            tags={['C4D', '블렌더', '3D디자인']}
+            key="03"
+          />
         </div>
       </section>
     </section>
