@@ -4,7 +4,7 @@ import StudyroomContent from '~/components/studyroom/studyroom-content'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
 export default function studyRoomPage() {
-  const activeStudyRoomLength = 0
+  const activeStudyRoomLength = 1
   const doneStudyRoomLength = 0
 
   return (
@@ -18,7 +18,7 @@ export default function studyRoomPage() {
             <div className="pr-4 text-end">
               <TabsList variant="small">
                 <TabsTrigger value="wip" variant="small">
-                  진행중 5
+                  진행중 {activeStudyRoomLength}
                 </TabsTrigger>
                 <TabsTrigger value="done" variant="small">
                   진행완료
