@@ -9,7 +9,7 @@ export type CreateFirstPage = {
   // enddate?: unknown     //종료일
   // regulardate?: unknown //정기 요일
   // regulartime?: unknown //정기 시간
-  // membernum?: number    //멤버 수
+  membernum?: number //멤버 수
   // tags?: string[]       //관련 태그
 }
 
@@ -24,6 +24,6 @@ export type CreateSecondPage = {
   // enddate?: unknown
   // regulardate?: unknown
   // regulartime?: unknown
-  // membernum?: number
+  membernum?: number
   // tags?: string[]
 }
