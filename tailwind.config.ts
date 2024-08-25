@@ -52,6 +52,9 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      flex: {
+        '2': '0 0 100%',
+      },
     },
   },
 } satisfies Config

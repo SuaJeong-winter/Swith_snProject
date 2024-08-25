@@ -1,10 +1,10 @@
 import SearchIcon from '~/assets/icon_search.svg'
-import Chatitem from './chat-item'
+import ChatItem from './chat-item'
 
 export default function ChatList() {
   return (
     <>
-      <section className="bg-[#fff] py-5">
+      <section className="min-h-[460px] bg-background py-5">
         <div>
           <form
             action=""
@@ -20,7 +20,7 @@ export default function ChatList() {
         </div>
         <div>
           <ul>
-            <Chatitem />
+            <ChatItem />
           </ul>
         </div>
       </section>
