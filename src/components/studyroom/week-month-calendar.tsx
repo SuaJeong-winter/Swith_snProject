@@ -9,7 +9,7 @@ import CalendarIcon from '~/assets/icon_calendar.svg'
 
 interface WeekMonthCalendarProps {
   category: 'calendar' | 'assignment'
-  onSelectDate: (date: string) => void
+  onSelectDate: any
 }
 
 export default function WeekMonthCalendar({
@@ -52,9 +52,13 @@ export default function WeekMonthCalendar({
               </div>
               <div
                 onClick={() =>
-                  handleDateClick(format(day, 'M월 d일 EEEE', { locale: ko }))
+                  handleDateClick(
+                    category === 'calendar'
+                      ? format(day, 'yyyy.MM.dd')
+                      : format(day, 'M월 d일 EEEE', { locale: ko }),
+                  )
                 }
-                className={`mt-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#f4f4f4] ${
+                className={`mt-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#f4f4f4] active:bg-meetie-blue-2 ${
                   isToday
                     ? 'border-2 border-meetie-blue-4'
                     : 'border border-meetie-gray-20'
