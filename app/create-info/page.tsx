@@ -44,9 +44,12 @@ export default function CreateInfoPage() {
         Object.keys(context).forEach((key) => {
           const typedKey = key as keyof CreateSecondPage
 
-          if (context[typedKey]?.length === 0) {
-            console.log('there is no data question')
-          }
+          // if (
+          //   Array.isArray(context[typedKey]) &&
+          //   context[typedKey].length === 0
+          // ) {
+          //   console.log('there is no data question')
+          // }
         })
         console.log('StepOne Data', context)
         return <CreateSPage />

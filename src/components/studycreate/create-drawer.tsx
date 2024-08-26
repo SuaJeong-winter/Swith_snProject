@@ -16,6 +16,7 @@ import { useState } from 'react'
 
 export default function RecruitDrawer() {
   const [isChecked, setIsChecked] = useState([false, false, false])
+  const jobtypes = ['기획자', '디자이너', '개발자']
 
   const handleToggle = (index: number) => {
     setIsChecked((prev) =>

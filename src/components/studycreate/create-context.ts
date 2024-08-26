@@ -5,8 +5,8 @@ export type CreateFirstPage = {
   goal?: string //목표
   description?: string //소개
   curriculum?: string //진행방식과 커리큘럼
-  // startdate?: unknown   //시작일
-  // enddate?: unknown     //종료일
+  startdate?: Date //시작일
+  enddate?: Date //종료일
   // regulardate?: unknown //정기 요일
   // regulartime?: unknown //정기 시간
   membernum?: number //멤버 수
@@ -20,8 +20,8 @@ export type CreateSecondPage = {
   goal: string
   description: string
   curriculum?: string
-  // startdate?: unknown
-  // enddate?: unknown
+  startdate?: Date
+  enddate?: Date
   // regulardate?: unknown
   // regulartime?: unknown
   membernum?: number

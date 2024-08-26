@@ -37,6 +37,21 @@ export default function CreateSPage() {
   const handleFocus = () => {
     setInputType('time')
   }
+
+  // useEffect to log startdate when it changes
+  React.useEffect(() => {
+    if (startdate) {
+      console.log('선택한 시작일:', format(startdate, 'yyyy년 MM월 dd일'))
+    }
+  }, [startdate])
+
+  // useEffect to log startdate when it changes
+  React.useEffect(() => {
+    if (enddate) {
+      console.log('선택한 종료일:', format(enddate, 'yyyy년 MM월 dd일'))
+    }
+  }, [enddate])
+
   return (
     <>
       <section className="flex min-h-dvh flex-col bg-white pb-8">
@@ -63,34 +78,6 @@ export default function CreateSPage() {
                     variant={'outline'}
                     className={cn(
                       'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
-                      !enddate && 'text-muted-foreground',
-                    )}
-                  >
-                    {enddate ? (
-                      format(enddate, 'yyyy년 MM월 dd일')
-                    ) : (
-                      <span className="text-gray-400">날짜 선택</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
-                  <Calendar
-                    mode="single"
-                    selected={enddate}
-                    onSelect={setEndDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="items-center">
-              <h2 className="font-bold leading-3">종료일</h2>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={'outline'}
-                    className={cn(
-                      'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
                       !startdate && 'text-muted-foreground',
                     )}
                   >
@@ -106,6 +93,34 @@ export default function CreateSPage() {
                     mode="single"
                     selected={startdate}
                     onSelect={setStartDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="items-center">
+              <h2 className="font-bold leading-3">종료일</h2>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={'outline'}
+                    className={cn(
+                      'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
+                      !enddate && 'text-muted-foreground',
+                    )}
+                  >
+                    {enddate ? (
+                      format(enddate, 'yyyy년 MM월 dd일')
+                    ) : (
+                      <span className="text-gray-400">날짜 선택</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto bg-white p-0">
+                  <Calendar
+                    mode="single"
+                    selected={enddate}
+                    onSelect={setEndDate}
                     initialFocus
                   />
                 </PopoverContent>
