@@ -9,6 +9,10 @@ import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import StudyHeader from '~/components/studycreate/study-header'
 
+const studyGroupDummyData = {
+  max_member: 3, // 멤버 수
+}
+
 const usersDummyData = [
   {
     name: '제이크',
@@ -21,14 +25,14 @@ const usersDummyData = [
     name: '박가현',
     job_type: '디자이너',
     introduce:
-      '안녕하세요. 올해 졸업하고 취업 준비 중 경력고 쌓고 싶고 비슷한 사람들과 정보도 공유하고 싶어요!!',
+      '안녕하세요. 올해 졸업하고 취업 준비 중 경력도 쌓고싶고 비슷한 사람들과 정보도 공유하고 싶어요!!',
     study_style: ['취준생', '논리적인', '책임감있는'],
   },
 ]
 
+const applynum: number = 1
+
 export default function WaitingListPage() {
-  const applynum: number = 1
-  const maxnum = 4
   const { toast } = useToast()
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
@@ -38,9 +42,9 @@ export default function WaitingListPage() {
       <StudyHeader href="approval" />
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
 
-      <div className="mt-6 space-y-2 px-3">
+      <div className="mt-6 space-y-4 px-3">
         <div>2024년 06월 07일</div>
-        <div className="h-[180px] space-y-1 rounded-lg border-2 border-solid border-gray-400 p-2">
+        <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
           <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
             <MpProfile />
             <div className="text-base text-black">
@@ -71,7 +75,7 @@ export default function WaitingListPage() {
           </div>
         </div>
         <div>2024년 06월 07일</div>
-        <div className="h-[180px] space-y-1 rounded-lg border-2 border-solid border-gray-400 p-2">
+        <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
           <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
             <MpProfile />
             <div className="text-base text-black">
@@ -107,27 +111,34 @@ export default function WaitingListPage() {
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">{applynum}명 </span>/ {maxnum}
-            명
+            <span className="text-meetie-blue-4">{applynum}명 </span>/
+            {studyGroupDummyData.max_member}명
           </p>
         </div>
         <Button
           className="w-60 flex-[2] rounded-md border border-solid"
           onClick={() => {
-            toast({
-              description: (
-                <div className="flex items-center">
-                  <IconBell />
-                  <span>신청자가 수락 가능 인원보다 많습니다</span>
-                </div>
-              ),
-              style: {
-                background: 'gray-300',
-                width: '300px',
-                height: '30px',
-                marginBottom: '10px',
-              },
-            })
+            if (
+              studyGroupDummyData.max_member - 1 - usersDummyData.length <
+              0
+            ) {
+              toast({
+                description: (
+                  <div className="flex items-center">
+                    <IconBell />
+                    <span>신청자가 수락 가능 인원보다 많습니다</span>
+                  </div>
+                ),
+                style: {
+                  background: 'gray-300',
+                  width: '300px',
+                  height: '30px',
+                  marginBottom: '10px',
+                },
+              })
+            } else {
+              console.log(usersDummyData.length)
+            }
           }}
         >
           전체 수락하기
