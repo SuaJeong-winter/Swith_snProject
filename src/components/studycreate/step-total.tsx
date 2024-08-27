@@ -1,13 +1,22 @@
 import MpProfile from '~/assets/mp_profile.svg'
-
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
 import { StudyHeaderNoText } from '~/components/studycreate/study-header'
 
-export default function ApprovalPage() {
-  const AppliedStudyTitle = '피그마 정복하기'
-  const TestText = '받아온 데이터 출력하기'
+type TotalInputProps = {
+  title: string
+  goal: string
+  info: string
+  curriculum: string
+}
+
+export default function TotalInput({
+  title,
+  goal,
+  info,
+  curriculum,
+}: TotalInputProps) {
   const applynum: number = 1
   const maxnum = 4
   return (
@@ -15,7 +24,7 @@ export default function ApprovalPage() {
       <StudyHeaderNoText />
       <div className="px-3">
         <div className="flex flex-row items-center space-x-4 space-y-2 pt-[60px]">
-          <h2 className="text-lg font-bold"> {AppliedStudyTitle}</h2>
+          <h2 className="text-lg font-bold"> {title}</h2>
           <Button
             className="m-8 w-[60px] rounded-3xl"
             variant="outline"
@@ -52,27 +61,27 @@ export default function ApprovalPage() {
       <div className="px-3">
         <div className="space-y-2 pt-10">
           <h2 className="font-bold">스터디 주제</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">{title}</h2>
         </div>
         <div className="space-y-2 pt-10">
           <h2 className="font-bold">스터디 목표</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">{goal}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 소개</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">{info}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">진행방식과 커리큘럼</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">{curriculum}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 인원</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">4</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 기간</h2>
-          <h2 className="font-medium">{TestText}</h2>
+          <h2 className="font-medium">2024.07.26~2024.08.31</h2>
         </div>
         <div className="space-y-2 px-[120px] pt-8">
           <Link href="established ">
@@ -103,19 +112,19 @@ export default function ApprovalPage() {
           </Link>
         )}
         {/* if (applynum===0)
-        {
+      {
+        <Button className="border-1 w-60 flex-[2] border-solid">
+          아직 대기 인원이 없습니다
+        </Button>
+      }
+      else
+      {
+        <Link href="/apply">
           <Button className="border-1 w-60 flex-[2] border-solid">
-            아직 대기 인원이 없습니다
+            스터디 신청하기
           </Button>
-        }
-        else
-        {
-          <Link href="/apply">
-            <Button className="border-1 w-60 flex-[2] border-solid">
-              스터디 신청하기
-            </Button>
-          </Link>
-        } */}
+        </Link>
+      } */}
       </div>
     </section>
   )

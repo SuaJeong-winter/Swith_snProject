@@ -17,7 +17,11 @@ import { Input } from '~/components/ui/input'
 import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 import CreateProgress from '~/components/studycreate/create-progress'
 
-export default function CreateSPage() {
+export default function Step2Input({
+  onNext,
+}: {
+  onNext: (curriculum: string) => void
+}) {
   const [startdate, setStartDate] = React.useState<Date>()
   const [enddate, setEndDate] = React.useState<Date>()
   const [regulardate, setRegularDate] = React.useState<Date>()
@@ -25,6 +29,8 @@ export default function CreateSPage() {
   const [count, setCount] = React.useState<number>(0)
 
   const [inputType, setInputType] = React.useState('text')
+
+  const [curriculum, setCurriculum] = React.useState<string>('')
 
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
@@ -52,6 +58,10 @@ export default function CreateSPage() {
     }
   }, [enddate])
 
+  const handleNext = () => {
+    onNext(curriculum)
+  }
+
   return (
     <>
       <section className="flex min-h-dvh flex-col bg-white pb-8">
@@ -66,6 +76,8 @@ export default function CreateSPage() {
               placeholder="스터디의 진행방식과 커리큘럼을 소개해주세요"
               className="resize-none border-gray-400"
               rows={6}
+              value={curriculum}
+              onChange={(e) => setCurriculum(e.target.value)}
             />
           </div>
 
@@ -222,16 +234,18 @@ export default function CreateSPage() {
               이전
             </Button>
           </Link>
-          <Link href="approval">
-            <Button className="w-[220px] flex-initial border-[1px] border-solid">
-              작성완료
-            </Button>
-          </Link>
+
+          <Button
+            className="w-[220px] flex-initial border-[1px] border-solid"
+            onClick={handleNext}
+          >
+            작성완료
+          </Button>
 
           {/* 비활성화 상태일때 */}
           {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
-          내용이 부족해요!
-        </Button> */}
+      내용이 부족해요!
+    </Button> */}
         </div>
       </section>
     </>

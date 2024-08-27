@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
@@ -10,17 +8,17 @@ import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 
 import CreateProgress from '~/components/studycreate/create-progress'
 
-export default function CreateFPage({
+export default function Step1Input({
   onNext,
 }: {
-  onNext: (data: { subject: string; goal: string; description: string }) => void
+  onNext: (data: { title: string; goal: string; info: string }) => void
 }) {
-  const [subject, setSubject] = useState('')
+  const [title, setTitle] = useState('')
   const [goal, setGoal] = useState('')
-  const [description, setDescription] = useState('')
+  const [info, setInfo] = useState('')
 
   const handleNext = () => {
-    onNext({ subject, goal, description })
+    onNext({ title, goal, info })
   }
 
   return (
@@ -41,8 +39,8 @@ export default function CreateFPage({
               placeholder="스터디의 주제를 작성해주세요"
               className="required"
               maxLength={20}
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="space-y-2 pt-10">
@@ -61,8 +59,8 @@ export default function CreateFPage({
               placeholder="스터디를 설명해보세요"
               className="resize-none"
               rows={6}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={info}
+              onChange={(e) => setInfo(e.target.value)}
             />
           </div>
         </div>
