@@ -2,18 +2,9 @@
 
 import dynamic from 'next/dynamic'
 
-const Step1Input = dynamic(
-  () => import('~/components/studycreate/step-first-input'),
-  { ssr: false },
-)
-const Step2Input = dynamic(
-  () => import('~/components/studycreate/step-second-input'),
-  { ssr: false },
-)
-const TotalInput = dynamic(
-  () => import('~/components/studycreate/step-total'),
-  { ssr: false },
-)
+const Step1Input = dynamic(() => import('./step-first-input'), { ssr: false })
+const Step2Input = dynamic(() => import('./step-second-input'), { ssr: false })
+const TotalInput = dynamic(() => import('./step-total'), { ssr: false })
 
 import { useFunnel } from '@use-funnel/browser'
 
