@@ -53,9 +53,11 @@ export default function RecruitDrawer({
     <Drawer>
       <div className="h-[40px] rounded-md border-2 border-gray-200 py-2 pl-3 text-sm text-gray-400">
         <DrawerTrigger>
-          {selectedJobs.length > 0
-            ? ` ${selectedJobs.join(', ')}`
-            : '모집 직군을 선택해주세요'}
+          {selectedJobs.length > 0 ? (
+            <span className="text-black">{` ${selectedJobs.join(', ')}`}</span>
+          ) : (
+            '모집 직군을 선택해주세요'
+          )}
         </DrawerTrigger>
       </div>
       <DrawerContent className="mx-auto w-[375px]">

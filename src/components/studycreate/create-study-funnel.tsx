@@ -2,11 +2,14 @@
 
 import dynamic from 'next/dynamic'
 
-const Step1Input = dynamic(() => import('./step-first-input'), { ssr: false })
-const Step2Input = dynamic(() => import('./step-second-input'), { ssr: false })
-const TotalInput = dynamic(() => import('./step-total'), { ssr: false })
+// const Step1Input = dynamic(() => import('./step-first-input'), { ssr: false })
+// const Step2Input = dynamic(() => import('./step-second-input'), { ssr: false })
+// const TotalInput = dynamic(() => import('./step-total'), { ssr: false })
 
 import { useFunnel } from '@use-funnel/browser'
+import Step1Input from './step-first-input'
+import Step2Input from './step-second-input'
+import TotalInput from './step-total'
 
 type Step1Data = {
   recruit_type?: string[]
