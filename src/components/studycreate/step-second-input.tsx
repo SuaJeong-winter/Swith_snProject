@@ -17,22 +17,22 @@ import { Chip } from '~/components/ui/chip'
 import { Input } from '~/components/ui/input'
 import { StudyHeaderProgress } from '~/components/studycreate/study-header'
 import CreateProgress from '~/components/studycreate/create-progress'
+import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 
 export default function Step2Input({
   onNext,
 }: {
   onNext: (curriculum: string) => void
 }) {
-  const [startdate, setStartDate] = React.useState<Date>()
-  const [enddate, setEndDate] = React.useState<Date>()
-  const [regulardate, setRegularDate] = React.useState<Date>()
-
-  const [count, setCount] = React.useState<number>(0)
-
-  const [inputType, setInputType] = React.useState('text')
-
-  const [curriculum, setCurriculum] = React.useState<string>('')
-
+  const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
+  const [startdate, setStartDate] = React.useState<Date>() //시작일
+  const [enddate, setEndDate] = React.useState<Date>() //종료일
+  // 정기일정(요일)
+  const [regularTime, setRegularTime] = React.useState('text') // 정기일정(시간)
+  const handleFocus = () => {
+    setRegularTime('time')
+  }
+  const [count, setCount] = React.useState<number>(0) //스터디 모집인원
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
   }
@@ -41,9 +41,27 @@ export default function Step2Input({
     setCount(count > 0 ? count - 1 : 0) // 최소 0명으로 제한
   }
 
-  const handleFocus = () => {
-    setInputType('time')
-  }
+  const [selectedTags, setSelectedTags] = React.useState<String[]>([])
+  const allTags = [
+    '온라인',
+    '오프라인',
+    '프론트엔드',
+    '백엔드',
+    'UX/UI',
+    'PM',
+    '어플',
+    '웹',
+    '사이드 프로젝트',
+  ]
+  // 나중에 Database에 넘겨주는 값은 selectedTags(배열 type)
+
+  React.useEffect(() => {
+    if (selectedTags.length > 4) {
+      console.log('Stop!')
+    } else {
+      console.log('선택된 태그:', selectedTags, selectedTags.length)
+    }
+  }, [selectedTags])
 
   // useEffect to log startdate when it changes
   React.useEffect(() => {
@@ -215,7 +233,7 @@ export default function Step2Input({
                 placeholder="시간 선택"
                 className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
                 onFocus={handleFocus}
-                type={inputType}
+                type={regularTime}
               />
             </div>
           </div>
@@ -242,20 +260,34 @@ export default function Step2Input({
           <p className="pt-2 text-xs text-meetie-blue-4">
             4~8명이 적당한 스터디 인원이에요
           </p>
-
+          {/* const [tagsarr, setTagsArr] = React.useState<String[]>([]) */}
           <div className="pt-10">
             <h2 className="font-bold leading-3">관련 태그</h2>
-            <div className="grid grid-cols-4 gap-1 pt-4 text-xs">
-              <Chip>온라인</Chip>
-              <Chip>오프라인</Chip>
-              <Chip>프론트엔드</Chip>
-              <Chip>백엔드</Chip>
-              <Chip>UX/UI</Chip>
-              <Chip>PM</Chip>
-              <Chip>어플</Chip>
-              <Chip>웹</Chip>
-              <Chip className="w-[120px]">사이드 프로젝트</Chip>
-            </div>
+            <ChipGroup
+              type="multiple"
+              onValueChange={(value) => setSelectedTags(value)}
+              className="grid grid-cols-3 gap-1 pt-3 text-sm"
+            >
+              {allTags.map((tag, index) => (
+                <ChipGroupItem key={index} value={tag}>
+                  {tag}
+                  {/* tag는 변수명 온라인 index는 배열 allTags의 index값 */}
+                </ChipGroupItem>
+              ))}
+
+              {/* <ChipGroupItem value="온라인">온라인</ChipGroupItem>
+              // value는 DB에 넘겨줄 값, 태그 사이에 들어가는 문자열은 사용자에게 보여줄 값
+              <ChipGroupItem value="오프라인">오프라인</ChipGroupItem>
+              <ChipGroupItem value="프론트엔드">프론트엔드</ChipGroupItem>
+              <ChipGroupItem value="백엔드">백엔드</ChipGroupItem>
+              <ChipGroupItem value="UX/UI">UX/UI</ChipGroupItem>
+              <ChipGroupItem value="PM">PM</ChipGroupItem>
+              <ChipGroupItem value="어플">어플</ChipGroupItem>
+              <ChipGroupItem value="웹">웹</ChipGroupItem>
+              <ChipGroupItem value="사이드 프로젝트">
+                사이드 프로젝트
+              </ChipGroupItem> */}
+            </ChipGroup>
           </div>
           <p className="pt-2 text-xs text-meetie-blue-4">
             최대 4개까지 선택이 가능합니다
