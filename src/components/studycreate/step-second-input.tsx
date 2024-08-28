@@ -1,5 +1,5 @@
 'use client'
-
+import { Bold, Italic, Underline } from 'lucide-react'
 import * as React from 'react'
 import { format } from 'date-fns'
 import { cn } from '../../../src/utils/cn'
@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
+import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group'
 import { Textarea } from '~/components/ui/textarea'
 import Link from 'next/link'
 import { Chip } from '~/components/ui/chip'
@@ -100,7 +101,7 @@ export default function Step2Input({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
+                <PopoverContent className="mx-[175px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     selected={startdate}
@@ -128,7 +129,7 @@ export default function Step2Input({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
+                <PopoverContent className="mx-[175px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     selected={enddate}
@@ -151,23 +152,60 @@ export default function Step2Input({
                     variant={'outline'}
                     className={cn(
                       'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
-                      !regulardate && 'text-muted-foreground',
                     )}
                   >
-                    {regulardate ? (
-                      format(regulardate, 'yyyy년 MM월 dd일')
-                    ) : (
-                      <span className="text-gray-400">날짜 선택</span>
-                    )}
+                    <span className="text-gray-400">요일 선택</span>
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
-                  <Calendar
-                    mode="single"
-                    selected={regulardate}
-                    onSelect={setRegularDate}
-                    initialFocus
-                  />
+                <PopoverContent className="mx-[175px] w-[330px] bg-white">
+                  <ToggleGroup
+                    variant="outline"
+                    type="multiple"
+                    className="space-x-1"
+                  >
+                    <ToggleGroupItem
+                      value="mon"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      월
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="tue"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      화
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="wed"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      수
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="thu"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      목
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="fri"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      금
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="sat"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      토
+                    </ToggleGroupItem>
+                    <ToggleGroupItem
+                      value="sun"
+                      className="aria-pressed:bg-gray-200"
+                    >
+                      일
+                    </ToggleGroupItem>
+                  </ToggleGroup>
                 </PopoverContent>
               </Popover>
             </div>
