@@ -81,7 +81,7 @@ export default function WeekMonthCalendar({
           </div>
           {/* + / 캘린더 아이콘 */}
           <div className="flex gap-1">
-            <Link href="/studyroom/calendar">
+            <Link href="/studyroom/calendarAdd">
               <AddIcon />
             </Link>
             <button onClick={toggleView}>

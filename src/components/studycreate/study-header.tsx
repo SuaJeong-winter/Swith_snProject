@@ -44,11 +44,11 @@ export function StudyHeaderProgress({
   )
 }
 
-export function StudyHeaderNoText() {
+export function StudyHeaderNoText({ href = '/search' }: { href?: string }) {
   return (
     <section>
       <div className="fixed flex h-[60px] w-[375px] flex-row space-x-[108px] bg-white px-3 py-5">
-        <Link href="#">
+        <Link href={href}>
           <BtnBackIcon />
         </Link>
         <h2 className="invisible font-bold">스터디 지원하기</h2>

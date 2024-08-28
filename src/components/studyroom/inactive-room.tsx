@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
 import StudyCard from '~/components/searchstudy/study-card'
@@ -36,9 +37,11 @@ export default function InactiveStudyRoom() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <button className="rounded-lg bg-meetie-blue-1 p-2 font-bold text-[#4A5999]">
-                    바로가기
-                  </button>
+                  <Link href="/search">
+                    <button className="rounded-lg bg-meetie-blue-1 p-2 font-bold text-[#4A5999]">
+                      바로가기
+                    </button>
+                  </Link>
                 </CardContent>
               </section>
               <section className="pt-7">
@@ -46,23 +49,25 @@ export default function InactiveStudyRoom() {
               </section>
             </div>
           </Card>
-          <Card className="bg-meetie-blue-1 p-2">
-            <div className="flex justify-between">
-              <section>
-                <CardHeader>
-                  <CardDescription>
-                    찾으시는 스터디룸이 없으신가요?
-                  </CardDescription>
-                  <CardTitle className="text-sm font-bold text-black">
-                    쉽고 빠른 스터디룸 개설하기
-                  </CardTitle>
-                </CardHeader>
-              </section>
-              <section className="pr-5 pt-2">
-                <WavingHand />
-              </section>
-            </div>
-          </Card>
+          <Link href="/create">
+            <Card className="bg-meetie-blue-1 p-2">
+              <div className="flex justify-between">
+                <section>
+                  <CardHeader>
+                    <CardDescription>
+                      찾으시는 스터디룸이 없으신가요?
+                    </CardDescription>
+                    <CardTitle className="text-sm font-bold text-black">
+                      쉽고 빠른 스터디룸 개설하기
+                    </CardTitle>
+                  </CardHeader>
+                </section>
+                <section className="pr-5 pt-2">
+                  <WavingHand />
+                </section>
+              </div>
+            </Card>
+          </Link>
         </section>
       </section>
       <section className="p-3">

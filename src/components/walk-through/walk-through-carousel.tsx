@@ -27,15 +27,15 @@ export default function WalkThroughCarousel() {
       <div className="max-w-[375px] overflow-hidden" ref={emblaRef}>
         <div className="flex">
           <div className="flex w-full flex-shrink-0 flex-col">
-            <h2 className="mt-7 px-4 text-2xl font-semibold text-meetie-gray-90">
+            <h2 className="z-50 mt-7 px-4 text-2xl font-semibold text-meetie-gray-90">
               다양한 IT 직군과의
               <br />
               견고한 스터디를 경험해보세요.
             </h2>
-            <span className="mt-6 px-4 text-sm text-meetie-gray-90">
+            <span className="z-50 mt-6 px-4 text-sm text-meetie-gray-90">
               다른 학습자들과 소통하며 함께 성장하세요!
             </span>
-            <WalkThrough1 />
+            <WalkThrough1 className="-mt-32" />
           </div>
           <div className="flex w-full flex-shrink-0 flex-col">
             <h2 className="mt-7 px-4 text-2xl font-semibold text-meetie-gray-90">
@@ -48,7 +48,7 @@ export default function WalkThroughCarousel() {
               <br />
               고민을 나누고 해결책을 찾아보세요!
             </span>
-            <WalkThrough2 />
+            <WalkThrough2 className="mx-auto mt-24" />
           </div>
           <div className="flex w-full flex-shrink-0 flex-col">
             <h2 className="mt-7 px-4 text-2xl font-semibold text-meetie-gray-90">
@@ -59,7 +59,7 @@ export default function WalkThroughCarousel() {
             <span className="mt-6 px-4 text-sm text-meetie-gray-90">
               스터디 활동을 수행하고 다양한 뱃지를 획득하세요!
             </span>
-            <WalkThrough3 />
+            <WalkThrough3 className="mx-auto mt-24" />
           </div>
         </div>
       </div>
