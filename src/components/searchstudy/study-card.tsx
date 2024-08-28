@@ -13,19 +13,27 @@ import { Badge } from '~/components/ui/badge'
 
 export default function StudyCard({
   title,
-  type,
+  types,
   tags,
+  startdate,
+  enddate,
 }: {
   title: string
-  type: string
+  types: string[]
   tags: string[]
+  startdate: string
+  enddate: string
 }) {
   return (
     <>
       <Card>
         <CardHeader>
           <div className="flex justify-between">
-            <CardDescription>{type}</CardDescription>
+            <CardDescription>
+              {types.map((type, idx) => (
+                <span key={type + idx}>{type} </span>
+              ))}
+            </CardDescription>
             <BookmarkOff />
             {/* <BookmarkOn /> */}
           </div>
@@ -40,7 +48,9 @@ export default function StudyCard({
           </div>
           <span className="font-bold text-primary">마감 0일 전</span>
           <CalendarMini className="mb-1 ml-3 mr-1 inline" />
-          <span>24.00.00(월) ~ 24.00.00</span>
+          <span>
+            {startdate} ~ {enddate}
+          </span>
         </CardContent>
       </Card>
     </>

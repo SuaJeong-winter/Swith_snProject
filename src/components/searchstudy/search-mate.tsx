@@ -18,8 +18,6 @@ export default function SearchMate() {
         <Chip className="py-1 text-sm">작업 스타일</Chip>
       </section>
       <section className="bg-[#F5F5FF] p-3">
-        {/* 페이지 넘버 */}
-        <p className="mb-2 text-right">1/3</p>
         {/* 팀원 리스트 */}
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">

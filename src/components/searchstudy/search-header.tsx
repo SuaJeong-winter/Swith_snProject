@@ -1,5 +1,4 @@
 import SearchIcon from '~/assets/icon_search.svg'
-import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
 export default function SearchHeader() {
   return (
@@ -18,12 +17,6 @@ export default function SearchHeader() {
           <SearchIcon className="absolute left-6 top-1/4 h-5 w-5" />
         </form>
       </section>
-      <Tabs defaultValue="find-study">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="find-study">스터디 찾기</TabsTrigger>
-          <TabsTrigger value="find-mate">팀원 찾기</TabsTrigger>
-        </TabsList>
-      </Tabs>
     </>
   )
 }
