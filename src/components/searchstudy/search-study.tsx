@@ -1,12 +1,13 @@
 'use client'
 
 import StudyCreateIcon from '~/assets/searchStudy/icon_study-create.svg'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Chip } from '~/components/ui/chip'
 import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 import { Checkbox } from '~/components/ui/checkbox'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
+import { getStudys } from '../../../apis/studys-rls'
 
 const AllTags = [
   '온라인',
@@ -27,6 +28,10 @@ const AllTags = [
 export default function SearchStudy() {
   const [tags, setTag] = useState<string[]>([])
   const [filters, setFilters] = useState<string[]>([])
+
+  useEffect(() => {
+    getStudys()
+  }, [])
 
   // const res = await fetch(
   //   'https://fb45094e-62c9-4930-bd40-a21edbb1a329.mock.pstmn.io/study',
