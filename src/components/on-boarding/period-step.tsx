@@ -6,6 +6,7 @@ import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 import type { FormState } from '~/components/on-boarding/on-boarding-funnel'
+import { useRouter } from 'next/navigation'
 
 const PERIODS = [
   '1개월 이내',
@@ -23,10 +24,13 @@ export default function PeriodStep({
     personality: string[]
   }
 }) {
+  const router = useRouter()
   const [period, setPeriod] = useState<string | null>(null)
 
   const handleSubmit = () => {
     console.log({ ...context, period })
+    /** 데이터 전송 로직 */
+    router.push('/on-boarding/done')
   }
 
   return (
