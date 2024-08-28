@@ -101,7 +101,7 @@ export default function Step2Input({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="mx-[175px] w-auto bg-white p-0">
+                <PopoverContent className="ml-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     selected={startdate}
@@ -129,7 +129,7 @@ export default function Step2Input({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="mx-[175px] w-auto bg-white p-0">
+                <PopoverContent className="mr-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     selected={enddate}
@@ -157,7 +157,7 @@ export default function Step2Input({
                     <span className="text-gray-400">요일 선택</span>
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="mx-[175px] w-[330px] bg-white">
+                <PopoverContent className="ml-[165px] w-[330px] bg-white">
                   <ToggleGroup
                     variant="outline"
                     type="multiple"
