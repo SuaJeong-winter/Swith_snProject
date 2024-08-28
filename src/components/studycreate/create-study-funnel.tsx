@@ -9,7 +9,7 @@ const TotalInput = dynamic(() => import('./step-total'), { ssr: false })
 import { useFunnel } from '@use-funnel/browser'
 
 type Step1Data = {
-  // recruit_type?: string[]
+  recruit_type?: string[]
   title?: string
   goal?: string
   info?: string
@@ -23,7 +23,7 @@ type Step1Data = {
 }
 
 type Step2Data = {
-  // recruit_type: string[]
+  recruit_type: string[]
   title: string
   goal: string
   info: string
@@ -37,7 +37,7 @@ type Step2Data = {
 }
 
 type TotalData = {
-  // recruit_type: string[]
+  recruit_type: string[]
   title: string
   goal: string
   info: string
@@ -66,10 +66,10 @@ export default function CreateStudyPage() {
     <funnel.Render
       Step1Data={({ history }) => (
         <Step1Input
-          onNext={({ title, goal, info }) => {
-            const step1Data = { title, goal, info }
+          onNext={({ recruit_type, title, goal, info }) => {
+            const step1Data = { recruit_type, title, goal, info }
             console.log('Step 1 데이터:', step1Data)
-            history.push('Step2Data', { title, goal, info })
+            history.push('Step2Data', { recruit_type, title, goal, info })
           }}
         />
       )}

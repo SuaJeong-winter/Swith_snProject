@@ -11,14 +11,20 @@ import CreateProgress from '~/components/studycreate/create-progress'
 export default function Step1Input({
   onNext,
 }: {
-  onNext: (data: { title: string; goal: string; info: string }) => void
+  onNext: (data: {
+    recruit_type: string[]
+    title: string
+    goal: string
+    info: string
+  }) => void
 }) {
   const [title, setTitle] = useState('')
   const [goal, setGoal] = useState('')
   const [info, setInfo] = useState('')
+  const [selectedJobs, setSelectedJobs] = useState<string[]>([])
 
   const handleNext = () => {
-    onNext({ title, goal, info })
+    onNext({ recruit_type: selectedJobs, title, goal, info })
   }
 
   return (
@@ -31,7 +37,7 @@ export default function Step1Input({
         <div className="space-y-0 px-3">
           <div className="space-y-2 pt-[100px]">
             <h2 className="font-bold">모집 직군</h2>
-            <RecruitDrawer />
+            <RecruitDrawer onJobsChange={setSelectedJobs} />
           </div>
           <div className="space-y-2 pt-10">
             <h2 className="font-bold">주제</h2>
