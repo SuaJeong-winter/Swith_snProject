@@ -1,50 +1,71 @@
+'use client'
+
 import StudyCreateIcon from '~/assets/searchStudy/icon_study-create.svg'
+import { useState, useCallback, useEffect } from 'react'
 import { Chip } from '~/components/ui/chip'
+import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 import { Checkbox } from '~/components/ui/checkbox'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
+import useStudysController from '~/hooks/useStudysController'
+
+const AllTags = [
+  '온라인',
+  '오프라인',
+  '프론트엔드',
+  '백엔드',
+  'UX/UI',
+  'PM',
+  '어플',
+  '웹',
+  '사이드프로젝트',
+]
 
 export default function SearchStudy() {
+  const [tags, setTag] = useState<string[]>([])
+  // console.log(tags)
+
+  const { studys, onFilterStudys } = useStudysController()
+
+  useEffect(() => {
+    onFilterStudys(tags)
+  }, [tags])
+
   return (
     <>
       {/* 스터디 검색 필터 */}
-      <section className="flex flex-wrap justify-evenly gap-2 bg-background px-3 py-4">
-        <Chip className="py-1 text-sm">#전체</Chip>
-        <Chip className="py-1 text-sm">#온라인</Chip>
-        <Chip className="py-1 text-sm">#오프라인</Chip>
-        <Chip className="py-1 text-sm">#프론트엔드</Chip>
-        <Chip className="py-1 text-sm">#백엔드</Chip>
-        <Chip className="py-1 text-sm">#UX/UI</Chip>
-        <Chip className="py-1 text-sm">#PM</Chip>
-        <Chip className="py-1 text-sm">#어플</Chip>
-        <Chip className="py-1 text-sm">#웹</Chip>
-        <Chip className="py-1 text-sm">#사이드프로젝트</Chip>
-      </section>
+      <ChipGroup
+        type="multiple"
+        onValueChange={(tag) => setTag(tag)}
+        className="flex flex-wrap justify-evenly gap-2 bg-background px-3 py-4"
+      >
+        <Chip defaultPressed={true} className="p-2 text-sm">
+          #전체
+        </Chip>
+        {AllTags.map((tag) => (
+          <ChipGroupItem key={tag} value={tag} className="p-2 text-sm">
+            #{tag}
+          </ChipGroupItem>
+        ))}
+      </ChipGroup>
       <section className="bg-[#FAFAFA] p-3">
         <div className="mb-3 flex items-center space-x-2">
           <Checkbox id="recruitNow" />
           <label htmlFor="recruitNow">모집중만 보기</label>
         </div>
         {/* 스터디 리스트 */}
+
         <div className="flex flex-col gap-5 pb-14">
-          <StudyCard
-            title="자바 중급 스터디"
-            type="개발"
-            tags={['온라인', '백엔드']}
-            key="01"
-          />
-          <StudyCard
-            title="자바 중급 스터디"
-            type="디자이너"
-            tags={['오토레이아웃', '과제인증필수']}
-            key="02"
-          />
-          <StudyCard
-            title="하반기 영상 공모전 대비 스터디"
-            type="디자이너"
-            tags={['C4D', '블렌더', '3D디자인']}
-            key="03"
-          />
+          {studys.map((study) => (
+            <StudyCard
+              title={study.title}
+              types={study['recruit_type']}
+              tags={study.tags}
+              startdate={study['start_date']}
+              enddate={study['end_date']}
+              key={study.id}
+            />
+          ))}
         </div>
         {/* 플로팅 버튼 -> 스터디 생성 */}
         <Link href="create">
