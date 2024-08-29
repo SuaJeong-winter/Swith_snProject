@@ -12,7 +12,24 @@ import BookMark from '~/assets/icon_study-bookmark.svg'
 import MeetieMaster from '~/assets/badge_meetie-master.svg'
 import InfoVector from '~/assets/icon_info_vector.svg'
 
-export default function Home() {
+export default async function Home() {
+  const res = await fetch(
+    'https://2cda2bdc-f43f-42c4-862d-6bee7ed3fd16.mock.pstmn.io/user/01',
+    {
+      cache: 'no-cache',
+    },
+  )
+  const user = await res.json()
+  console.log(user)
+
+  const res2 = await fetch(
+    'https://bca20514-f73e-4685-b1ad-7ad95c1392b9.mock.pstmn.io/meetiebadge/01',
+    {
+      cache: 'no-cache',
+    },
+  )
+  const meetiebadge = await res2.json()
+  console.log(meetiebadge)
   return (
     <div className="items-left flex min-h-dvh flex-col justify-center bg-background from-[hsla(239,100%,95%,1)] from-0% to-background to-50% p-3">
       <div className="items-left flex flex-col pb-8">
@@ -23,8 +40,8 @@ export default function Home() {
         <div className="items-left flex p-3">
           <MpProfile className="justify-between" />
           <div className="items-left flex flex-col pl-3">
-            <span className="text-lg">디자이너</span>
-            <span className="text-lg font-bold">김서희님</span>
+            <span className="text-lg">{user[0]['job_type']}</span>
+            <span className="text-lg font-bold">{user[0].name}님</span>
           </div>
         </div>
         <div className="items-right flex pl-8 pt-3">
@@ -70,7 +87,7 @@ export default function Home() {
             </Link>
             <div className="pt-2 text-center">
               <div className="text-sm text-gray-400">스터디 친구</div>
-              <div className="text-base font-bold">13</div>
+              <div className="text-base font-bold">{user[0].friends}</div>
             </div>
           </div>
         </Card>
@@ -84,9 +101,11 @@ export default function Home() {
           <MeetieMaster className="justify-between" />
         </Link>
         <span className="align-center pl-9 pt-3 text-xs font-semibold text-gray-500">
-          레벨3
+          레벨{meetiebadge[0].level}
         </span>
-        <span className="pl-6 text-xs font-semibold">밋티 마스터</span>
+        <span className="pl-6 text-xs font-semibold">
+          {meetiebadge[0].badgename}
+        </span>
       </div>
 
       <div className="items-left flex flex-col pt-4">
