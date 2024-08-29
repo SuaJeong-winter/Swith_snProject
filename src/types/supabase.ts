@@ -108,23 +108,23 @@ export type Database = {
       }
       Study: {
         Row: {
-          curriculum: string | null
-          deadline: string | null
-          end_date: string | null
-          goal: string | null
+          curriculum: string
+          deadline: string
+          end_date: string
+          goal: string
           id: string
-          info: string | null
-          max_member: number | null
-          member: string[] | null
-          owner: string | null
-          recruit_type: string[] | null
-          regular_days: string | null
-          regular_time: string | null
-          start_date: string | null
-          status: boolean | null
-          tags: string[] | null
+          info: string
+          max_member: number
+          member: string[]
+          owner: string
+          recruit_type: string[]
+          regular_days: string
+          regular_time: string
+          start_date: string
+          status: boolean
+          tags: string[]
           title: string
-          writing_datetime: string | null
+          writing_datetime: string
         }
         Insert: {
           curriculum?: string | null

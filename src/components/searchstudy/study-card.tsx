@@ -21,8 +21,8 @@ export default function StudyCard({
   title: string
   types: string[]
   tags: string[]
-  startdate: string
-  enddate: string
+  startdate: string | null
+  enddate: string | null
 }) {
   return (
     <>

@@ -8,3 +8,10 @@ export const getStudys = async () => {
 
   return result.data
 }
+
+export const filterStudys = async (filters: string[]) => {
+  const supabase = createSupabaseBrowserClient()
+  const result = await supabase.from('Study').select().contains('tags', filters)
+
+  return result.data
+}
