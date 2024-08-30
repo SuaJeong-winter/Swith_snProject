@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getStudys, filterStudys } from '~/apis/studys-rls'
+import { getStudys, filterStudys, searchStudys } from '~/apis/studys-rls'
 import { Database } from '~/types/supabase'
 
 type StudyDto = Database['public']['Tables']['Study']['Row']
@@ -26,15 +26,24 @@ const useStudysController = () => {
 
   const onFilterStudys = async (filters: string[]) => {
     if (filters) {
-      const filteredStudys = await filterStudys(filters)
-      if (filteredStudys) setStudys(filteredStudys)
+      const resultStudys = await filterStudys(filters)
+      if (resultStudys) setStudys(resultStudys)
       // console.log(studys)
     } else {
       await onGetStudys()
     }
   }
 
-  return { loading, studys, onFilterStudys }
+  const onSearchStudys = async (terms: string) => {
+    if (terms) {
+      const resultStudys = await searchStudys(terms)
+      if (resultStudys) setStudys(resultStudys)
+    } else {
+      await onGetStudys()
+    }
+  }
+
+  return { loading, studys, onFilterStudys, onSearchStudys }
 }
 
 export default useStudysController

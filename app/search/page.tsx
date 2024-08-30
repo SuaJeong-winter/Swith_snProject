@@ -7,7 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 export default function searchPage() {
   return (
     <>
-      <SearchHeader />
+      <section className="bg-background">
+        <h1 className="p-4 text-lg font-bold">탐색하기</h1>
+      </section>
       <Tabs defaultValue="find-study">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="find-study">스터디 찾기</TabsTrigger>

@@ -15,3 +15,13 @@ export const filterStudys = async (filters: string[]) => {
 
   return result.data
 }
+
+export const searchStudys = async (terms: string) => {
+  const supabase = createClient()
+  const result = await supabase
+    .from('Study')
+    .select()
+    .textSearch('title', terms)
+
+  return result.data
+}
