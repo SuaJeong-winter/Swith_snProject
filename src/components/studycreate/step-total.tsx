@@ -9,6 +9,7 @@ type TotalInputProps = {
   goal: string
   info: string
   curriculum: string
+  max_member: number
 }
 
 export default function TotalInput({
@@ -16,9 +17,9 @@ export default function TotalInput({
   goal,
   info,
   curriculum,
+  max_member,
 }: TotalInputProps) {
   const applynum: number = 1
-  const maxnum = 4
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       <StudyHeaderNoText />
@@ -77,7 +78,7 @@ export default function TotalInput({
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 인원</h2>
-          <h2 className="font-medium">4</h2>
+          <h2 className="font-medium">{max_member}명</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 기간</h2>
@@ -96,8 +97,8 @@ export default function TotalInput({
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">{applynum}명 </span>/ {maxnum}
-            명
+            <span className="text-meetie-blue-4">{applynum}명 </span>/{' '}
+            {max_member}명
           </p>
         </div>
         {applynum === 0 ? (

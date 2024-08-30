@@ -21,7 +21,7 @@ type Step1Data = {
   // end_date?: Date
   // regulardays?: string
   // regulartime?: string
-  // membernum?: number
+  max_member?: number
   // tags?: string[]
 }
 
@@ -35,7 +35,7 @@ type Step2Data = {
   // end_date?: Date
   // regulardays?: string
   // regulartime?: string
-  // membernum?: number
+  max_member?: number
   // tags?: string[]
 }
 
@@ -49,7 +49,7 @@ type TotalData = {
   // end_date?: Date
   // regulardays?: string
   // regulartime?: string
-  // membernum?: number
+  max_member: number
   // tags?: string[]
 }
 
@@ -72,14 +72,24 @@ export default function CreateStudyPage() {
           onNext={({ recruit_type, title, goal, info }) => {
             const step1Data = { recruit_type, title, goal, info }
             console.log('Step 1 데이터:', step1Data)
+            console.log('데이터 길이', Object.keys(step1Data).length)
+            // const hasEmptyValue = Object.keys(step1Data).some(
+            //   (key) => step1Data[key] === '',
+            // )
+
+            // if (hasEmptyValue) {
+            //   console.log('sth wrong') // 값이 공백인 경우
+            // } else {
+            //   console.log('good') // 모든 키에 값이 있는 경우
+            // }
             history.push('Step2Data', { recruit_type, title, goal, info })
           }}
         />
       )}
       Step2Data={({ context, history }) => (
         <Step2Input
-          onNext={(curriculum) => {
-            const step2Data = { ...context, curriculum }
+          onNext={({ curriculum, max_member }) => {
+            const step2Data = { ...context, curriculum, max_member }
             console.log('Step 2 데이터:', step2Data)
             history.push('TotalData', step2Data)
           }}
@@ -91,6 +101,8 @@ export default function CreateStudyPage() {
           goal={context.goal}
           info={context.info}
           curriculum={context.curriculum}
+          max_member={context.max_member}
+          // regulartime={context.regulartime}
         />
       )}
     />

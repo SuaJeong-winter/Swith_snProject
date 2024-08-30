@@ -22,16 +22,14 @@ import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 export default function Step2Input({
   onNext,
 }: {
-  onNext: (curriculum: string) => void
+  onNext: (data: { curriculum: string; max_member: number }) => void
 }) {
   const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
   const [startdate, setStartDate] = React.useState<Date>() //시작일
   const [enddate, setEndDate] = React.useState<Date>() //종료일
-  // 정기일정(요일)
-  const [regularTime, setRegularTime] = React.useState('text') // 정기일정(시간)
-  const handleFocus = () => {
-    setRegularTime('time')
-  }
+
+  const [regularTime, setRegularTime] = React.useState<string>('') // 정기일정(시간)을 저장하는 상태
+
   const [count, setCount] = React.useState<number>(0) //스터디 모집인원
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
@@ -78,7 +76,10 @@ export default function Step2Input({
   }, [enddate])
 
   const handleNext = () => {
-    onNext(curriculum)
+    onNext({
+      curriculum,
+      max_member: count,
+    })
   }
 
   return (
@@ -232,8 +233,9 @@ export default function Step2Input({
               <Input
                 placeholder="시간 선택"
                 className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
-                onFocus={handleFocus}
-                type={regularTime}
+                onChange={(e) => setRegularTime(e.target.value)}
+                type="time"
+                value={regularTime} // 입력된 값을 상태로 유지
               />
             </div>
           </div>
