@@ -5,9 +5,12 @@ import { useState, useCallback, useEffect } from 'react'
 import { Chip } from '~/components/ui/chip'
 import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 import { Checkbox } from '~/components/ui/checkbox'
+import { Skeleton } from '~/components/ui/skeleton'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
 import useStudysController from '~/hooks/useStudysController'
+import { createClient } from '~/utils/supabase/client'
+import NoResult from './no-result'
 
 const AllTags = [
   '온라인',
@@ -25,7 +28,7 @@ export default function SearchStudy() {
   const [tags, setTag] = useState<string[]>([])
   // console.log(tags)
 
-  const { studys, onFilterStudys } = useStudysController()
+  const { loading, studys, onFilterStudys } = useStudysController()
 
   useEffect(() => {
     onFilterStudys(tags)
@@ -54,8 +57,11 @@ export default function SearchStudy() {
           <label htmlFor="recruitNow">모집중만 보기</label>
         </div>
         {/* 스터디 리스트 */}
-
         <div className="flex flex-col gap-5 pb-14">
+          {studys.length === 0 && <NoResult />}
+          {loading && (
+            <Skeleton className="h-[200px] w-full rounded-xl bg-slate-200" />
+          )}
           {studys.map((study) => (
             <StudyCard
               title={study.title}

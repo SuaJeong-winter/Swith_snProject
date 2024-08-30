@@ -5,14 +5,18 @@ import { Database } from '~/types/supabase'
 type StudyDto = Database['public']['Tables']['Study']['Row']
 
 const useStudysController = () => {
+  const [loading, setLoading] = useState(false)
   const [studys, setStudys] = useState<StudyDto[]>([])
 
   const onGetStudys = async () => {
+    setLoading(true)
     try {
       const resultStudys = await getStudys()
       if (resultStudys) setStudys(resultStudys)
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -30,7 +34,7 @@ const useStudysController = () => {
     }
   }
 
-  return { studys, onFilterStudys }
+  return { loading, studys, onFilterStudys }
 }
 
 export default useStudysController
