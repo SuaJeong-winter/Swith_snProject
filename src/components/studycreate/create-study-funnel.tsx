@@ -11,6 +11,8 @@ import Step1Input from './step-first-input'
 import Step2Input from './step-second-input'
 import TotalInput from './step-total'
 
+import { createClient } from '~/utils/supabase/client'
+
 type Step1Data = {
   recruit_type?: string[]
   title?: string
@@ -53,6 +55,8 @@ type TotalData = {
   tags: string[]
 }
 
+const supabase = createClient()
+
 export default function CreateStudyPage() {
   const funnel = useFunnel<{
     Step1Data: Step1Data
@@ -73,25 +77,40 @@ export default function CreateStudyPage() {
             const step1Data = { recruit_type, title, goal, info }
             console.log('Step 1 데이터:', step1Data)
             console.log('데이터 길이', Object.keys(step1Data).length)
-            // const hasEmptyValue = Object.keys(step1Data).some(
-            //   (key) => step1Data[key] === '',
-            // )
-
-            // if (hasEmptyValue) {
-            //   console.log('sth wrong') // 값이 공백인 경우
-            // } else {
-            //   console.log('good') // 모든 키에 값이 있는 경우
-            // }
             history.push('Step2Data', { recruit_type, title, goal, info })
           }}
         />
       )}
       Step2Data={({ context, history }) => (
         <Step2Input
-          onNext={({ curriculum, max_member, tags }) => {
+          onNext={async ({ curriculum, max_member, tags }) => {
             const step2Data = { ...context, curriculum, max_member, tags }
             console.log('Step 2 데이터:', step2Data)
-            history.push('TotalData', step2Data)
+            // Supabase insert
+            const { data, error } = await supabase
+              .from('Study')
+              .insert([
+                {
+                  recruit_type: step2Data.recruit_type,
+                  title: step2Data.title,
+                  goal: step2Data.goal,
+                  info: step2Data.info,
+                  curriculum: step2Data.curriculum,
+                  max_member: step2Data.max_member,
+                  tags: step2Data.tags,
+                  // uuid 필드가 자동으로 생성되도록 설정되어 있으면 명시하지 않아도 됩니다.
+                  // id: 'custom-uuid-value', // 수동으로 생성하려면 이와 같이 명시합니다.
+                },
+              ])
+              .select()
+
+            if (error) {
+              console.error('Error inserting data:', error)
+            } else {
+              console.log('Insert successful, data:', data)
+              // 성공적으로 삽입되면 다음 단계로 이동
+              history.push('TotalData', step2Data)
+            }
           }}
         />
       )}
@@ -104,7 +123,6 @@ export default function CreateStudyPage() {
           curriculum={context.curriculum}
           max_member={context.max_member}
           tags={context.tags}
-          // regulartime={context.regulartime}
         />
       )}
     />
