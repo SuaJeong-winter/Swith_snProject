@@ -22,7 +22,7 @@ type Step1Data = {
   // regulardays?: string
   // regulartime?: string
   max_member?: number
-  // tags?: string[]
+  tags?: string[]
 }
 
 type Step2Data = {
@@ -36,7 +36,7 @@ type Step2Data = {
   // regulardays?: string
   // regulartime?: string
   max_member?: number
-  // tags?: string[]
+  tags?: string[]
 }
 
 type TotalData = {
@@ -50,7 +50,7 @@ type TotalData = {
   // regulardays?: string
   // regulartime?: string
   max_member: number
-  // tags?: string[]
+  tags: string[]
 }
 
 export default function CreateStudyPage() {
@@ -88,8 +88,8 @@ export default function CreateStudyPage() {
       )}
       Step2Data={({ context, history }) => (
         <Step2Input
-          onNext={({ curriculum, max_member }) => {
-            const step2Data = { ...context, curriculum, max_member }
+          onNext={({ curriculum, max_member, tags }) => {
+            const step2Data = { ...context, curriculum, max_member, tags }
             console.log('Step 2 데이터:', step2Data)
             history.push('TotalData', step2Data)
           }}
@@ -97,11 +97,13 @@ export default function CreateStudyPage() {
       )}
       TotalData={({ context }) => (
         <TotalInput
+          recruit_type={context.recruit_type}
           title={context.title}
           goal={context.goal}
           info={context.info}
           curriculum={context.curriculum}
           max_member={context.max_member}
+          tags={context.tags}
           // regulartime={context.regulartime}
         />
       )}

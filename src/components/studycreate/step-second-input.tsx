@@ -22,7 +22,11 @@ import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 export default function Step2Input({
   onNext,
 }: {
-  onNext: (data: { curriculum: string; max_member: number }) => void
+  onNext: (data: {
+    curriculum: string
+    max_member: number
+    tags: string[]
+  }) => void
 }) {
   const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
   const [startdate, setStartDate] = React.useState<Date>() //시작일
@@ -39,7 +43,7 @@ export default function Step2Input({
     setCount(count > 0 ? count - 1 : 0) // 최소 0명으로 제한
   }
 
-  const [selectedTags, setSelectedTags] = React.useState<String[]>([])
+  const [selectedTags, setSelectedTags] = React.useState<string[]>([])
   const allTags = [
     '온라인',
     '오프라인',
@@ -79,6 +83,7 @@ export default function Step2Input({
     onNext({
       curriculum,
       max_member: count,
+      tags: selectedTags,
     })
   }
 
