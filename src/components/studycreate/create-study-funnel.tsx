@@ -98,8 +98,7 @@ export default function CreateStudyPage() {
                   curriculum: step2Data.curriculum,
                   max_member: step2Data.max_member,
                   tags: step2Data.tags,
-                  // uuid 필드가 자동으로 생성되도록 설정되어 있으면 명시하지 않아도 됩니다.
-                  // id: 'custom-uuid-value', // 수동으로 생성하려면 이와 같이 명시합니다.
+                  writing_datetime: new Date(),
                 },
               ])
               .select()
