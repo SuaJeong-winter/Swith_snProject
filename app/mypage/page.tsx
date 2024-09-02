@@ -18,7 +18,7 @@ import useUserController from '~/hooks/useUserController'
 import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import { useEffect } from 'react'
 import { userSignout } from '~/apis/signout-rls'
-
+import UserProfileImg from '~/components/common/user-profile-img'
 export default function Home() {
   const { user } = useUserController()
   const { badge } = useMeetieBadgeController()
@@ -36,7 +36,7 @@ export default function Home() {
 
       <div className="items-left flex justify-between">
         <div className="items-left flex p-3">
-          <MpProfile className="justify-between" />
+          <UserProfileImg />
           <div className="items-left flex flex-col pl-3">
             <span className="text-lg">{user[0]?.['job_type']}</span>
             <span className="text-lg font-bold">{user[0]?.name}님</span>
