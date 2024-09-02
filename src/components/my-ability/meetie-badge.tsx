@@ -16,13 +16,11 @@ import {
 } from '~/components/ui/drawer'
 
 export default function MeetieBadge({
-  level,
   badgename,
   point,
   commentcount,
   hostcount,
 }: {
-  level: string
   badgename: string
   point: string
   commentcount: string
@@ -81,7 +79,14 @@ export default function MeetieBadge({
                     )}
                   </div>
                   <Card className="flex flex-col items-center justify-center border-2 border-purple-500 bg-[#FDFBFF] p-1 pl-2 pr-2 text-center">
-                    <span className="text-xs text-purple-500">레벨{level}</span>
+                    <span className="text-xs text-purple-500">
+                      레벨
+                      {badgename === '밋티 뉴비'
+                        ? 1
+                        : badgename === '밋티 러너'
+                          ? 2
+                          : 3}
+                    </span>
                   </Card>
                   <span className="pb-7 pt-2 text-base font-semibold">
                     {badgename}

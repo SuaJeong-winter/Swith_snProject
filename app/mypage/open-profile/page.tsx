@@ -3,30 +3,17 @@ import Link from 'next/link'
 import { Chip } from '~/components/ui/chip'
 import BtnBack from '~/assets/btn_back.svg'
 import OpenProfileimage from '~/assets/icon_openprofile-image.svg'
+import MeetieRunner from '~/assets/badge_meetie-runner.svg'
+import MeetieNewbie from '~/assets/badge_meetie-newbie.svg'
 import MeetieMaster from '~/assets/badge_meetie-master.svg'
 import MyStudyPeople from '~/assets/icon_studypeople.svg'
 import { Card } from '~/components/ui/card'
 import useUserController from '~/hooks/useUserController'
+import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
+
 export default function OpenProfile() {
-  // const res = await fetch(
-  //   'https://2cda2bdc-f43f-42c4-862d-6bee7ed3fd16.mock.pstmn.io/user/01',
-  //   {
-  //     cache: 'no-cache',
-  //   },
-  // )
-  // const user = await res.json()
-  // console.log(user)
-
-  // const res2 = await fetch(
-  //   'https://bca20514-f73e-4685-b1ad-7ad95c1392b9.mock.pstmn.io/meetiebadge/01',
-  //   {
-  //     cache: 'no-cache',
-  //   },
-  // )
-  // const meetiebadge = await res2.json()
-  // console.log(meetiebadge)
-
   const { user } = useUserController()
+  const { badge } = useMeetieBadgeController()
 
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
@@ -57,13 +44,22 @@ export default function OpenProfile() {
           <span className="pb-5 text-base font-bold">보유하고 있는 뱃지</span>
 
           <Card className="flex h-[185px] w-[150px] flex-col items-center justify-center border border-2 border-purple-200 border-purple-500 bg-[#FDFBFF] p-5 text-center">
-            <MeetieMaster />
+            {badge[0]?.badgename === '밋티 뉴비' ? (
+              <MeetieNewbie />
+            ) : badge[0]?.badgename === '밋티 러너' ? (
+              <MeetieRunner />
+            ) : (
+              <MeetieMaster />
+            )}
             <span className="align-center pt-3 text-xs font-semibold text-gray-500">
-              {/* 레벨{meetiebadge[0].level} */}
+              레벨
+              {badge[0]?.badgename === '밋티 뉴비'
+                ? 1
+                : badge[0]?.badgename === '밋티 러너'
+                  ? 2
+                  : 3}
             </span>
-            <span className="text-xs font-semibold">
-              {/* {meetiebadge[0].badgename} */}
-            </span>
+            <span className="text-xs font-semibold">{badge[0]?.badgename}</span>
           </Card>
         </div>
 
