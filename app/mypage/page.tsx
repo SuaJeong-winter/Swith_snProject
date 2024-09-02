@@ -40,8 +40,11 @@ export default function Home() {
   // console.log(user)
   return (
     <div className="items-left flex min-h-dvh flex-col justify-center bg-background from-[hsla(239,100%,95%,1)] from-0% to-background to-50% p-3">
-      <div className="items-left flex flex-col pb-8">
+      <div className="flex justify-between pb-8">
         <span className="text-lg font-bold">마이페이지</span>
+        <Button variant="secondary" size="sm" onClick={(e) => userSignout()}>
+          로그아웃
+        </Button>
       </div>
 
       <div className="items-left flex justify-between">
@@ -55,11 +58,7 @@ export default function Home() {
         <div className="items-right flex pl-8 pt-3">
           <div className="items-left flex flex-col pt-7">
             <Link href="/mypage/open-profile">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-4/1 border text-purple-600"
-              >
+              <Button variant="outline" size="sm" className="w-4/1">
                 공개 프로필
               </Button>
             </Link>
