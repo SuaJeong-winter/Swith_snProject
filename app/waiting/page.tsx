@@ -119,7 +119,7 @@ export default function WaitingListPage() {
       <div className="fixed bottom-[80px] mx-[50px] -translate-x-1/2 transform">
         <Toaster />
       </div>
-      <StudyHeader href="approval" />
+      <StudyHeader href="create?input-funnel.step=TotalData" />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
 
