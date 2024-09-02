@@ -42,6 +42,7 @@ type Step2Data = {
 }
 
 type TotalData = {
+  id: string
   recruit_type: string[]
   title: string
   goal: string
@@ -127,13 +128,15 @@ export default function CreateStudyPage() {
             } else {
               console.log('Insert successful, data:', data)
               // 성공적으로 삽입되면 다음 단계로 이동
-              history.push('TotalData', step2Data)
+              const studyId = data[0].id // 삽입된 스터디의 ID
+              history.push('TotalData', { ...step2Data, id: studyId })
             }
           }}
         />
       )}
       TotalData={({ context }) => (
         <TotalInput
+          id={context.id}
           recruit_type={context.recruit_type}
           title={context.title}
           goal={context.goal}

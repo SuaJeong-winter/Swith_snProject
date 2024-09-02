@@ -34,7 +34,8 @@ export default function SearchStudy() {
 
   useEffect(() => {
     onFilterStudys(tags)
-  }, [tags])
+  }, [tags, onFilterStudys])
+  // dependenct 문제로 onFilterStudys 추가
 
   return (
     <>
@@ -74,6 +75,7 @@ export default function SearchStudy() {
           <label htmlFor="recruitNow">모집중만 보기</label>
         </div>
         {/* 스터디 리스트 */}
+
         <div className="flex flex-col gap-5 pb-14">
           {loading && (
             <div className="flex flex-col gap-3">
@@ -85,14 +87,16 @@ export default function SearchStudy() {
           )}
           {studys.length === 0 && <NoResult />}
           {studys.map((study) => (
-            <StudyCard
-              title={study.title}
-              types={study['recruit_type']}
-              tags={study.tags}
-              startdate={study['start_date']}
-              enddate={study['end_date']}
-              key={study.id}
-            />
+            <Link href={`apply/${study.id}`} key={study.id}>
+              <StudyCard
+                title={study.title}
+                types={study['recruit_type']}
+                tags={study.tags}
+                startdate={study['start_date']}
+                enddate={study['end_date']}
+                key={study.id}
+              />
+            </Link>
           ))}
         </div>
         {/* 플로팅 버튼 -> 스터디 생성 */}

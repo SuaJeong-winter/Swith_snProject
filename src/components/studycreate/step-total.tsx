@@ -8,6 +8,7 @@ import { createClient } from '~/utils/supabase/client'
 import { useEffect, useState } from 'react'
 
 type TotalInputProps = {
+  id: string
   recruit_type: string[]
   title: string
   goal: string
@@ -20,6 +21,7 @@ type TotalInputProps = {
 const supabase = createClient()
 
 export default function TotalInput({
+  id,
   recruit_type,
   title,
   goal,
@@ -28,23 +30,47 @@ export default function TotalInput({
   max_member,
   tags,
 }: TotalInputProps) {
-  // const [session, setSession] = useState<any>(null)
+  const [studyData, setStudyData] = useState<any>(null)
+  const [session, setSession] = useState<any>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     const {
-  //       data: { session },
-  //       error,
-  //     } = await supabase.auth.getSession()
+  useEffect(() => {
+    const fetchSession = async () => {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession()
 
-  //     if (error) {
-  //     } else {
-  //       setSession(session)
-  //     }
-  //   }
+      if (error) {
+      } else {
+        setSession(session)
+      }
+    }
+    const fetchStudyData = async () => {
+      const { data, error } = await supabase
+        .from('Study')
+        .select('*')
+        .eq('id', id)
+        .single()
 
-  //   fetchSession()
-  // }, [])
+      if (error) {
+        console.error('Error fetching study data:', error)
+      } else {
+        setStudyData(data)
+        setLoading(false)
+      }
+    }
+    fetchSession()
+    fetchStudyData()
+  }, [id])
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+
+  if (!studyData) {
+    return <p>Study not found</p>
+  }
 
   const applynum: number = 1
   return (
@@ -52,7 +78,7 @@ export default function TotalInput({
       <StudyHeaderNoText />
       <div className="px-3">
         <div className="flex flex-row items-center space-x-4 space-y-2 pt-[60px]">
-          <h2 className="text-lg font-bold"> {title}</h2>
+          <h2 className="text-lg font-bold"> {studyData.title}</h2>
           <Button
             className="m-8 w-[60px] rounded-3xl"
             variant="outline"
@@ -63,7 +89,7 @@ export default function TotalInput({
         </div>
 
         <div className="mt-3 grid grid-cols-4 gap-1">
-          {tags.map((tag, index) => (
+          {studyData.tags.map((tag: string, index: number) => (
             <Chip
               key={index}
               className="border-transparent bg-meetie-blue-1 text-xs"
@@ -77,19 +103,30 @@ export default function TotalInput({
           <MpProfile />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
-            {/* <p>{session?.user?.email || '알 수 없는 사용자'}</p> */}
+            <p>{session?.user?.email || '알 수 없는 사용자'}</p>
             {/* supabase에서 값 가져오기  */}
             {/* <p className="text-sm">{recruit_type}</p> */}
             <div className="flex flex-row">
-              {recruit_type.map((recruit, index) => (
+              {studyData.recruit_type.map((recruit: string, index: number) => (
                 <p key={index} className="text-sm">
                   {recruit}
-                  {index < recruit_type.length - 1 && ` |${'\u00A0'}`}
+                  {index < studyData.recruit_type.length - 1 && ` |${'\u00A0'}`}
                 </p>
               ))}
             </div>
+            {/* <p>작성일</p> */}
 
-            <p className="text-sm">작성일 2024.08.13 09:41</p>
+            <p className="text-sm text-gray-500">
+              작성일{' '}
+              {new Intl.DateTimeFormat('ko-KR', {
+                year: '2-digit',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hourCycle: 'h23',
+              }).format(new Date(studyData.writing_datetime))}
+            </p>
           </div>
         </div>
       </div>
@@ -99,23 +136,23 @@ export default function TotalInput({
       <div className="px-3">
         <div className="space-y-2 pt-10">
           <h2 className="font-bold">스터디 주제</h2>
-          <h2 className="font-medium">{title}</h2>
+          <h2 className="font-medium">{studyData.title}</h2>
         </div>
         <div className="space-y-2 pt-10">
           <h2 className="font-bold">스터디 목표</h2>
-          <h2 className="font-medium">{goal}</h2>
+          <h2 className="font-medium">{studyData.goal}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 소개</h2>
-          <h2 className="font-medium">{info}</h2>
+          <h2 className="font-medium">{studyData.info}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">진행방식과 커리큘럼</h2>
-          <h2 className="font-medium">{curriculum}</h2>
+          <h2 className="font-medium">{studyData.curriculum}</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 인원</h2>
-          <h2 className="font-medium">{max_member}명</h2>
+          <h2 className="font-medium">{studyData.max_member}명</h2>
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 기간</h2>
@@ -135,9 +172,9 @@ export default function TotalInput({
           <p>참여 가능 인원</p>
           <p>
             <span className="text-meetie-blue-4">
-              {max_member - applynum}명
+              {studyData.max_member - applynum}명
             </span>
-            / {max_member}명
+            / {studyData.max_member}명
           </p>
         </div>
         {applynum === 0 ? (
