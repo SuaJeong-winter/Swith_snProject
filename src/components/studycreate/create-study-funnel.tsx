@@ -84,6 +84,23 @@ export default function CreateStudyPage() {
       Step2Data={({ context, history }) => (
         <Step2Input
           onNext={async ({ curriculum, max_member, tags }) => {
+            const {
+              data: { session },
+              error: sessionError,
+            } = await supabase.auth.getSession()
+
+            if (sessionError) {
+              console.error('Error fetching session:', sessionError)
+              return
+            }
+
+            const userUuid = session?.user?.id // 사용자 UUID
+
+            if (!userUuid) {
+              console.error('User is not authenticated')
+              return
+            }
+
             const step2Data = { ...context, curriculum, max_member, tags }
             console.log('Step 2 데이터:', step2Data)
             // Supabase insert
@@ -99,6 +116,8 @@ export default function CreateStudyPage() {
                   max_member: step2Data.max_member,
                   tags: step2Data.tags,
                   writing_datetime: new Date(),
+                  owner: userUuid,
+                  member: [userUuid],
                 },
               ])
               .select()

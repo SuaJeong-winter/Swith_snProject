@@ -28,23 +28,23 @@ export default function TotalInput({
   max_member,
   tags,
 }: TotalInputProps) {
-  const [session, setSession] = useState<any>(null)
+  // const [session, setSession] = useState<any>(null)
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession()
+  // useEffect(() => {
+  //   const fetchSession = async () => {
+  //     const {
+  //       data: { session },
+  //       error,
+  //     } = await supabase.auth.getSession()
 
-      if (error) {
-      } else {
-        setSession(session)
-      }
-    }
+  //     if (error) {
+  //     } else {
+  //       setSession(session)
+  //     }
+  //   }
 
-    fetchSession()
-  }, [])
+  //   fetchSession()
+  // }, [])
 
   const applynum: number = 1
   return (
@@ -77,7 +77,8 @@ export default function TotalInput({
           <MpProfile />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
-            <p>{session?.user?.email || '알 수 없는 사용자'}</p>
+            {/* <p>{session?.user?.email || '알 수 없는 사용자'}</p> */}
+            {/* supabase에서 값 가져오기  */}
             {/* <p className="text-sm">{recruit_type}</p> */}
             <div className="flex flex-row">
               {recruit_type.map((recruit, index) => (
