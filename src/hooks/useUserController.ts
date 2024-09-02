@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getProfile, userSignout } from '~/apis/user-rls'
+import { getProfile } from '~/apis/user-rls'
 import { Database } from '~/types/supabase'
 type UserDto = Database['public']['Tables']['User']['Row']
 
@@ -17,6 +17,6 @@ const useUserController = () => {
   useEffect(() => {
     onGetUser()
   }, [])
-  return { user, userSignout }
+  return { user }
 }
 export default useUserController
