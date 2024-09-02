@@ -23,7 +23,7 @@ export default function MyAbility() {
     <div className="flex min-h-dvh flex-col items-center bg-background">
       <div className="flex w-full flex-col">
         <div className="flex items-center px-4 pt-4">
-          <Link href="mypage" className="flex items-center">
+          <Link href="/mypage" className="flex items-center">
             <BtnBack className="" />
           </Link>
           <div className="flex flex-1 justify-center px-4">
