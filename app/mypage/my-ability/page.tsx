@@ -7,6 +7,7 @@ import MeetieRunner from '~/assets/badge_meetie-runner.svg'
 import { Card } from '~/components/ui/card'
 import { Button } from '~/components/ui/button'
 import MeetieBadge from '~/components/my-ability/meetie-badge'
+import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 
 import {
   Drawer,
@@ -19,6 +20,9 @@ import {
 } from '~/components/ui/drawer'
 
 export default function MyAbility() {
+  const { badge } = useMeetieBadgeController()
+  console.log(badge[0]?.badgename)
+
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
       <div className="flex w-full flex-col">
@@ -57,11 +61,11 @@ export default function MyAbility() {
           />
 
           <MeetieBadge
-            level={'3'}
+            level={badge[0]?.level}
             badgename={'밋티 마스터'}
-            point={'500'}
-            commentcount={'50'}
-            hostcount={'5'}
+            point={badge[0]?.['point_hap']}
+            commentcount={badge[0]?.['comment_hap']}
+            hostcount={badge[0]?.['host_hap']}
           />
         </div>
       </div>
