@@ -34,7 +34,7 @@ export default function Home() {
   // const meetiebadge = await res2.json()
   // console.log(meetiebadge)
 
-  const { user } = useUserController()
+  const { user, userSignout } = useUserController()
   console.log(user[0]?.name)
   // user.map((u) => console.log(u.name))
   // console.log(user)

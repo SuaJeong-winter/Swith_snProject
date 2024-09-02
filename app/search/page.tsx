@@ -1,5 +1,4 @@
 import BottomNavBar from '~/components/common/bottom-nav-bar'
-import SearchHeader from '~/components/searchstudy/search-header'
 import SearchMate from '~/components/searchstudy/search-mate'
 import SearchStudy from '~/components/searchstudy/search-study'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'

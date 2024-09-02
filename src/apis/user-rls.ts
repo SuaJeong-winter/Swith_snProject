@@ -10,3 +10,22 @@ export const getProfile = async () => {
 
   return result.data
 }
+
+export const getUser = async () => {
+  const supabase = createClient()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error) {
+    console.error(error)
+  }
+  return { user }
+}
+
+export const userSignout = async () => {
+  const supabase = createClient()
+  const { error } = await supabase.auth.signOut()
+  if (error) console.error('Logout failed:', error)
+}
