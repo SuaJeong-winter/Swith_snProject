@@ -25,7 +25,17 @@ export default function StudyroomCalendar() {
       deadline: 'Mon Aug 26 2024 00:00:00 GMT+0900 (한국 표준시)',
     },
     {
+      description: '넥스트 프로젝트 초기 설정',
+      verificationMethod: '스크린샷 업로드',
+      deadline: 'Mon Aug 28 2024 18:00:00 GMT+0900 (한국 표준시)',
+    },
+    {
       description: '딥다이브 2장 읽기',
+      verificationMethod: '마지막장 사진 찍기',
+      deadline: 'Mon Aug 28 2024 21:00:00 GMT+0900 (한국 표준시)',
+    },
+    {
+      description: '딥다이브 3장 읽기',
       verificationMethod: '마지막장 사진 찍기',
       deadline: 'Mon Sep 2 2024 21:00:00 GMT+0900 (한국 표준시)',
     },
