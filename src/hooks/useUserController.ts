@@ -9,7 +9,7 @@ const useUserController = () => {
     try {
       const resultUser = await getProfile()
       if (resultUser) setUser(resultUser)
-      console.log(resultUser)
+      // console.log(resultUser)
     } catch (error) {
       console.error(error)
     }
