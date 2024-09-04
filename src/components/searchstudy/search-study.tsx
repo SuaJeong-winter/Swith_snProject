@@ -10,7 +10,6 @@ import { Skeleton } from '~/components/ui/skeleton'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
 import useStudysController from '~/hooks/useStudysController'
-import { createClient } from '~/utils/supabase/client'
 import NoResult from './no-result'
 
 const AllTags = [
@@ -29,12 +28,23 @@ export default function SearchStudy() {
   const [tags, setTag] = useState<string[]>([])
   // console.log(tags)
 
-  const { loading, studys, onFilterStudys, onSearchStudys } =
-    useStudysController()
+  const {
+    loading,
+    studys,
+    onFilterStudys,
+    onSearchStudys,
+    onUserBookmark,
+    bookmark,
+  } = useStudysController()
 
   useEffect(() => {
     onFilterStudys(tags)
   }, [tags])
+
+  // useEffect(() => {
+  //   onUserBookmark()
+  // }, [])
+  // console.log(bookmark)
 
   return (
     <>
@@ -91,6 +101,7 @@ export default function SearchStudy() {
               tags={study.tags}
               startdate={study['start_date']}
               enddate={study['end_date']}
+              sutdyId={study.id}
               key={study.id}
             />
           ))}

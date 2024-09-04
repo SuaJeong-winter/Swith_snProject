@@ -2,26 +2,61 @@
 
 import SearchIcon from '~/assets/icon_search.svg'
 import RefreshBtn from '~/assets/searchStudy/icon_refresh.svg'
-import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
-import { ChipGroup, ChipGroupItem } from '../ui/chip-group'
 import MateCard from '~/components/searchstudy/mate-card'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
 } from '~/components/ui/dropdown-menu'
-import { useState } from 'react'
+import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group'
 
-type Checked = DropdownMenuCheckboxItemProps['checked']
+import { useEffect, useState } from 'react'
+import useUserController from '~/hooks/useUserController'
 
 export default function SearchMate() {
   const [emblaRef, emblaApi] = useEmblaCarousel()
-  const [showStatusBar, setShowStatusBar] = useState<Checked>(true)
-  const [showActivityBar, setShowActivityBar] = useState<Checked>(false)
-  const [showPanel, setShowPanel] = useState<Checked>(false)
+  const [jobType, setJobType] = useState('')
+  const [purpose, setPurpose] = useState<string[]>([])
+  const [period, setPeriod] = useState('')
+  const [studyStyle, setStudyStyle] = useState<string[]>([])
+
+  const JOBS = ['개발자', '기획자', '디자이너']
+  const PURPOSES = [
+    '자기 개발',
+    '툴 능력 향상',
+    '해당 분야의 네트워킹 확장',
+    '취미',
+  ]
+  const PERIODS = ['1개월 이내', '1개월~3개월', '3개월~6개월', '6개월 이상']
+  const STUDYSTYLE = [
+    '주도적인',
+    '열정적인',
+    '손이 빠른',
+    '시간을 지키는',
+    '꼼꼼한',
+    '모험적인',
+    '신중한',
+    '커뮤니케이션에 능숙한',
+    '논리적인',
+    '파워 J',
+    '분석적인',
+    '동기부여가 필요한',
+    '완벽주의',
+  ]
+
+  const { allUsers } = useUserController()
+
+  const filterReset = () => {
+    setJobType('')
+    setPurpose([])
+    setPeriod('')
+    setStudyStyle([])
+  }
 
   return (
     <>
@@ -40,36 +75,105 @@ export default function SearchMate() {
       </section>
       {/* 팀원 검색 필터 */}
       <section className="flex flex-wrap justify-evenly gap-2 bg-background py-3">
-        <RefreshBtn />
+        <RefreshBtn onClick={filterReset} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="secondary"
-              className="border-[1px] border-slate-300 py-1 text-sm font-normal"
-            >
-              직무
-            </Button>
+            {jobType !== '' ? (
+              <Button variant="outline" className="py-1 text-sm font-normal">
+                {jobType}
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                className="border-[1px] border-slate-300 py-1 text-sm font-normal"
+              >
+                직무
+              </Button>
+            )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-4 bg-background">
-            <DropdownMenuCheckboxItem
-              checked={showStatusBar}
-              onCheckedChange={setShowStatusBar}
-              onSelect={(e) => console.log(e.target.innerText)}
+            <DropdownMenuRadioGroup value={jobType} onValueChange={setJobType}>
+              {JOBS.map((job, idx) => (
+                <DropdownMenuRadioItem
+                  value={job}
+                  key={job + idx}
+                  className="data-[state=on]:text-primary"
+                >
+                  {job}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            {purpose.length > 0 ? (
+              <Button variant="outline" className="py-1 text-sm font-normal">
+                스터디 목적
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                className="border-[1px] border-slate-300 py-1 text-sm font-normal"
+              >
+                스터디 목적
+              </Button>
+            )}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-background">
+            <ToggleGroup
+              type="multiple"
+              onValueChange={(pur) => {
+                setPurpose(pur)
+                console.log(purpose)
+              }}
+              className="flex flex-col"
             >
-              개발자
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={showActivityBar}
-              onCheckedChange={setShowActivityBar}
+              {PURPOSES.map((pur) => (
+                <ToggleGroupItem
+                  key={pur}
+                  value={pur}
+                  className="data-[state=on]:text-primary"
+                >
+                  {pur}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            {studyStyle.length > 0 ? (
+              <Button variant="outline" className="py-1 text-sm font-normal">
+                작업 스타일
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                className="border-[1px] border-slate-300 py-1 text-sm font-normal"
+              >
+                작업 스타일
+              </Button>
+            )}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-background">
+            <ToggleGroup
+              type="multiple"
+              onValueChange={(style) => {
+                setStudyStyle(style)
+              }}
+              className="flex flex-col"
             >
-              기획자
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={showPanel}
-              onCheckedChange={setShowPanel}
-            >
-              디자이너
-            </DropdownMenuCheckboxItem>
+              {STUDYSTYLE.map((style) => (
+                <ToggleGroupItem
+                  key={style}
+                  value={style}
+                  className="data-[state=on]:text-primary"
+                >
+                  {style}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
@@ -82,33 +186,22 @@ export default function SearchMate() {
               className="flex flex-2 flex-wrap justify-center gap-3"
               key="01"
             >
-              <MateCard
-                userName="김선우"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              />
-              <MateCard
-                userName="김선우"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              />
+              {allUsers.map((user) => (
+                <MateCard
+                  userName={user.username}
+                  jobType={user['job_type']}
+                  userType={user['study_style']}
+                  profileImg={user['profile_img']}
+                  key={user.id}
+                />
+              ))}
             </div>
             {/* page2 */}
             <div
               className="flex flex-2 flex-wrap justify-center gap-3"
               key="02"
             >
-              <MateCard
+              {/* <MateCard
                 userName="김선우2"
                 jobType="디자이너"
                 userType={['초급', '열정있는', '파워J']}
@@ -127,14 +220,14 @@ export default function SearchMate() {
                 userName="이정아2"
                 jobType="디자이너"
                 userType={['고급', '꼼꼼한', '사교적인']}
-              />
+              /> */}
             </div>
             {/* page3 */}
             <div
               className="flex flex-2 flex-wrap justify-center gap-3"
               key="03"
             >
-              <MateCard
+              {/* <MateCard
                 userName="김선우3"
                 jobType="디자이너"
                 userType={['초급', '열정있는', '파워J']}
@@ -153,7 +246,7 @@ export default function SearchMate() {
                 userName="이정아3"
                 jobType="디자이너"
                 userType={['고급', '꼼꼼한', '사교적인']}
-              />
+              /> */}
             </div>
           </div>
         </div>
