@@ -69,6 +69,7 @@ export default function RecruitDrawer({
               onClick={() => {
                 setIsChecked([true, true, true])
                 setSelectedJobs(jobtypes) // 전체 선택 버튼 클릭 시 모든 직군을 선택
+                onJobsChange(jobtypes)
               }}
             >
               전체 선택

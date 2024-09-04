@@ -26,15 +26,18 @@ export default function Step2Input({
     curriculum: string
     max_member: number
     tags: string[]
+    start_date: string | null
+    end_date: string | null
   }) => void
 }) {
   const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
-  const [startdate, setStartDate] = React.useState<Date>() //시작일
-  const [enddate, setEndDate] = React.useState<Date>() //종료일
+  const [startdate, setStartDate] = React.useState<Date | null>() //시작일
+  const [enddate, setEndDate] = React.useState<Date | null>() //종료일
 
   const [regularTime, setRegularTime] = React.useState<string>('') // 정기일정(시간)을 저장하는 상태
 
   const [count, setCount] = React.useState<number>(0) //스터디 모집인원
+  const [isValid, setIsValid] = React.useState(false)
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
   }
@@ -79,11 +82,32 @@ export default function Step2Input({
     }
   }, [enddate])
 
+  React.useEffect(() => {
+    setIsValid(
+      curriculum.trim() !== '' &&
+        // startdate.trim() !== '' &&
+        // enddate.trim() !== '' &&
+        count > 0 &&
+        selectedTags.length > 0,
+    )
+  }, [curriculum, startdate, enddate, count, selectedTags])
+
   const handleNext = () => {
+    const addOneDay = (date: Date | null | undefined): Date | null => {
+      if (!date) return null
+      const newDate = new Date(date)
+      newDate.setDate(newDate.getDate() + 1) // 하루 더하기
+      return newDate
+    }
+    const correctStartDate = addOneDay(startdate)
+    const correctEndDate = addOneDay(enddate)
+
     onNext({
       curriculum,
       max_member: count,
       tags: selectedTags,
+      start_date: correctStartDate ? correctStartDate.toISOString() : null,
+      end_date: correctEndDate ? correctEndDate.toISOString() : null,
     })
   }
 
@@ -128,7 +152,7 @@ export default function Step2Input({
                 <PopoverContent className="ml-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
-                    selected={startdate}
+                    selected={startdate || undefined}
                     onSelect={setStartDate}
                     initialFocus
                   />
@@ -156,7 +180,7 @@ export default function Step2Input({
                 <PopoverContent className="mr-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
-                    selected={enddate}
+                    selected={enddate || undefined}
                     onSelect={setEndDate}
                     initialFocus
                   />
@@ -281,19 +305,6 @@ export default function Step2Input({
                   {/* tag는 변수명 온라인 index는 배열 allTags의 index값 */}
                 </ChipGroupItem>
               ))}
-
-              {/* <ChipGroupItem value="온라인">온라인</ChipGroupItem>
-              // value는 DB에 넘겨줄 값, 태그 사이에 들어가는 문자열은 사용자에게 보여줄 값
-              <ChipGroupItem value="오프라인">오프라인</ChipGroupItem>
-              <ChipGroupItem value="프론트엔드">프론트엔드</ChipGroupItem>
-              <ChipGroupItem value="백엔드">백엔드</ChipGroupItem>
-              <ChipGroupItem value="UX/UI">UX/UI</ChipGroupItem>
-              <ChipGroupItem value="PM">PM</ChipGroupItem>
-              <ChipGroupItem value="어플">어플</ChipGroupItem>
-              <ChipGroupItem value="웹">웹</ChipGroupItem>
-              <ChipGroupItem value="사이드 프로젝트">
-                사이드 프로젝트
-              </ChipGroupItem> */}
             </ChipGroup>
           </div>
           <p className="pt-2 text-xs text-meetie-blue-4">
@@ -312,12 +323,18 @@ export default function Step2Input({
             </Button>
           </Link>
 
-          <Button
-            className="w-[220px] flex-initial border-[1px] border-solid"
-            onClick={handleNext}
-          >
-            작성완료
-          </Button>
+          {isValid ? (
+            <Button
+              className="w-[220px] flex-initial border-[1px] border-solid"
+              onClick={handleNext}
+            >
+              작성완료
+            </Button>
+          ) : (
+            <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+              내용이 부족해요!
+            </Button>
+          )}
 
           {/* 비활성화 상태일때 */}
           {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">

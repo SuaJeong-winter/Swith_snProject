@@ -10,6 +10,7 @@ import { Button } from '~/components/ui/button'
 import StudyHeader from '~/components/studycreate/study-header'
 import React, { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const studyGroupDummyData = {
   max_member: 3, // 멤버 수
@@ -129,7 +130,9 @@ export default function WaitingListPage() {
             <div>2024년 06월 07일</div>
             <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
               <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
-                <MpProfile />
+                <Link href={`${user.user_id}/open-profile`}>
+                  <MpProfile />
+                </Link>
 
                 {/* <Image
                   src={user.profile_img || '/default-profile.png'}
