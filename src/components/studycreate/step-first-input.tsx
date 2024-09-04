@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import RecruitDrawer from '~/components/studycreate/create-drawer'
@@ -22,6 +22,16 @@ export default function Step1Input({
   const [goal, setGoal] = useState('')
   const [info, setInfo] = useState('')
   const [selectedJobs, setSelectedJobs] = useState<string[]>([])
+  const [isValid, setIsValid] = useState(false)
+
+  useEffect(() => {
+    setIsValid(
+      selectedJobs.length > 0 &&
+        title.trim() !== '' &&
+        goal.trim() !== '' &&
+        info.trim() !== '',
+    )
+  }, [title, goal, info, selectedJobs])
 
   const handleNext = () => {
     onNext({ recruit_type: selectedJobs, title, goal, info })
@@ -79,19 +89,19 @@ export default function Step1Input({
               이전
             </Button>
           </Link>
-          {/* <Link href="createsec"> */}
-          <Button
-            onClick={handleNext}
-            className="w-[220px] flex-initial border-[1px] border-solid"
-          >
-            다음
-          </Button>
-          {/* </Link> */}
 
-          {/* 비활성화 상태일때 */}
-          {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
-          다음_off
-        </Button> */}
+          {isValid ? (
+            <Button
+              onClick={handleNext}
+              className="w-[220px] flex-initial border-[1px] border-solid"
+            >
+              다음
+            </Button>
+          ) : (
+            <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+              내용이 부족해요!
+            </Button>
+          )}
         </div>
       </section>
     </>
