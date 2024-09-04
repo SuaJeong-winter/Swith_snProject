@@ -6,8 +6,6 @@ import JobStep from '~/components/on-boarding/job-step'
 import PersonalityStep from '~/components/on-boarding/personality-step'
 import PurposeStep from '~/components/on-boarding/purpose-step'
 import PeriodStep from '~/components/on-boarding/period-step'
-import useOnboardingController from '~/hooks/useOnboardingController'
-import { useEffect } from 'react'
 
 export type FormState = {
   job?: string
@@ -32,14 +30,6 @@ export default function OnBoardingFunnel() {
       context: {},
     },
   })
-
-  // console.log(funnel.context)
-
-  const { onPostData, user, onGetUser } = useOnboardingController()
-
-  useEffect(() => {
-    onGetUser()
-  }, [])
 
   return (
     <funnel.Render

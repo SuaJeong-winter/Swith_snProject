@@ -13,13 +13,6 @@ export const getProfile = async () => {
 
 export const getUser = async () => {
   const supabase = createClient()
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser()
-
-  if (error) {
-    console.error(error)
-  }
-  return { user }
+  const user = await supabase.auth.getUser()
+  return user?.data?.user
 }
