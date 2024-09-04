@@ -37,6 +37,7 @@ export default function Step2Input({
   const [regularTime, setRegularTime] = React.useState<string>('') // 정기일정(시간)을 저장하는 상태
 
   const [count, setCount] = React.useState<number>(0) //스터디 모집인원
+  const [isValid, setIsValid] = React.useState(false)
   const handleIncrease = () => {
     setCount(count < 10 ? count + 1 : 10)
   }
@@ -81,13 +82,32 @@ export default function Step2Input({
     }
   }, [enddate])
 
+  React.useEffect(() => {
+    setIsValid(
+      curriculum.trim() !== '' &&
+        // startdate.trim() !== '' &&
+        // enddate.trim() !== '' &&
+        count > 0 &&
+        selectedTags.length > 0,
+    )
+  }, [curriculum, startdate, enddate, count, selectedTags])
+
   const handleNext = () => {
+    const addOneDay = (date: Date | null | undefined): Date | null => {
+      if (!date) return null
+      const newDate = new Date(date)
+      newDate.setDate(newDate.getDate() + 1) // 하루 더하기
+      return newDate
+    }
+    const correctStartDate = addOneDay(startdate)
+    const correctEndDate = addOneDay(enddate)
+
     onNext({
       curriculum,
       max_member: count,
       tags: selectedTags,
-      start_date: startdate ? startdate.toISOString() : null,
-      end_date: enddate ? enddate.toISOString() : null,
+      start_date: correctStartDate ? correctStartDate.toISOString() : null,
+      end_date: correctEndDate ? correctEndDate.toISOString() : null,
     })
   }
 
@@ -303,12 +323,18 @@ export default function Step2Input({
             </Button>
           </Link>
 
-          <Button
-            className="w-[220px] flex-initial border-[1px] border-solid"
-            onClick={handleNext}
-          >
-            작성완료
-          </Button>
+          {isValid ? (
+            <Button
+              className="w-[220px] flex-initial border-[1px] border-solid"
+              onClick={handleNext}
+            >
+              작성완료
+            </Button>
+          ) : (
+            <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
+              내용이 부족해요!
+            </Button>
+          )}
 
           {/* 비활성화 상태일때 */}
           {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
