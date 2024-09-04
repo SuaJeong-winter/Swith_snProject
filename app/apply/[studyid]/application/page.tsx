@@ -99,7 +99,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">1명 </span>/
+            <span className="text-meetie-blue-4">1명 </span>/{' '}
             {studyData.max_member - 1}명
           </p>
         </div>
