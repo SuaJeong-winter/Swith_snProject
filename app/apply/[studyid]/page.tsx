@@ -124,8 +124,10 @@ export default function ApplyIntroPage({
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">1명 </span>/{' '}
-            {studyData.max_member - 1}명
+            <span className="text-meetie-blue-4">
+              {studyData.max_member - studyData.member.length}명
+            </span>
+            / {studyData.max_member}명
           </p>
         </div>
         <Link href={`/apply/${params.studyid}/application`}>
