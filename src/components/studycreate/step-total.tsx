@@ -179,7 +179,9 @@ export default function TotalInput({
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 기간</h2>
-          <h2 className="font-medium">2024.07.26~2024.08.31</h2>
+          <h2 className="font-medium">
+            {studyData.start_date}~{studyData.end_date}
+          </h2>
         </div>
         <div className="space-y-2 px-[120px] pt-8">
           <Link href="established ">

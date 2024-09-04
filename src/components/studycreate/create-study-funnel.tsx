@@ -127,8 +127,8 @@ export default function CreateStudyPage() {
                   goal: step2Data.goal,
                   info: step2Data.info,
                   curriculum: step2Data.curriculum,
-                  start_date: step2Data.start_date, // Insert start_date
-                  end_date: step2Data.end_date, // Insert end_date
+                  start_date: step2Data.start_date,
+                  end_date: step2Data.end_date,
                   max_member: step2Data.max_member,
                   tags: step2Data.tags,
                   writing_datetime: new Date(),
