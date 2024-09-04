@@ -39,12 +39,7 @@ export default function SearchStudy() {
 
   useEffect(() => {
     onFilterStudys(tags)
-  }, [tags])
-
-  // useEffect(() => {
-  //   onUserBookmark()
-  // }, [])
-  // console.log(bookmark)
+  }, [tags, onFilterStudys])
 
   return (
     <>
@@ -84,6 +79,7 @@ export default function SearchStudy() {
           <label htmlFor="recruitNow">모집중만 보기</label>
         </div>
         {/* 스터디 리스트 */}
+
         <div className="flex flex-col gap-5 pb-14">
           {loading && (
             <div className="flex flex-col gap-3">

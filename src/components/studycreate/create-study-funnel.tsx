@@ -19,8 +19,8 @@ type Step1Data = {
   goal?: string
   info?: string
   curriculum?: string
-  // start_date?: Date
-  // end_date?: Date
+  start_date?: Date
+  end_date?: Date
   // regulardays?: string
   // regulartime?: string
   max_member?: number
@@ -33,8 +33,8 @@ type Step2Data = {
   goal: string
   info: string
   curriculum?: string
-  // start_date?: Date
-  // end_date?: Date
+  start_date?: Date
+  end_date?: Date
   // regulardays?: string
   // regulartime?: string
   max_member?: number
@@ -42,13 +42,14 @@ type Step2Data = {
 }
 
 type TotalData = {
+  id: string
   recruit_type: string[]
   title: string
   goal: string
   info: string
   curriculum: string
-  // start_date?: Date
-  // end_date?: Date
+  start_date?: Date
+  end_date?: Date
   // regulardays?: string
   // regulartime?: string
   max_member: number
@@ -83,8 +84,38 @@ export default function CreateStudyPage() {
       )}
       Step2Data={({ context, history }) => (
         <Step2Input
-          onNext={async ({ curriculum, max_member, tags }) => {
-            const step2Data = { ...context, curriculum, max_member, tags }
+          onNext={async ({
+            curriculum,
+            start_date,
+            end_date,
+            max_member,
+            tags,
+          }) => {
+            const {
+              data: { session },
+              error: sessionError,
+            } = await supabase.auth.getSession()
+
+            if (sessionError) {
+              console.error('Error fetching session:', sessionError)
+              return
+            }
+
+            const userUuid = session?.user?.id // 사용자 UUID
+
+            if (!userUuid) {
+              console.error('User is not authenticated')
+              return
+            }
+
+            const step2Data = {
+              ...context,
+              curriculum,
+              start_date: start_date ? new Date(start_date) : undefined, // Date 처리
+              end_date: end_date ? new Date(end_date) : undefined, // Date 처리
+              max_member,
+              tags,
+            }
             console.log('Step 2 데이터:', step2Data)
             // Supabase insert
             const { data, error } = await supabase
@@ -96,9 +127,13 @@ export default function CreateStudyPage() {
                   goal: step2Data.goal,
                   info: step2Data.info,
                   curriculum: step2Data.curriculum,
+                  start_date: step2Data.start_date,
+                  end_date: step2Data.end_date,
                   max_member: step2Data.max_member,
                   tags: step2Data.tags,
                   writing_datetime: new Date(),
+                  owner: userUuid,
+                  member: [userUuid],
                 },
               ])
               .select()
@@ -108,18 +143,25 @@ export default function CreateStudyPage() {
             } else {
               console.log('Insert successful, data:', data)
               // 성공적으로 삽입되면 다음 단계로 이동
-              history.push('TotalData', step2Data)
+              if (data && data.length > 0) {
+                const studyId = data[0].id // 삽입된 스터디의 ID
+                history.push('TotalData', { ...step2Data, id: studyId })
+              } else {
+                console.error('No study data returned')
+              }
             }
           }}
         />
       )}
       TotalData={({ context }) => (
         <TotalInput
+          id={context.id}
           recruit_type={context.recruit_type}
           title={context.title}
           goal={context.goal}
           info={context.info}
           curriculum={context.curriculum}
+          start_date={context.start_date || new Date()}
           max_member={context.max_member}
           tags={context.tags}
         />
