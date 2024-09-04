@@ -161,6 +161,7 @@ export default function CreateStudyPage() {
           goal={context.goal}
           info={context.info}
           curriculum={context.curriculum}
+          start_date={context.start_date || new Date()}
           max_member={context.max_member}
           tags={context.tags}
         />

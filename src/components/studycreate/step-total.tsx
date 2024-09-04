@@ -14,6 +14,7 @@ type TotalInputProps = {
   goal: string
   info: string
   curriculum: string
+  start_date: Date
   max_member: number
   tags: string[]
 }
@@ -27,12 +28,22 @@ export default function TotalInput({
   goal,
   info,
   curriculum,
+  start_date,
   max_member,
   tags,
 }: TotalInputProps) {
   const [studyData, setStudyData] = useState<any>(null)
   const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
+
+  const startDate = new Date(studyData?.start_date || start_date) // 스터디 시작일
+  const currentDate = new Date() // 현재 시간
+  const diffInMilliseconds = startDate.getTime() - currentDate.getTime()
+  const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24)) // D-Day 계산
+
+  console.log('현재 날짜:', currentDate)
+  console.log('스터디 시작일:', startDate)
+  console.log('D-Day 차이:', diffInDays)
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -58,6 +69,8 @@ export default function TotalInput({
       } else {
         setStudyData(data)
         setLoading(false)
+        console.log('start_date:', data.start_date) // Log start_date
+        console.log('writing_datetime:', data.writing_datetime) // Log writing_datetime
       }
     }
     fetchSession()
@@ -79,13 +92,23 @@ export default function TotalInput({
       <div className="px-3">
         <div className="flex flex-row items-center space-x-4 space-y-2 pt-[60px]">
           <h2 className="text-lg font-bold"> {studyData.title}</h2>
-          <Button
-            className="m-8 w-[60px] rounded-3xl"
-            variant="outline"
-            size="sm"
-          >
-            D-12
-          </Button>
+          {diffInDays == 0 ? (
+            <Button
+              className="m-8 w-[50px] rounded-3xl"
+              variant="outline"
+              size="sm"
+            >
+              D-Day
+            </Button>
+          ) : (
+            <Button
+              className="m-8 w-[50px] rounded-3xl"
+              variant="outline"
+              size="sm"
+            >
+              D-{diffInDays}
+            </Button>
+          )}
         </div>
 
         <div className="mt-3 grid grid-cols-4 gap-1">
