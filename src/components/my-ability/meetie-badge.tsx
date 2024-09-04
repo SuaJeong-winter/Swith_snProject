@@ -90,38 +90,92 @@ export default function MeetieBadge({
               </div>
             </div>
             <div className="pb-1 text-xs font-semibold text-gray-600">
-              {point}p 모으기
+              {badgename === '밋티 뉴비'
+                ? 100
+                : badgename === '밋티 러너'
+                  ? 300
+                  : 500}
+              p 모으기
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
               <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">500</span>
-                <span className="text-xs text-white">/{point}</span>
+                <span className="text-xs text-white">
+                  {Number(point) < 101
+                    ? 100
+                    : Number(point) < 301
+                      ? 300
+                      : Number(point)}
+                </span>
+                <span className="text-xs text-white">
+                  /
+                  {badgename === '밋티 뉴비'
+                    ? 100
+                    : badgename === '밋티 러너'
+                      ? 300
+                      : 500}
+                </span>
               </div>
             </div>
 
             <div className="pb-1 pt-3 text-xs font-semibold text-gray-600">
-              댓글 {commentcount}회 남기기
+              {badgename === '밋티 뉴비'
+                ? 10
+                : badgename === '밋티 러너'
+                  ? 30
+                  : 50}
+              회 남기기
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
               <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">50</span>
-                <span className="text-xs text-white">/{commentcount}</span>
+                <span className="text-xs text-white">
+                  {Number(commentcount) < 11
+                    ? 10
+                    : Number(commentcount) < 31
+                      ? 30
+                      : Number(commentcount)}
+                </span>
+                <span className="text-xs text-white">
+                  /
+                  {badgename === '밋티 뉴비'
+                    ? 10
+                    : badgename === '밋티 러너'
+                      ? 30
+                      : 50}
+                </span>
               </div>
             </div>
 
             <div className="pb-1 pt-3 text-xs font-semibold text-gray-600">
-              방장 {hostcount}회 달성
+              {badgename === '밋티 뉴비'
+                ? 1
+                : badgename === '밋티 러너'
+                  ? 3
+                  : 5}
+              회 달성
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
               <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">5</span>
-                <span className="text-xs text-white">/{hostcount}</span>
+                <span className="text-xs text-white">
+                  {Number(hostcount) < 2
+                    ? 1
+                    : Number(hostcount) < 4
+                      ? 3
+                      : Number(hostcount)}
+                </span>
+                <span className="text-xs text-white">
+                  /
+                  {badgename === '밋티 뉴비'
+                    ? 1
+                    : badgename === '밋티 러너'
+                      ? 3
+                      : 5}
+                </span>
               </div>
             </div>
           </div>

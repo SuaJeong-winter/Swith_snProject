@@ -30,9 +30,14 @@ export default function StudyCard({
         <CardHeader>
           <div className="flex justify-between">
             <CardDescription>
-              {types.map((type, idx) => (
-                <span key={type + idx}>{type} </span>
-              ))}
+              <div className="flex flex-row">
+                {types.map((type, idx) => (
+                  <span key={type + idx}>
+                    {type}
+                    {idx < type.length - 1 && '|'}{' '}
+                  </span>
+                ))}
+              </div>
             </CardDescription>
             <BookmarkOff />
             {/* <BookmarkOn /> */}

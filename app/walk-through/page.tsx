@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import WalkThroughCarousel from '~/components/walk-through/walk-through-carousel'
 
 export default function WalkThrough() {

@@ -14,34 +14,20 @@ import MeetieMaster from '~/assets/badge_meetie-master.svg'
 import InfoVector from '~/assets/icon_info_vector.svg'
 import useUserController from '~/hooks/useUserController'
 import { useEffect } from 'react'
+import { userSignout } from '~/apis/signout-rls'
 
 export default function Home() {
-  // const res = await fetch(
-  //   'https://2cda2bdc-f43f-42c4-862d-6bee7ed3fd16.mock.pstmn.io/user/01',
-  //   {
-  //     cache: 'no-cache',
-  //   },
-  // )
-  // const user = await res.json()
-  // console.log(user)
-
-  // const res2 = await fetch(
-  //   'https://bca20514-f73e-4685-b1ad-7ad95c1392b9.mock.pstmn.io/meetiebadge/01',
-  //   {
-  //     cache: 'no-cache',
-  //   },
-  // )
-  // const meetiebadge = await res2.json()
-  // console.log(meetiebadge)
-
   const { user } = useUserController()
   console.log(user[0]?.name)
   // user.map((u) => console.log(u.name))
   // console.log(user)
   return (
     <div className="items-left flex min-h-dvh flex-col justify-center bg-background from-[hsla(239,100%,95%,1)] from-0% to-background to-50% p-3">
-      <div className="items-left flex flex-col pb-8">
+      <div className="flex justify-between pb-8">
         <span className="text-lg font-bold">마이페이지</span>
+        <Button variant="secondary" size="sm" onClick={(e) => userSignout()}>
+          로그아웃
+        </Button>
       </div>
 
       <div className="items-left flex justify-between">
@@ -55,11 +41,7 @@ export default function Home() {
         <div className="items-right flex pl-8 pt-3">
           <div className="items-left flex flex-col pt-7">
             <Link href="/mypage/open-profile">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-4/1 border text-purple-600"
-              >
+              <Button variant="outline" size="sm" className="w-4/1">
                 공개 프로필
               </Button>
             </Link>
@@ -152,8 +134,11 @@ export default function Home() {
       <div className="relative">
         <button className="flex w-full items-center rounded bg-white py-2 text-sm text-black">
           <div className="flex items-center">
-            <MyStudyPrev className="mr-2" /> 지난 스터디
-            <span className="pl-2 font-bold">2</span>
+            <MyStudyPrev className="mr-2" />
+            <span className="mr-2">지난 스터디</span>
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#EDF1FF]">
+              <span className="font-bold text-purple-600">2</span>
+            </div>
           </div>
           <MyStudyOpen className="absolute right-4 top-1/2 -translate-y-1/2 transform" />
         </button>
