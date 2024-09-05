@@ -6,7 +6,7 @@ export default function NoResult() {
       <div className="mt-10 text-center">
         <Exclamation className="mx-auto mb-5" />
         <h3 className="text-xl font-bold text-primary">
-          일치하는 스터디가 없어요.
+          일치하는 결과가 없어요.
         </h3>
       </div>
     </>

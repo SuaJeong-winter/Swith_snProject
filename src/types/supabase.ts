@@ -11,27 +11,24 @@ export type Database = {
     Tables: {
       Assignment: {
         Row: {
-          deadline: string | null
+          deadline: Date
           description: string | null
           id: string
           study_id: string
-          submit_member: string[] | null
           verificationMethod: string | null
         }
         Insert: {
-          deadline?: string | null
+          deadline?: Date
           description?: string | null
           id: string
           study_id: string
-          submit_member?: string[] | null
           verificationMethod?: string | null
         }
         Update: {
-          deadline?: string | null
+          deadline?: Date
           description?: string | null
           id?: string
           study_id?: string
-          submit_member?: string[] | null
           verificationMethod?: string | null
         }
         Relationships: [
@@ -79,21 +76,21 @@ export type Database = {
           description: string
           id: string
           place: string | null
-          schedule: string | null
+          schedule: Date
           study_id: string | null
         }
         Insert: {
           description: string
           id?: string
           place?: string | null
-          schedule?: string | null
+          schedule?: Date
           study_id?: string | null
         }
         Update: {
           description?: string
           id?: string
           place?: string | null
-          schedule?: string | null
+          schedule?: Date
           study_id?: string | null
         }
         Relationships: [
@@ -321,6 +318,26 @@ export type Database = {
             referencedColumns: ['id']
           },
         ]
+      }
+      StudyroomTest: {
+        Row: {
+          timestamp: Date
+          description: string
+          id: string
+          photo: string
+        }
+        Insert: {
+          timestamp: Date
+          description: string
+          id?: string
+          photo: string
+        }
+        Update: {
+          description?: string
+          id?: string
+          photo?: string
+        }
+        Relationships: []
       }
     }
     Views: {

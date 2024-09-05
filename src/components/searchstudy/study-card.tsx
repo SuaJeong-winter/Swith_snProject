@@ -1,3 +1,5 @@
+'use client'
+
 import BookmarkOff from '~/assets/searchStudy/icon_bookmark-off.svg'
 import BookmarkOn from '~/assets/searchStudy/icon_bookmark-on.svg'
 import CalendarMini from '~/assets/searchStudy/icon_calendar-mini.svg'
@@ -10,6 +12,8 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
+import { Button } from '../ui/button'
+import { useState } from 'react'
 
 export default function StudyCard({
   title,
@@ -17,13 +21,21 @@ export default function StudyCard({
   tags,
   startdate,
   enddate,
+  sutdyId,
 }: {
   title: string
   types: string[]
   tags: string[]
   startdate: string | null
   enddate: string | null
+  sutdyId: any
 }) {
+  const [bookmark, setBookmark] = useState(false)
+
+  const handleBookmark = () => {
+    setBookmark(!bookmark)
+  }
+
   return (
     <>
       <Card>
@@ -34,13 +46,18 @@ export default function StudyCard({
                 {types?.map((type, idx) => (
                   <span key={type + idx}>
                     {type}
-                    {idx < type.length - 1 && '|'}{' '}
+                    {idx < type.length - 1 && ' | '}
                   </span>
                 ))}
               </div>
             </CardDescription>
-            <BookmarkOff />
-            {/* <BookmarkOn /> */}
+            <Button
+              variant="secondary"
+              className="p-0"
+              onClick={handleBookmark}
+            >
+              {bookmark ? <BookmarkOn /> : <BookmarkOff />}
+            </Button>
           </div>
           <CardTitle>{title}</CardTitle>
         </CardHeader>

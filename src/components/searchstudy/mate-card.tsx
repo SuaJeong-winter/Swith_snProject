@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import OpenProfile from '~/assets/searchStudy/icon_arrow-circle.svg'
 import { Button } from '~/components/ui/button'
 import {
@@ -12,21 +13,25 @@ export default function MateCard({
   userName,
   jobType,
   userType,
+  profileImg,
 }: {
   userName: string
   jobType: string
   userType: string[]
+  profileImg: string
 }) {
   return (
     <>
       <Card className="relative border-none px-0 py-4 shadow-none">
         <OpenProfile className="absolute right-3 top-3" />
         <CardHeader className="items-center px-2">
-          {/* 임시 프로필 이미지 dummy */}
-          <div className="mb-2 h-14 w-14 rounded-full bg-black">
-            <p>img</p>
-          </div>
-          {/* <Image src="" alt="profile image" /> */}
+          <Image
+            src={profileImg}
+            width={56}
+            height={56}
+            className="rounded-full"
+            alt={`${userName} profile image`}
+          />
           <CardTitle className="font-bold">{userName}</CardTitle>
           <CardDescription className="text-meetie-gray-40">
             {jobType}
