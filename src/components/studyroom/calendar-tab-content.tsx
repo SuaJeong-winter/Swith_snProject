@@ -128,6 +128,7 @@ export default function StudyroomCalendar() {
         />
         {/* 해당 일자의 일정 영역 */}
         {renderSelectedDateContents()}
+        {renderSelectedDateContents()}
       </section>
     </>
   )

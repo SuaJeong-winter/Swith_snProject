@@ -1,26 +1,28 @@
 import { useState } from 'react'
-import { postTest } from '~/apis/onboarding-rls'
-import { getUser } from '~/apis/user-rls'
+import { postOnboarding, testPost } from '~/apis/onboarding-rls'
 
 const useOnboardingController = () => {
-  const [test, setTest] = useState<any>()
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<any[]>([])
 
-  const onGetUser = async () => {
-    const result = await getUser()
-    setUser(result)
-  }
-
-  const onPostData = async (userID: any) => {
+  const onPostProfiles = async ({
+    job,
+    purpose,
+    personality,
+    period,
+  }: {
+    job: string
+    purpose: string[]
+    personality: string[]
+    period: string | null
+  }) => {
     try {
-      const result = await postTest(userID)
-      setTest(result)
+      const result = await postOnboarding({ job, purpose, personality, period })
     } catch (error) {
       console.error(error)
     }
   }
 
-  return { onPostData, test, onGetUser, user }
+  return { onPostProfiles }
 }
 
 export default useOnboardingController
