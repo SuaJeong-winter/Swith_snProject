@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
+import useUserController from '~/hooks/useUserController'
 
 const PURPOSES = [
   '자기 개발',
@@ -19,7 +20,8 @@ export default function PurposeStep({
   onNext: (purpose: string[]) => void
 }) {
   const [purpose, setPurpose] = useState<string[]>([])
-
+  const { user } = useUserController()
+  const [userData] = user
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
       <div className="flex w-full flex-col">
@@ -30,7 +32,7 @@ export default function PurposeStep({
       </div>
       <div className="flex w-full flex-col px-4">
         <h2 className="mt-16 text-2xl font-semibold text-meetie-gray-90">
-          김서희님의
+          {userData?.username}님의
           <br />
           스터디 목적은 무엇인가요?
         </h2>

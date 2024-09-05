@@ -8,6 +8,7 @@ import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 import type { FormState } from '~/components/on-boarding/on-boarding-funnel'
 import { useRouter } from 'next/navigation'
 import useOnboardingController from '~/hooks/useOnboardingController'
+import useUserController from '~/hooks/useUserController'
 
 const PERIODS = [
   '1개월 이내',
@@ -34,6 +35,8 @@ export default function PeriodStep({
     onPostProfiles({ ...context, period })
     router.push('/on-boarding/done')
   }
+  const { user } = useUserController()
+  const [userData] = user
 
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
@@ -45,7 +48,7 @@ export default function PeriodStep({
       </div>
       <div className="flex w-full flex-col px-4">
         <h2 className="mt-16 text-2xl font-semibold text-meetie-gray-90">
-          김서희님의
+          {userData?.username}님의
           <br />
           예상 스터디 기간은 얼마인가요?
         </h2>

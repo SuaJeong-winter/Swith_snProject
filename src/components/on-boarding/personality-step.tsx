@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
+import useUserController from '~/hooks/useUserController'
 
 const PERSONALITIES = [
   ['주도적인', '열정적인', '손이 빠른'],
@@ -19,7 +20,8 @@ export default function PersonalityStep({
   onNext: (personality: string[]) => void
 }) {
   const [personality, setPersonality] = useState<string[]>([])
-
+  const { user } = useUserController()
+  const [userData] = user
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
       <div className="flex w-full flex-col">
@@ -30,7 +32,7 @@ export default function PersonalityStep({
       </div>
       <div className="flex w-full flex-col px-4">
         <h2 className="mt-16 text-2xl font-semibold text-meetie-gray-90">
-          김서희님은
+          {userData?.username}님은
           <br />
           어떤 스타일이신가요?
         </h2>
