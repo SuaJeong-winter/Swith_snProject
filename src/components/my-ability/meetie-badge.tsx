@@ -22,10 +22,23 @@ export default function MeetieBadge({
   hostcount,
 }: {
   badgename: string
-  point: string
+  point: number
   commentcount: string
   hostcount: string
 }) {
+  if (point > 500 && badgename === '밋티 마스터') {
+    point = 500
+  } else if (point > 300 && badgename === '밋티 러너') {
+    point = 300
+  } else if (point > 100 && badgename === '밋티 뉴비') {
+    point = 100
+  }
+  // if (point >= 301 && badgename === '밋티 러너') {
+  //   point = 300
+  // } else if (point >= 101 && badgename === '밋티 뉴비') {
+  //   point = 100
+  // }
+  console.log(point)
   return (
     <>
       <Drawer>
@@ -106,13 +119,7 @@ export default function MeetieBadge({
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
               <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">
-                  {Number(point) < 101
-                    ? 100
-                    : Number(point) < 301
-                      ? 300
-                      : Number(point)}
-                </span>
+                <span className="text-xs text-white">{point}</span>
                 <span className="text-xs text-white">
                   /
                   {badgename === '밋티 뉴비'

@@ -10,6 +10,7 @@ import MyStudyPeople from '~/assets/icon_studypeople.svg'
 import { Card } from '~/components/ui/card'
 import useUserController from '~/hooks/useUserController'
 import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
+import UserProfileImg from '~/components/common/user-profile-img'
 
 export default function OpenProfile() {
   const { user } = useUserController()
@@ -28,7 +29,7 @@ export default function OpenProfile() {
         </div>
 
         <div className="flex flex-col items-center pt-8">
-          <OpenProfileimage className="justify-between" />
+          <UserProfileImg />
           <span className="pt-2 text-lg font-semibold">{user[0]?.name}</span>
           <span className="pt-1 text-xs">{user[0]?.['job_type']}</span>
         </div>
