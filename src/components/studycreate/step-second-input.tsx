@@ -28,14 +28,13 @@ export default function Step2Input({
     tags: string[]
     start_date: string | null
     end_date: string | null
+    regular_time: string
   }) => void
 }) {
   const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
   const [startdate, setStartDate] = React.useState<Date | null>() //시작일
   const [enddate, setEndDate] = React.useState<Date | null>() //종료일
-
   const [regularTime, setRegularTime] = React.useState<string>('') // 정기일정(시간)을 저장하는 상태
-
   const [count, setCount] = React.useState<number>(0) //스터디 모집인원
   const [isValid, setIsValid] = React.useState(false)
   const handleIncrease = () => {
@@ -87,8 +86,9 @@ export default function Step2Input({
       curriculum.trim() !== '' &&
         // startdate.trim() !== '' &&
         // enddate.trim() !== '' &&
-        count > 0 &&
-        selectedTags.length > 0,
+        regularTime.trim() !== '' &&
+        count > 0,
+      // selectedTags.length > 0,
     )
   }, [curriculum, startdate, enddate, count, selectedTags])
 
@@ -108,6 +108,7 @@ export default function Step2Input({
       tags: selectedTags,
       start_date: correctStartDate ? correctStartDate.toISOString() : null,
       end_date: correctEndDate ? correctEndDate.toISOString() : null,
+      regular_time: regularTime.slice(0, 5),
     })
   }
 
@@ -300,7 +301,13 @@ export default function Step2Input({
               className="grid grid-cols-3 gap-1 pt-3 text-sm"
             >
               {allTags.map((tag, index) => (
-                <ChipGroupItem key={index} value={tag}>
+                <ChipGroupItem
+                  key={index}
+                  value={tag}
+                  disabled={
+                    !selectedTags.includes(tag) && selectedTags.length >= 4
+                  }
+                >
                   {tag}
                   {/* tag는 변수명 온라인 index는 배열 allTags의 index값 */}
                 </ChipGroupItem>
@@ -335,11 +342,6 @@ export default function Step2Input({
               내용이 부족해요!
             </Button>
           )}
-
-          {/* 비활성화 상태일때 */}
-          {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
-      내용이 부족해요!
-    </Button> */}
         </div>
       </section>
     </>

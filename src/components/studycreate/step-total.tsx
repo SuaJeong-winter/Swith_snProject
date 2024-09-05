@@ -15,6 +15,7 @@ type TotalInputProps = {
   info: string
   curriculum: string
   start_date: Date
+  regular_time: string
   max_member: number
   tags: string[]
 }
@@ -29,6 +30,7 @@ export default function TotalInput({
   info,
   curriculum,
   start_date,
+  regular_time,
   max_member,
   tags,
 }: TotalInputProps) {
@@ -181,6 +183,8 @@ export default function TotalInput({
           <h2 className="font-bold">스터디 기간</h2>
           <h2 className="font-medium">
             {studyData.start_date}~{studyData.end_date}
+            <br />
+            매주 ~~요일 {studyData.regular_time.slice(0, 5)}
           </h2>
         </div>
         <div className="space-y-2 px-[120px] pt-8">
