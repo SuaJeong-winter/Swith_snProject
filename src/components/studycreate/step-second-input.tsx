@@ -28,14 +28,15 @@ export default function Step2Input({
     tags: string[]
     start_date: string | null
     end_date: string | null
+    regular_days: string
+    regular_time: string
   }) => void
 }) {
   const [curriculum, setCurriculum] = React.useState<string>('') //진행 방식과 커리큘럼
   const [startdate, setStartDate] = React.useState<Date | null>() //시작일
   const [enddate, setEndDate] = React.useState<Date | null>() //종료일
-
+  const [regulardays, setRegularDays] = React.useState<string>('') //정기 요일 저장
   const [regularTime, setRegularTime] = React.useState<string>('') // 정기일정(시간)을 저장하는 상태
-
   const [count, setCount] = React.useState<number>(0) //스터디 모집인원
   const [isValid, setIsValid] = React.useState(false)
   const handleIncrease = () => {
@@ -87,10 +88,11 @@ export default function Step2Input({
       curriculum.trim() !== '' &&
         // startdate.trim() !== '' &&
         // enddate.trim() !== '' &&
-        count > 0 &&
-        selectedTags.length > 0,
+        regularTime.trim() !== '' &&
+        count > 0,
+      // selectedTags.length > 0,
     )
-  }, [curriculum, startdate, enddate, count, selectedTags])
+  }, [curriculum, startdate, enddate, regularTime, count, selectedTags])
 
   const handleNext = () => {
     const addOneDay = (date: Date | null | undefined): Date | null => {
@@ -108,6 +110,8 @@ export default function Step2Input({
       tags: selectedTags,
       start_date: correctStartDate ? correctStartDate.toISOString() : null,
       end_date: correctEndDate ? correctEndDate.toISOString() : null,
+      regular_days: regulardays,
+      regular_time: regularTime.slice(0, 5),
     })
   }
 
@@ -202,54 +206,58 @@ export default function Step2Input({
                       'mt-3 w-[170px] justify-start border-gray-400 text-left font-normal text-black',
                     )}
                   >
-                    <span className="text-gray-400">요일 선택</span>
+                    <span className="text-gray-400">
+                      {regulardays ? regulardays : '요일'}
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="ml-[165px] w-[330px] bg-white">
                   <ToggleGroup
                     variant="outline"
-                    type="multiple"
+                    type="single"
+                    value={regulardays}
+                    onValueChange={(value) => setRegularDays(value)}
                     className="space-x-1"
                   >
                     <ToggleGroupItem
-                      value="mon"
-                      className="aria-pressed:bg-gray-200"
+                      value="월요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       월
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="tue"
-                      className="aria-pressed:bg-gray-200"
+                      value="화요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       화
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="wed"
-                      className="aria-pressed:bg-gray-200"
+                      value="수요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       수
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="thu"
-                      className="aria-pressed:bg-gray-200"
+                      value="목요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       목
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="fri"
-                      className="aria-pressed:bg-gray-200"
+                      value="금요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       금
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="sat"
-                      className="aria-pressed:bg-gray-200"
+                      value="토요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       토
                     </ToggleGroupItem>
                     <ToggleGroupItem
-                      value="sun"
-                      className="aria-pressed:bg-gray-200"
+                      value="일요일"
+                      className="aria-pressed:bg-gray-200 data-[state=on]:bg-gray-300"
                     >
                       일
                     </ToggleGroupItem>
@@ -300,7 +308,13 @@ export default function Step2Input({
               className="grid grid-cols-3 gap-1 pt-3 text-sm"
             >
               {allTags.map((tag, index) => (
-                <ChipGroupItem key={index} value={tag}>
+                <ChipGroupItem
+                  key={index}
+                  value={tag}
+                  disabled={
+                    !selectedTags.includes(tag) && selectedTags.length >= 4
+                  }
+                >
                   {tag}
                   {/* tag는 변수명 온라인 index는 배열 allTags의 index값 */}
                 </ChipGroupItem>
@@ -335,11 +349,6 @@ export default function Step2Input({
               내용이 부족해요!
             </Button>
           )}
-
-          {/* 비활성화 상태일때 */}
-          {/* <Button className="w-[220px] flex-initial border-[1px] border-solid bg-meetie-blue-2">
-      내용이 부족해요!
-    </Button> */}
         </div>
       </section>
     </>
