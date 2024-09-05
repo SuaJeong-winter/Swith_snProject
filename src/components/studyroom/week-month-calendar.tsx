@@ -10,8 +10,8 @@ import CalendarIcon from '~/assets/icon_calendar.svg'
 interface WeekMonthCalendarProps {
   category: 'calendar' | 'assignment'
   onSelectDate: any
-  handleWeeklyMeetup: (date: Date) => Promise<void>
-  handleWeeklyAssignment: (date: Date) => Promise<void>
+  handleWeeklyMeetup?: (date: Date) => Promise<void>
+  handleWeeklyAssignment?: (date: Date) => Promise<void>
 }
 
 export default function WeekMonthCalendar({
@@ -45,8 +45,11 @@ export default function WeekMonthCalendar({
         {days.map((day) => {
           const isToday = isSameDay(day, new Date())
           let isClickedDay = true
+
           if (selectedDate) {
-            isClickedDay = clickedDate === format(day, 'yyyy.MM.dd')
+            isClickedDay =
+              clickedDate === format(day, 'yyyy.MM.dd') ||
+              clickedDate === format(day, 'M월 d일 EEEE', { locale: ko })
           }
           return (
             <div
@@ -88,11 +91,11 @@ export default function WeekMonthCalendar({
   }
 
   useEffect(() => {
-    if (selectedDate) {
+    if (selectedDate && handleWeeklyMeetup && handleWeeklyAssignment) {
       handleWeeklyMeetup(selectedDate)
       handleWeeklyAssignment(selectedDate)
     }
-  }, [selectedDate])
+  }, [selectedDate, handleWeeklyMeetup, handleWeeklyAssignment])
 
   return (
     <div className="bg-[#f9f9f9] py-4">

@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import WeekMonthCalendar from './week-month-calendar'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { format } from 'date-fns'
 import useAssignmentController from '~/hooks/useAssignmentController'
 import useMeetupController from '~/hooks/useMeetupController'
@@ -127,7 +127,6 @@ export default function StudyroomCalendar() {
           handleWeeklyAssignment={onGetAssignmentCalendar}
         />
         {/* 해당 일자의 일정 영역 */}
-        {renderSelectedDateContents()}
         {renderSelectedDateContents()}
       </section>
     </>
