@@ -15,6 +15,7 @@ type TotalInputProps = {
   info: string
   curriculum: string
   start_date: Date
+  regular_days: string
   regular_time: string
   max_member: number
   tags: string[]
@@ -30,6 +31,7 @@ export default function TotalInput({
   info,
   curriculum,
   start_date,
+  regular_days,
   regular_time,
   max_member,
   tags,

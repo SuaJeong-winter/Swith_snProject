@@ -139,6 +139,7 @@ export default function CreateStudyPage() {
                   tags: step2Data.tags,
                   writing_datetime: new Date(),
                   owner: userUuid,
+                  status: false,
                   member: [userUuid],
                 },
               ])
@@ -168,7 +169,7 @@ export default function CreateStudyPage() {
           info={context.info}
           curriculum={context.curriculum}
           start_date={context.start_date || new Date()}
-          regular_days={context.regular_days}
+          regular_days={context.regular_days || ''}
           regular_time={context.regular_time}
           max_member={context.max_member}
           tags={context.tags}
