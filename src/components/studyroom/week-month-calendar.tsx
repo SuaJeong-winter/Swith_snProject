@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Calendar } from '~/components/ui/calendar'
 import { startOfWeek, format, addDays, isSameDay } from 'date-fns'
@@ -10,17 +10,23 @@ import CalendarIcon from '~/assets/icon_calendar.svg'
 interface WeekMonthCalendarProps {
   category: 'calendar' | 'assignment'
   onSelectDate: any
+  handleWeeklyMeetup: (date: Date) => Promise<void>
+  handleWeeklyAssignment: (date: Date) => Promise<void>
 }
 
 export default function WeekMonthCalendar({
   category,
   onSelectDate,
+  handleWeeklyMeetup,
+  handleWeeklyAssignment,
 }: WeekMonthCalendarProps) {
   const [isMonthView, setIsMonthView] = useState(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+  const [clickedDate, setClickedDate] = useState('')
 
   const handleDateClick = (date: string) => {
     onSelectDate(date)
+    setClickedDate(date)
   }
 
   const toggleView = () => {
@@ -38,6 +44,10 @@ export default function WeekMonthCalendar({
       <div className="flex justify-center space-x-3">
         {days.map((day) => {
           const isToday = isSameDay(day, new Date())
+          let isClickedDay = true
+          if (selectedDate) {
+            isClickedDay = clickedDate === format(day, 'yyyy.MM.dd')
+          }
           return (
             <div
               key={day}
@@ -58,11 +68,11 @@ export default function WeekMonthCalendar({
                       : format(day, 'M월 d일 EEEE', { locale: ko }),
                   )
                 }
-                className={`mt-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#f4f4f4] active:bg-meetie-blue-2 ${
+                className={`mt-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full active:bg-meetie-blue-2 ${
                   isToday
                     ? 'border-2 border-meetie-blue-4'
                     : 'border border-meetie-gray-20'
-                }`}
+                } ${isClickedDay ? 'bg-meetie-blue-2' : 'bg-[#f4f4f4]'}`}
               >
                 {format(day, 'd')}
               </div>
@@ -72,9 +82,17 @@ export default function WeekMonthCalendar({
       </div>
     )
   }
+
   const getMonthYear = (date: any) => {
     return format(date, 'MMMM', { locale: ko })
   }
+
+  useEffect(() => {
+    if (selectedDate) {
+      handleWeeklyMeetup(selectedDate)
+      handleWeeklyAssignment(selectedDate)
+    }
+  }, [selectedDate])
 
   return (
     <div className="bg-[#f9f9f9] py-4">
@@ -102,7 +120,11 @@ export default function WeekMonthCalendar({
           <Calendar
             mode="single"
             selected={selectedDate}
-            onSelect={setSelectedDate}
+            onSelect={(date) => {
+              if (date) {
+                setSelectedDate(date)
+              }
+            }}
             locale={ko}
             weekStartsOn={0}
           />

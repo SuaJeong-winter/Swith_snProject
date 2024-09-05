@@ -14,49 +14,39 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import useStudyroomController from '~/hooks/useStudyroomController'
 
 export default function Assignment() {
   const searchParams = useSearchParams()
   const description = searchParams.get('description')
   const method = searchParams.get('method')
-
   const [preview, setPreview] = useState('')
+
+  const { register, handleSubmit, setValue, reset } = useForm()
+  const { handleAddImage, handleDeleteImage, handleInsertData } =
+    useStudyroomController()
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       const imageUrl = URL.createObjectURL(file)
       setPreview(imageUrl)
-      setValue('file', file)
+      handleAddImage(file).then((url) => {
+        if (url) {
+          setValue('file', url)
+        }
+      })
     }
   }
   const deleteFile = () => {
+    handleDeleteImage()
     setPreview('')
     setValue('file', '')
   }
 
-  const { register, handleSubmit, setValue, reset } = useForm()
   const onSubmit = async (data: any) => {
-    const formData = new FormData()
-    formData.append('file', data.file)
-    formData.append('text', data.text)
-
-    console.log(formData.get('file'), formData.get('text'))
-    // try {
-    //   const response = await fetch('/api/save', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-
-    //   if (response.ok) {
-    //     reset() // 폼 초기화
-    //   } else {
-    //     alert('저장에 실패했습니다.')
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error)
-    //   alert('저장 중 오류가 발생했습니다.')
-    // }
+    handleInsertData(data.text, data.file)
+    reset()
   }
 
   return (
@@ -73,7 +63,7 @@ export default function Assignment() {
             <h2 className="text-xl font-bold">{description}</h2>
             <p className="text-meetie-gray-40">{method}</p>
           </div>
-          <Card className="w- flex h-44 justify-center bg-[#F5F5F5]">
+          <Card className="flex h-44 justify-center bg-[#F5F5F5]">
             {!preview && (
               <Label htmlFor="assign-pic" className="my-14 block">
                 <div className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-meetie-blue-3">

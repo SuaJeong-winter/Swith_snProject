@@ -6,54 +6,19 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import WeekMonthCalendar from './week-month-calendar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
+import useAssignmentController from '~/hooks/useAssignmentController'
+import useMeetupController from '~/hooks/useMeetupController'
 
 export default function StudyroomCalendar() {
-  interface Data {
-    description: string
-    verificationMethod?: string
-    place?: string
-    // 실제 deadline의 타입은 Date 객체가 될 것
-    deadline: string
-  }
+  const { assignment, onGetAssignmentCalendar } = useAssignmentController()
+  const { meetup, onGetMeetupCalendar } = useMeetupController()
 
-  const data: Data[] = [
-    {
-      description: '딥다이브 1장 읽기',
-      verificationMethod: '사진 찍기',
-      deadline: 'Mon Aug 26 2024 00:00:00 GMT+0900 (한국 표준시)',
-    },
-    {
-      description: '넥스트 프로젝트 초기 설정',
-      verificationMethod: '스크린샷 업로드',
-      deadline: 'Mon Aug 28 2024 18:00:00 GMT+0900 (한국 표준시)',
-    },
-    {
-      description: '딥다이브 2장 읽기',
-      verificationMethod: '마지막장 사진 찍기',
-      deadline: 'Mon Aug 28 2024 21:00:00 GMT+0900 (한국 표준시)',
-    },
-    {
-      description: '딥다이브 3장 읽기',
-      verificationMethod: '마지막장 사진 찍기',
-      deadline: 'Mon Sep 2 2024 21:00:00 GMT+0900 (한국 표준시)',
-    },
-    {
-      description: '킥오프 미팅',
-      place: '줌',
-      deadline: 'Tue Aug 26 2024 21:30:00 GMT+0900 (한국 표준시)',
-    },
-    {
-      description: '2번째 밋업',
-      place: '줌',
-      deadline: 'Tue Aug 27 2024 08:40:00 GMT+0900 (한국 표준시)',
-    },
-  ]
-  const [formattedDate, setFormattedDate] = useState<string>(
+  const [formattedDate, setFormattedDate] = useState(
     format(new Date(), 'yyyy.MM.dd'),
   )
-  const formatDeadline = (deadline: string) => {
+  const formatDeadline = (deadline: Date) => {
     const date = new Date(deadline)
 
     // 시간을 12시간제로 변환
@@ -75,35 +40,60 @@ export default function StudyroomCalendar() {
   }
 
   const renderSelectedDateContents = () => {
-    const contents = data.filter((item) => {
+    const weeklyAssignment = assignment.filter((item) => {
       const formattedDeadline = format(new Date(item.deadline), 'yyyy.MM.dd')
       return formattedDeadline === formattedDate
+    })
+    const weeklyMeetup = meetup.filter((item) => {
+      const formattedSchedule = format(new Date(item.schedule), 'yyyy.MM.dd')
+      return formattedSchedule === formattedDate
     })
 
     return (
       <>
-        {contents.length ? (
-          <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-6 pt-4">
-            {contents.map((content, index) => (
-              <Card key={index}>
-                <div className="flex items-center">
-                  <div className="ml-4 text-center">
-                    {formatDeadline(content.deadline)}
-                  </div>
-                  <CardHeader>
-                    <CardTitle>{content.description}</CardTitle>
-                    <CardDescription>
-                      {content.verificationMethod
-                        ? content.verificationMethod
-                        : content.place}
-                    </CardDescription>
-                  </CardHeader>
-                </div>
-              </Card>
-            ))}
-          </div>
+        {weeklyMeetup.length || weeklyAssignment.length ? (
+          <>
+            {weeklyAssignment.length > 0 && (
+              <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
+                {weeklyAssignment.map((content, index) => (
+                  <Card key={index}>
+                    <div className="flex items-center">
+                      <div className="ml-4 min-w-[70px] text-center">
+                        {formatDeadline(content.deadline)}
+                      </div>
+                      <CardHeader>
+                        <CardTitle className="line-clamp-1">
+                          {content.description}
+                        </CardTitle>
+                        <CardDescription className="line-clamp-1">
+                          {content.verificationMethod}
+                        </CardDescription>
+                      </CardHeader>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+            {weeklyMeetup.length > 0 && (
+              <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
+                {weeklyMeetup.map((content, index) => (
+                  <Card key={index}>
+                    <div className="flex items-center">
+                      <div className="ml-4 text-center">
+                        {formatDeadline(content.schedule)}
+                      </div>
+                      <CardHeader>
+                        <CardTitle>{content.description}</CardTitle>
+                        <CardDescription>{content.place}</CardDescription>
+                      </CardHeader>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
-          <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-6 pt-4">
+          <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
             <Card>
               <div className="flex items-center">
                 <CardHeader>
@@ -125,7 +115,7 @@ export default function StudyroomCalendar() {
       <section>
         <h1 className="px-4 py-2 text-lg font-bold">🤙 팀원과의 약속</h1>
         <p className="pb-4 pl-4 text-sm text-meetie-gray-60">
-          이번 주 일정 및 과제를 확인해 보세요
+          이번 주 과제 및 일정을 확인해 보세요
         </p>
       </section>
       <section>
@@ -133,6 +123,8 @@ export default function StudyroomCalendar() {
         <WeekMonthCalendar
           category="calendar"
           onSelectDate={setFormattedDate}
+          handleWeeklyMeetup={onGetMeetupCalendar}
+          handleWeeklyAssignment={onGetAssignmentCalendar}
         />
         {/* 해당 일자의 일정 영역 */}
         {renderSelectedDateContents()}

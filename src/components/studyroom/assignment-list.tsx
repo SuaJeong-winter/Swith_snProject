@@ -4,11 +4,16 @@ import { format } from 'date-fns'
 import { ko } from 'date-fns/locale'
 import AssignmentItem from './assignment-item'
 import WeekMonthCalendar from './week-month-calendar'
+import useStudyroomController from '~/hooks/useStudyroomController'
+import { Skeleton } from '../ui/skeleton'
 
 export default function AssignmentList() {
   const [selectedDate, setSelectedDate] = useState<string>(
     format(new Date(), 'M월 d일 EEEE', { locale: ko }),
   )
+
+  const { loading, studyroom } = useStudyroomController()
+
   return (
     <>
       <section className="bg-background">
@@ -24,9 +29,28 @@ export default function AssignmentList() {
           onSelectDate={setSelectedDate}
         />
         <ul className="border-t-1 border-meetie-gray-20">
-          <AssignmentItem />
-          <AssignmentItem />
-          <AssignmentItem />
+          {loading && (
+            <div className="flex flex-col items-center gap-3">
+              <Skeleton className="h-[150px] w-[350px] bg-meetie-gray-20" />
+              <Skeleton className="h-[150px] w-[350px] bg-meetie-gray-20" />
+              <Skeleton className="h-[150px] w-[350px] bg-meetie-gray-20" />
+            </div>
+          )}
+          {studyroom.length === 0 && (
+            <div className="flex h-60 items-center justify-center bg-background">
+              <div className="text-sm text-meetie-gray-60">
+                아직 제출된 과제가 없습니다!
+              </div>
+            </div>
+          )}
+          {studyroom.map((item) => (
+            <AssignmentItem
+              key={item.id}
+              description={item.description}
+              photo={item.photo}
+              timestamp={item.timestamp}
+            />
+          ))}
         </ul>
       </section>
     </>
