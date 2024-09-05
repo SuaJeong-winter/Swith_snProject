@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getStudys, filterStudys, searchStudys } from '~/apis/studys-rls'
+import { getUserBookmark } from '~/apis/user-rls'
 import { Database } from '~/types/supabase'
 
 type StudyDto = Database['public']['Tables']['Study']['Row']
@@ -7,6 +8,7 @@ type StudyDto = Database['public']['Tables']['Study']['Row']
 const useStudysController = () => {
   const [loading, setLoading] = useState(false)
   const [studys, setStudys] = useState<StudyDto[]>([])
+  const [bookmark, setBookmark] = useState<any[]>([])
 
   const onGetStudys = async () => {
     setLoading(true)
@@ -43,7 +45,19 @@ const useStudysController = () => {
     }
   }
 
-  return { loading, studys, onFilterStudys, onSearchStudys }
+  const onUserBookmark = async () => {
+    const resultBookmark = await getUserBookmark()
+    if (resultBookmark) setBookmark(resultBookmark)
+  }
+
+  return {
+    loading,
+    studys,
+    onFilterStudys,
+    onSearchStudys,
+    onUserBookmark,
+    bookmark,
+  }
 }
 
 export default useStudysController

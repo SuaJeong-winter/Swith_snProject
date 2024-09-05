@@ -10,8 +10,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
 import useStudysController from '~/hooks/useStudysController'
-import { createClient } from '~/utils/supabase/client'
-import NoResult from './no-result'
+import NoResult from '../common/no-result'
 
 const AllTags = [
   '온라인',
@@ -29,13 +28,18 @@ export default function SearchStudy() {
   const [tags, setTag] = useState<string[]>([])
   // console.log(tags)
 
-  const { loading, studys, onFilterStudys, onSearchStudys } =
-    useStudysController()
+  const {
+    loading,
+    studys,
+    onFilterStudys,
+    onSearchStudys,
+    onUserBookmark,
+    bookmark,
+  } = useStudysController()
 
   useEffect(() => {
     onFilterStudys(tags)
   }, [tags, onFilterStudys])
-  // dependenct 문제로 onFilterStudys 추가
 
   return (
     <>
@@ -94,6 +98,7 @@ export default function SearchStudy() {
                 tags={study.tags}
                 startdate={study['start_date']}
                 enddate={study['end_date']}
+                sutdyId={study.id}
                 key={study.id}
               />
             </Link>

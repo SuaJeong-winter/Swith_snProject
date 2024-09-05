@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { getProfile } from '~/apis/user-rls'
+import { getProfile, getUserAll } from '~/apis/user-rls'
 import { Database } from '~/types/supabase'
-type UserDto = Database['public']['Tables']['User']['Row']
 
 const useUserController = () => {
   const [user, setUser] = useState<any[]>([])
+  const [allUsers, setAllUser] = useState<any[]>([])
   const onGetUser = async () => {
     try {
       const resultUser = await getProfile()
@@ -16,7 +16,18 @@ const useUserController = () => {
   }
   useEffect(() => {
     onGetUser()
+    onGetUserAll()
   }, [])
-  return { user }
+
+  const onGetUserAll = async () => {
+    try {
+      const resultUserAll = await getUserAll()
+      if (resultUserAll) setAllUser(resultUserAll)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return { user, allUsers, onGetUserAll }
 }
 export default useUserController
