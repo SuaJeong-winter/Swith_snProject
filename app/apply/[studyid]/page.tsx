@@ -115,7 +115,11 @@ export default function ApplyIntroPage({
         </div>
         <div className="space-y-2 pt-20">
           <h2 className="font-bold">스터디 기간</h2>
-          <h2 className="font-medium">2024.08.26~2024.09.24</h2>
+          <h2 className="font-medium">
+            {studyData.start_date}~{studyData.end_date}
+            <br />
+            매주 {studyData.regular_days} {studyData.regular_time}
+          </h2>
         </div>
         <div className="space-y-2 pt-20"></div>
       </div>

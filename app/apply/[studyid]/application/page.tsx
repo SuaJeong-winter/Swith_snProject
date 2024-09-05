@@ -41,7 +41,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
       return
     }
 
-    const userId = sessionData.session.user.id
+    const userId = sessionData.session.profiles.id
 
     // 삽입될 데이터를 콘솔에 출력
     const dataToInsert = {
