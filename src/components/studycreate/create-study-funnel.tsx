@@ -139,7 +139,6 @@ export default function CreateStudyPage() {
                   tags: step2Data.tags,
                   writing_datetime: new Date(),
                   owner: userUuid,
-                  status: false,
                   member: [userUuid],
                 },
               ])

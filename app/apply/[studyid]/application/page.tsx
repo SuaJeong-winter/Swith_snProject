@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { getUser } from '~/apis/user-rls'
 import StudyHeader from '~/components/studycreate/study-header'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
@@ -33,21 +34,14 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
   }, [params.studyid])
 
   const handleSubmit = async () => {
-    // Supabase에서 현재 사용자의 세션 정보를 가져옵니다.
-    const { data: sessionData, error: sessionError } =
-      await supabase.auth.getSession()
-    if (sessionError || !sessionData.session) {
-      console.error('Error fetching session:', sessionError)
-      return
-    }
-
-    const userId = sessionData.session.profiles.id
+    const user = await getUser()
+    console.log(user)
 
     // 삽입될 데이터를 콘솔에 출력
     const dataToInsert = {
       introduce: introduce, // 사용자가 입력한 한 줄 자기소개
       study_id: params.studyid, // 현재 스터디 ID
-      user_id: userId, // 현재 로그인된 사용자의 ID
+      user_id: user?.id, // 현재 로그인된 사용자의 ID
       writing_datetime: new Date(), // 현재 시간
     }
 
