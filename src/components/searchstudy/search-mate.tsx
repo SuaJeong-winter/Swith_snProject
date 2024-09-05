@@ -14,9 +14,12 @@ import {
   DropdownMenuCheckboxItem,
 } from '~/components/ui/dropdown-menu'
 import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group'
+import { Badge } from '~/components/ui/badge'
 
 import { useEffect, useState } from 'react'
 import useUserController from '~/hooks/useUserController'
+import useMatesController from '~/hooks/useMatesController'
+import NoResult from '../common/no-result'
 
 export default function SearchMate() {
   const [emblaRef, emblaApi] = useEmblaCarousel()
@@ -50,11 +53,18 @@ export default function SearchMate() {
   ]
 
   const { allUsers } = useUserController()
+  const {
+    mates,
+    setMates,
+    onFilterMatesByJob,
+    onFilterMatesByPurpose,
+    onFilterMatesByStyle,
+  } = useMatesController()
 
   const filterReset = () => {
+    setMates([])
     setJobType('')
     setPurpose([])
-    setPeriod('')
     setStudyStyle([])
   }
 
@@ -78,9 +88,9 @@ export default function SearchMate() {
         <RefreshBtn onClick={filterReset} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            {jobType !== '' ? (
+            {jobType ? (
               <Button variant="outline" className="py-1 text-sm font-normal">
-                {jobType}
+                직무
               </Button>
             ) : (
               <Button
@@ -92,7 +102,15 @@ export default function SearchMate() {
             )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-4 bg-background">
-            <DropdownMenuRadioGroup value={jobType} onValueChange={setJobType}>
+            <DropdownMenuRadioGroup
+              value={jobType}
+              onValueChange={(job) => {
+                setJobType(job)
+                onFilterMatesByJob(job)
+                setPurpose([])
+                setStudyStyle([])
+              }}
+            >
               {JOBS.map((job, idx) => (
                 <DropdownMenuRadioItem
                   value={job}
@@ -125,7 +143,9 @@ export default function SearchMate() {
               type="multiple"
               onValueChange={(pur) => {
                 setPurpose(pur)
-                console.log(purpose)
+                onFilterMatesByPurpose(pur)
+                setStudyStyle([])
+                setJobType('')
               }}
               className="flex flex-col"
             >
@@ -161,6 +181,9 @@ export default function SearchMate() {
               type="multiple"
               onValueChange={(style) => {
                 setStudyStyle(style)
+                onFilterMatesByStyle(style)
+                setPurpose([])
+                setJobType('')
               }}
               className="flex flex-col"
             >
@@ -177,6 +200,11 @@ export default function SearchMate() {
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
+      <div className="flex flex-wrap gap-2 bg-background p-2">
+        {jobType ? <Badge key={jobType}>{jobType}</Badge> : false}
+        {purpose?.map((pur) => <Badge key={pur}>{pur}</Badge>)}
+        {studyStyle?.map((style) => <Badge key={style}>{style}</Badge>)}
+      </div>
       {/* 팀원 리스트 */}
       <section className="bg-[#F5F5FF] p-3">
         <div className="overflow-hidden" ref={emblaRef}>
@@ -186,15 +214,31 @@ export default function SearchMate() {
               className="flex flex-2 flex-wrap justify-center gap-3"
               key="01"
             >
-              {allUsers.map((user) => (
-                <MateCard
-                  userName={user.username}
-                  jobType={user['job_type']}
-                  userType={user['study_style']}
-                  profileImg={user['profile_img']}
-                  key={user.id}
-                />
-              ))}
+              {mates.length !== 0 ? (
+                mates?.map((mate) => (
+                  <MateCard
+                    userName={mate.username}
+                    jobType={mate['job_type']}
+                    userType={mate['study_style']}
+                    profileImg={mate['profile_img']}
+                    key={mate.id}
+                  />
+                ))
+              ) : jobType !== '' ||
+                purpose.length !== 0 ||
+                studyStyle.length !== 0 ? (
+                <NoResult />
+              ) : (
+                allUsers.map((user) => (
+                  <MateCard
+                    userName={user.username}
+                    jobType={user['job_type']}
+                    userType={user['study_style']}
+                    profileImg={user['profile_img']}
+                    key={user.id}
+                  />
+                ))
+              )}
             </div>
             {/* page2 */}
             <div

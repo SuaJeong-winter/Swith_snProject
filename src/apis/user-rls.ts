@@ -43,3 +43,30 @@ export const postUserBookmark = async (curr: any) => {
   //   .update({ bookmark_list: [...prev, curr] })
   //   .eq('id', user?.id)
 }
+
+export const filterMatesByJob = async (filter: string) => {
+  const supabase = createClient()
+  const result = await supabase.from('profiles').select().eq('job_type', filter)
+
+  return result.data
+}
+
+export const filterMatesByPurpose = async (filters: string[]) => {
+  const supabase = createClient()
+  const result = await supabase
+    .from('profiles')
+    .select()
+    .contains('study_purpose', filters)
+
+  return result.data
+}
+
+export const filterMatesByStyle = async (filters: string[]) => {
+  const supabase = createClient()
+  const result = await supabase
+    .from('profiles')
+    .select()
+    .contains('study_style', filters)
+
+  return result.data
+}

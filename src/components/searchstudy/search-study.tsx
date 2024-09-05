@@ -10,7 +10,7 @@ import { Skeleton } from '~/components/ui/skeleton'
 import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
 import useStudysController from '~/hooks/useStudysController'
-import NoResult from './no-result'
+import NoResult from '../common/no-result'
 
 const AllTags = [
   '온라인',
@@ -91,15 +91,17 @@ export default function SearchStudy() {
           )}
           {studys.length === 0 && <NoResult />}
           {studys.map((study) => (
-            <StudyCard
-              title={study.title}
-              types={study['recruit_type']}
-              tags={study.tags}
-              startdate={study['start_date']}
-              enddate={study['end_date']}
-              sutdyId={study.id}
-              key={study.id}
-            />
+            <Link href={`apply/${study.id}`} key={study.id}>
+              <StudyCard
+                title={study.title}
+                types={study['recruit_type']}
+                tags={study.tags}
+                startdate={study['start_date']}
+                enddate={study['end_date']}
+                sutdyId={study.id}
+                key={study.id}
+              />
+            </Link>
           ))}
         </div>
         {/* 플로팅 버튼 -> 스터디 생성 */}
