@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
@@ -10,8 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import useStudysController from '~/hooks/useStudysController'
+import { Skeleton } from '~/components/ui/skeleton'
 
 export default function InactiveStudyRoom() {
+  const { loading, studys } = useStudysController()
+
   return (
     <section className="bg-[#f6f6f6]">
       <section>
@@ -44,13 +50,13 @@ export default function InactiveStudyRoom() {
                   </Link>
                 </CardContent>
               </section>
-              <section className="pt-7">
+              <section className="pt-7 transition-opacity duration-500">
                 <ThinkingFace />
               </section>
             </div>
           </Card>
           <Link href="/create">
-            <Card className="bg-meetie-blue-1 p-2">
+            <Card className="bg-meetie-blue-1 p-2 transition-opacity duration-500">
               <div className="flex justify-between">
                 <section>
                   <CardHeader>
@@ -77,25 +83,25 @@ export default function InactiveStudyRoom() {
           스터디룸
         </h1>
         {/* 스터디 리스트 */}
-        <div className="flex flex-col gap-5 pb-14">
-          <StudyCard
-            title="자바 중급 스터디"
-            type="개발"
-            tags={['온라인', '백엔드']}
-            key="01"
-          />
-          <StudyCard
-            title="자바 중급 스터디"
-            type="디자이너"
-            tags={['오토레이아웃', '과제인증필수']}
-            key="02"
-          />
-          <StudyCard
-            title="하반기 영상 공모전 대비 스터디"
-            type="디자이너"
-            tags={['C4D', '블렌더', '3D디자인']}
-            key="03"
-          />
+        <div className="flex flex-col gap-2 pb-16">
+          {loading && (
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-[150px] w-full rounded-xl bg-slate-200" />
+              <Skeleton className="h-[150px] w-full rounded-xl bg-slate-200" />
+            </div>
+          )}
+          {studys.slice(0, 4).map((study) => (
+            <Link href={`apply/${study.id}`} key={study.id}>
+              <StudyCard
+                title={study.title}
+                types={study['recruit_type']}
+                tags={study.tags}
+                startdate={study['start_date']}
+                enddate={study['end_date']}
+                key={study.id}
+              />
+            </Link>
+          ))}
         </div>
       </section>
     </section>
