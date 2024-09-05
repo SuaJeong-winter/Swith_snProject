@@ -21,7 +21,7 @@ type Step1Data = {
   curriculum?: string
   start_date?: Date
   end_date?: Date
-  // regulardays?: string
+  regular_days?: string
   regular_time?: string
   max_member?: number
   tags?: string[]
@@ -35,7 +35,7 @@ type Step2Data = {
   curriculum?: string
   start_date?: Date
   end_date?: Date
-  // regulardays?: string
+  regular_days?: string
   regular_time?: string
   max_member?: number
   tags?: string[]
@@ -50,7 +50,7 @@ type TotalData = {
   curriculum: string
   start_date: Date | undefined
   end_date: Date | undefined
-  // regulardays?: string
+  regular_days?: string
   regular_time: string
   max_member: number
   tags: string[]
@@ -88,6 +88,7 @@ export default function CreateStudyPage() {
             curriculum,
             start_date,
             end_date,
+            regular_days,
             regular_time,
             max_member,
             tags,
@@ -114,6 +115,7 @@ export default function CreateStudyPage() {
               curriculum,
               start_date: start_date ? new Date(start_date) : undefined, // Date 처리
               end_date: end_date ? new Date(end_date) : undefined, // Date 처리
+              regular_days,
               regular_time,
               max_member,
               tags,
@@ -131,6 +133,7 @@ export default function CreateStudyPage() {
                   curriculum: step2Data.curriculum,
                   start_date: step2Data.start_date,
                   end_date: step2Data.end_date,
+                  regular_days: step2Data.regular_days,
                   regular_time: step2Data.regular_time,
                   max_member: step2Data.max_member,
                   tags: step2Data.tags,
@@ -165,6 +168,7 @@ export default function CreateStudyPage() {
           info={context.info}
           curriculum={context.curriculum}
           start_date={context.start_date || new Date()}
+          regular_days={context.regular_days}
           regular_time={context.regular_time}
           max_member={context.max_member}
           tags={context.tags}

@@ -184,7 +184,7 @@ export default function TotalInput({
           <h2 className="font-medium">
             {studyData.start_date}~{studyData.end_date}
             <br />
-            매주 ~~요일 {studyData.regular_time.slice(0, 5)}
+            매주 {studyData.regular_days} {studyData.regular_time.slice(0, 5)}
           </h2>
         </div>
         <div className="space-y-2 px-[120px] pt-8">
