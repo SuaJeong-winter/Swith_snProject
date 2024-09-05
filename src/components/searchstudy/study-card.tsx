@@ -31,7 +31,7 @@ export default function StudyCard({
           <div className="flex justify-between">
             <CardDescription>
               <div className="flex flex-row">
-                {types.map((type, idx) => (
+                {types?.map((type, idx) => (
                   <span key={type + idx}>
                     {type}
                     {idx < type.length - 1 && '|'}{' '}
@@ -46,11 +46,7 @@ export default function StudyCard({
         </CardHeader>
         <CardContent>
           {/* 태그 */}
-          <div>
-            {tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
-            ))}
-          </div>
+          <div>{tags?.map((tag) => <Badge key={tag}>{tag}</Badge>)}</div>
           <span className="font-bold text-primary">마감 0일 전</span>
           <CalendarMini className="mb-1 ml-3 mr-1 inline" />
           <span>
