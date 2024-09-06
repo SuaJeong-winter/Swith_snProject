@@ -17,6 +17,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '~/components/ui/alert-dialog'
+import { getProfile } from '~/apis/user-rls'
+import useUserController from '~/hooks/useUserController'
 
 type TotalInputProps = {
   id: string
@@ -50,6 +52,8 @@ export default function TotalInput({
   const [studyData, setStudyData] = useState<any>(null)
   const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const { user } = useUserController()
+  const [userData] = user
 
   const startDate = new Date(studyData?.start_date || start_date) // 스터디 시작일
   const currentDate = new Date() // 현재 시간
@@ -61,17 +65,6 @@ export default function TotalInput({
   console.log('D-Day 차이:', diffInDays)
 
   useEffect(() => {
-    const fetchSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession()
-
-      if (error) {
-      } else {
-        setSession(session)
-      }
-    }
     const fetchStudyData = async () => {
       const { data, error } = await supabase
         .from('Study')
@@ -88,7 +81,6 @@ export default function TotalInput({
         console.log('writing_datetime:', data.writing_datetime) // Log writing_datetime
       }
     }
-    fetchSession()
     fetchStudyData()
   }, [id])
 
@@ -141,7 +133,7 @@ export default function TotalInput({
           <MpProfile />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
-            <p>{session?.user?.email || '알 수 없는 사용자'}</p>
+            <p>{userData?.username}</p>
             {/* supabase에서 값 가져오기  */}
             {/* <p className="text-sm">{recruit_type}</p> */}
             <div className="flex flex-row">
@@ -222,9 +214,11 @@ export default function TotalInput({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="w-[100px]">취소</AlertDialogCancel>
               <Link href="/search">
-                <AlertDialogAction>Continue</AlertDialogAction>
+                <AlertDialogAction className="w-[100px]">
+                  확인
+                </AlertDialogAction>
               </Link>
             </AlertDialogFooter>
           </AlertDialogContent>
