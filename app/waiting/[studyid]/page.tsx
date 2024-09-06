@@ -132,10 +132,10 @@ export default function WaitingListPage({
                   </Link>
                   <div className="text-base text-black">
                     <p className="text-base">
-                      {matchedProfile.username || '이름 없음'}
+                      {matchedProfile?.username || '이름 없음'}
                     </p>
                     <p className="text-sm">
-                      {matchedProfile.job_type || '직업 정보 없음'}
+                      {matchedProfile?.job_type || '직업 정보 없음'}
                     </p>
                     <p className="text-xs">스터디 8회</p>
                   </div>

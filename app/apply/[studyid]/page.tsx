@@ -8,33 +8,57 @@ import { Chip } from '~/components/ui/chip'
 import { useEffect, useState } from 'react'
 import { createClient } from '~/utils/supabase/client'
 import { useRouter } from 'next/router'
+import { getUser } from '~/apis/user-rls'
 const supabase = createClient()
 
-export default function ApplyIntroPage({
-  params,
-}: {
-  params: { studyid: string }
-}) {
+export default function TempPage({ params }: { params: { studyid: string } }) {
   const [studyData, setStudyData] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const [username, setUsername] = useState<string | null>(null) // username 저장 상태
 
   useEffect(() => {
-    const fetchStudyData = async () => {
-      const { data, error } = await supabase
-        .from('Study')
-        .select('*')
-        .eq('id', params.studyid)
-        .single()
+    const fetchData = async () => {
+      try {
+        // Study 테이블에서 데이터를 가져옵니다.
+        const { data: studyData, error: studyError } = await supabase
+          .from('Study')
+          .select('*')
+          .eq('id', params.studyid)
+          .single()
 
-      if (error) {
-        console.error('Error fetching study data:', error)
-      } else {
-        setStudyData(data)
+        if (studyError) {
+          console.error('Error fetching study data:', studyError)
+          return
+        }
+
+        // profiles 테이블에서 owner와 일치하는 id가 있는지 확인합니다.
+        if (studyData && studyData.owner) {
+          const { data: profileData, error: profileError } = await supabase
+            .from('profiles') // Assuming the profiles table name is "profiles"
+            .select('id,username')
+            .eq('id', studyData.owner)
+            .single()
+
+          if (profileError) {
+            console.error('Error fetching profile data:', profileError)
+          } else {
+            // owner와 profiles.id가 일치하는 경우 true 출력
+            if (profileData) {
+              console.log(profileData.username)
+              setUsername(profileData.username) // 상태에 username 저장
+            }
+          }
+        }
+
+        setStudyData(studyData)
+      } catch (error) {
+        console.error('Error:', error)
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     }
 
-    fetchStudyData()
+    fetchData()
   }, [params.studyid])
 
   if (loading) {
@@ -44,6 +68,8 @@ export default function ApplyIntroPage({
   if (!studyData) {
     return <p>Study not found</p>
   }
+
+  const applynum: number = 1
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
@@ -71,8 +97,9 @@ export default function ApplyIntroPage({
         </div>
         <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
           <MpProfile />
+          {/* profile_img={userData?.['profile_img']} */}
           <div className="text-base text-black">
-            <p>{studyData.owner}</p>
+            <p>{username}</p>
             {/* <p>작성일 {new Date(studyData.writing_datetime).toLocaleDateString()}</p> */}
 
             <p className="text-sm text-gray-500">
@@ -123,7 +150,6 @@ export default function ApplyIntroPage({
         </div>
         <div className="space-y-2 pt-20"></div>
       </div>
-
       <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
         <div>
           <p>참여 가능 인원</p>
