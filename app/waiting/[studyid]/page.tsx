@@ -113,7 +113,7 @@ export default function WaitingListPage({
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
       {/* 토스터 메시지 */}
-      <StudyHeader href="/search" />
+      <StudyHeader href="search" />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
       <div className="mt-6 space-y-4 px-3">
