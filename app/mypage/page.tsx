@@ -10,14 +10,18 @@ import MyStudyOpen from '~/assets/icon_page open.svg'
 import MyStudyPrev from '~/assets/icon_study-prev.svg'
 import MpLine from '~/assets/icon_line.svg'
 import BookMark from '~/assets/icon_study-bookmark.svg'
+import MeetieRunner from '~/assets/badge_meetie-runner.svg'
+import MeetieNewbie from '~/assets/badge_meetie-newbie.svg'
 import MeetieMaster from '~/assets/badge_meetie-master.svg'
 import InfoVector from '~/assets/icon_info_vector.svg'
 import useUserController from '~/hooks/useUserController'
+import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import { useEffect } from 'react'
 import { userSignout } from '~/apis/signout-rls'
-
+import UserProfileImg from '~/components/common/user-profile-img'
 export default function Home() {
   const { user } = useUserController()
+  const { badge } = useMeetieBadgeController()
   console.log(user[0]?.name)
   // user.map((u) => console.log(u.name))
   // console.log(user)
@@ -32,7 +36,7 @@ export default function Home() {
 
       <div className="items-left flex justify-between">
         <div className="items-left flex p-3">
-          <MpProfile className="justify-between" />
+          <UserProfileImg />
           <div className="items-left flex flex-col pl-3">
             <span className="text-lg">{user[0]?.['job_type']}</span>
             <span className="text-lg font-bold">{user[0]?.name}님</span>
@@ -90,13 +94,24 @@ export default function Home() {
       </div>
       <div className="items-left flex flex-col p-3 pt-4">
         <Link href="/mypage/my-ability" className="">
-          <MeetieMaster className="justify-between" />
+          {badge[0]?.badgename === '밋티 뉴비' ? (
+            <MeetieNewbie />
+          ) : badge[0]?.badgename === '밋티 러너' ? (
+            <MeetieRunner />
+          ) : (
+            <MeetieMaster />
+          )}
         </Link>
         <span className="align-center pl-9 pt-3 text-xs font-semibold text-gray-500">
-          {/* 레벨{meetiebadge[0].level} */}
+          레벨
+          {badge[0]?.badgename === '밋티 뉴비'
+            ? 1
+            : badge[0]?.badgename === '밋티 러너'
+              ? 2
+              : 3}
         </span>
         <span className="pl-6 text-xs font-semibold">
-          {/* {meetiebadge[0].badgename} */}
+          {badge[0]?.badgename}
         </span>
       </div>
 
