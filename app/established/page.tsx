@@ -53,7 +53,11 @@ export default function EstablishedPage() {
           <CarouselContent>
             {usersDummyData.map((user) => (
               <CarouselItem key={user.user_id} className="basis-1/10">
-                <ProfileCard username={user.name} userjobtype={user.job_type} />
+                <ProfileCard
+                  username={user.name}
+                  userjobtype={user.job_type}
+                  profile_img=""
+                />
               </CarouselItem>
             ))}
             <CarouselItem className="basis-1/10">

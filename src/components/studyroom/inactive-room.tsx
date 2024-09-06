@@ -98,6 +98,7 @@ export default function InactiveStudyRoom() {
                 tags={study.tags}
                 startdate={study['start_date']}
                 enddate={study['end_date']}
+                studyId={study.id}
                 key={study.id}
               />
             </Link>

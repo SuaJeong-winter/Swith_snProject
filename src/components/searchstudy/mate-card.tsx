@@ -22,7 +22,7 @@ export default function MateCard({
 }) {
   return (
     <>
-      <Card className="relative border-none px-0 py-4 shadow-none">
+      <Card className="relative w-40 border-none py-2 shadow-none">
         <OpenProfile className="absolute right-3 top-3" />
         <CardHeader className="items-center px-2">
           <Image
@@ -36,7 +36,11 @@ export default function MateCard({
           <CardDescription className="text-meetie-gray-40">
             {jobType}
           </CardDescription>
-          <CardContent>{userType.map((type) => `${type} `)}</CardContent>
+          <CardContent>
+            {userType.map((type) => (
+              <span key={type}>{type} </span>
+            ))}
+          </CardContent>
           <Button variant="outline" size="sm" className="w-full">
             친구 추가하기 +
           </Button>

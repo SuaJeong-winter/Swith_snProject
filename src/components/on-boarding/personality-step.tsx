@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
 import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
+import useUserController from '~/hooks/useUserController'
 
 const PERSONALITIES = [
   ['주도적인', '열정적인', '손이 빠른'],
@@ -19,7 +20,8 @@ export default function PersonalityStep({
   onNext: (personality: string[]) => void
 }) {
   const [personality, setPersonality] = useState<string[]>([])
-
+  const { user } = useUserController()
+  const [userData] = user
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
       <div className="flex w-full flex-col">
@@ -30,12 +32,13 @@ export default function PersonalityStep({
       </div>
       <div className="flex w-full flex-col px-4">
         <h2 className="mt-16 text-2xl font-semibold text-meetie-gray-90">
-          김서희님은
+          {userData?.username}님은
           <br />
           어떤 스타일이신가요?
         </h2>
         <span className="mt-5 text-sm text-meetie-gray-40">
-          미티님과 비슷하다고 생각되는 키워드를 모두 선택해주세요!
+          미티님과 비슷하다고 생각되는 키워드를 선택해주세요! <br /> 키워드는
+          최대 4개까지 선택 가능합니다.
         </span>
         <ChipGroup
           type="multiple"
@@ -48,7 +51,14 @@ export default function PersonalityStep({
               className="flex gap-2"
             >
               {group.map((value) => (
-                <ChipGroupItem key={value} value={value} className="rounded-xl">
+                <ChipGroupItem
+                  key={value}
+                  value={value}
+                  disabled={
+                    !personality.includes(value) && personality.length >= 4
+                  }
+                  className="rounded-xl"
+                >
                   {value}
                 </ChipGroupItem>
               ))}
