@@ -5,7 +5,7 @@ import MpProfile from '~/assets/mp_profile.svg'
 export default function ProfileCard({
   username,
   userjobtype,
-  profile_img = '',
+  profile_img,
 }: {
   username?: string
   userjobtype?: string
