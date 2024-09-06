@@ -37,7 +37,8 @@ export default function PersonalityStep({
           어떤 스타일이신가요?
         </h2>
         <span className="mt-5 text-sm text-meetie-gray-40">
-          미티님과 비슷하다고 생각되는 키워드를 모두 선택해주세요!
+          미티님과 비슷하다고 생각되는 키워드를 선택해주세요! <br /> 키워드는
+          최대 4개까지 선택 가능합니다.
         </span>
         <ChipGroup
           type="multiple"
@@ -50,7 +51,14 @@ export default function PersonalityStep({
               className="flex gap-2"
             >
               {group.map((value) => (
-                <ChipGroupItem key={value} value={value} className="rounded-xl">
+                <ChipGroupItem
+                  key={value}
+                  value={value}
+                  disabled={
+                    !personality.includes(value) && personality.length >= 4
+                  }
+                  className="rounded-xl"
+                >
                   {value}
                 </ChipGroupItem>
               ))}

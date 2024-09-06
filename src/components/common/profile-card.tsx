@@ -3,8 +3,8 @@ import MeetieMaster from '~/assets/icon_profile-deco.svg'
 import MpProfile from '~/assets/mp_profile.svg'
 
 export default function ProfileCard({
-  username = '김서희',
-  userjobtype = '개발자',
+  username,
+  userjobtype,
   profile_img,
 }: {
   username?: string

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import ProfileCard from '~/components/common/profile-card'
 import { Button } from '~/components/ui/button'
 import useUserController from '~/hooks/useUserController'
@@ -27,8 +28,10 @@ export default function Done() {
         </div>
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">
-        <div className="flex gap-3">
-          <Button className="w-full font-semibold">확인하러 가기</Button>
+        <div>
+          <Link href="/mypage" className="block">
+            <Button className="w-full font-semibold">확인하러 가기</Button>
+          </Link>
         </div>
       </div>
     </div>
