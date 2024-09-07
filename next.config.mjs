@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['lh3.googleusercontent.com']
+    domains: ['lh3.googleusercontent.com', 'http://k.kakaocdn.net', 'k.kakaocdn.net', 'avatars.githubusercontent.com']
   },
   webpack: (config) => {
     config.module.rules.push({

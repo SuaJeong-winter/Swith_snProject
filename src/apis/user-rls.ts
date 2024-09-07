@@ -1,9 +1,11 @@
 'use client'
+import { useState } from 'react'
 import { createClient } from '~/utils/supabase/client'
 
 export const getUser = async () => {
   const supabase = createClient()
   const user = await supabase.auth.getUser()
+
   return user?.data?.user
 }
 
@@ -33,15 +35,15 @@ export const getUserBookmark = async () => {
   return result.data
 }
 
-export const postUserBookmark = async (curr: any) => {
+export const postUserBookmark = async (newList: any) => {
   const user = await getUser()
-  const prev = await getUserBookmark()
   const supabase = createClient()
-  console.log(prev)
-  // const result = await supabase
-  //   .from('profiles')
-  //   .update({ bookmark_list: [...prev, curr] })
-  //   .eq('id', user?.id)
+  const result = await supabase
+    .from('profiles')
+    .update({ bookmark_list: newList })
+    .eq('id', user?.id)
+
+  return result.data
 }
 
 export const filterMatesByJob = async (filter: string) => {

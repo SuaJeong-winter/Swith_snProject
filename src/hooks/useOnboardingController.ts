@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import { postOnboarding, testPost } from '~/apis/onboarding-rls'
+import { postOnboarding } from '~/apis/onboarding-rls'
 
 const useOnboardingController = () => {
-  const [user, setUser] = useState<any[]>([])
-
   const onPostProfiles = async ({
     job,
     purpose,
