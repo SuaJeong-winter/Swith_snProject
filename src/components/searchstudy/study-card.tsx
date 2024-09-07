@@ -15,7 +15,7 @@ import {
 } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '../ui/button'
-import { useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import useStudysController from '~/hooks/useStudysController'
 import useUserController from '~/hooks/useUserController'
 
@@ -34,24 +34,26 @@ export default function StudyCard({
   enddate: string | null
   studyId: any
 }) {
-  const today = new Date()
   // console.log(today)
   // console.log(typeof startdate)
+  const { prevList, onGetBookmark, onPostBookmark } = useUserController()
 
-  const { prevList, bookmarkList, setBookmark, onPostBookmark } =
-    useUserController()
-  // console.log(prevList)
-  // console.log(bookmarkList)
+  useEffect(() => {
+    onGetBookmark()
+  }, [])
+
+  // 북마크 기능 완성X 버그 수정 필요
   const handleBookmark = () => {
-    if (!prevList.includes(studyId)) {
-      // setBookmark([...prevList, studyId])
-      // console.log(bookmarkList)
-      // onPostBookmark(bookmarkList)
-    } else {
-      // setBookmark(bookmarkList.filter((item) => item !== studyId))
-      console.log('off')
+    onGetBookmark()
+    if (prevList.length !== 0) {
+      if (!prevList.includes(studyId)) {
+        onPostBookmark([...prevList, studyId])
+      } else {
+        onPostBookmark(prevList.filter((item) => item !== studyId))
+      }
+    } else if (prevList.length === 0 && studyId) {
+      onPostBookmark([studyId])
     }
-    console.log(bookmarkList)
   }
 
   return (

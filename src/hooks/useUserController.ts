@@ -1,32 +1,31 @@
 import { useEffect, useState } from 'react'
 import {
+  getOpenProfile,
   getProfile,
   getUser,
   getUserAll,
   getUserBookmark,
+  getUserFriends,
   postUserBookmark,
+  postUserFriends,
 } from '~/apis/user-rls'
 import { Database } from '~/types/supabase'
 
 const useUserController = () => {
   const [user, setUser] = useState<any[]>([])
+  const [openUser, setOpenUser] = useState<any[]>([])
   const [allUsers, setAllUser] = useState<any[]>([])
   const [prevList, setPrevList] = useState<any[]>([])
-  const [bookmarkList, setBookmark] = useState<any[]>([])
+  const [friends, setFriends] = useState<any[]>([])
 
   const onGetUser = async () => {
     try {
       const resultUser = await getProfile()
       if (resultUser) setUser(resultUser)
-      // console.log(resultUser)
     } catch (error) {
       console.error(error)
     }
   }
-  useEffect(() => {
-    onGetUser()
-    onGetUserAll()
-  }, [])
 
   const onGetUserAll = async () => {
     try {
@@ -36,6 +35,20 @@ const useUserController = () => {
       console.error(error)
     }
   }
+
+  const onGetOpenProfile = async (userId: any) => {
+    try {
+      const resultUser = await getOpenProfile(userId)
+      if (resultUser) setOpenUser(resultUser)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    onGetUser()
+    onGetUserAll()
+  }, [])
 
   const onGetBookmark = async () => {
     try {
@@ -47,16 +60,33 @@ const useUserController = () => {
     } catch (error) {
       console.error(error)
     }
-    console.log('get prev list')
   }
-
-  useEffect(() => {
-    onGetBookmark()
-  }, [bookmarkList])
 
   const onPostBookmark = async (newList: any) => {
     try {
-      const resultNewList = await postUserBookmark(newList)
+      await postUserBookmark(newList)
+      onGetBookmark()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onGetFriends = async () => {
+    try {
+      const result = await getUserFriends()
+      if (result) {
+        const [resultFriends] = result
+        if (resultFriends) setFriends(resultFriends.friends)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onPostFriends = async (newList: any) => {
+    try {
+      await postUserFriends(newList)
+      onGetFriends()
     } catch (error) {
       console.error(error)
     }
@@ -65,12 +95,16 @@ const useUserController = () => {
   return {
     user,
     allUsers,
+    openUser,
+    onGetUser,
     onGetUserAll,
+    onGetOpenProfile,
     prevList,
-    bookmarkList,
-    setBookmark,
     onGetBookmark,
     onPostBookmark,
+    friends,
+    onGetFriends,
+    onPostFriends,
   }
 }
 export default useUserController

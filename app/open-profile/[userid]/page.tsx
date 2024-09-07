@@ -10,18 +10,23 @@ import { Card } from '~/components/ui/card'
 import useUserController from '~/hooks/useUserController'
 import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
-export default function OpenProfile() {
-  const { user } = useUserController()
+export default function OpenProfile({ params }: { params: { userid: any } }) {
+  const { openUser, onGetOpenProfile } = useUserController()
   const { badge } = useMeetieBadgeController()
-  const [userData] = user
+  const [userData] = openUser
+
+  useEffect(() => {
+    onGetOpenProfile(params.userid)
+  }, [])
 
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background px-4 pb-4">
       <div className="flex w-full flex-col">
         <div className="flex items-center pt-4">
           <Link href="/mypage" className="flex items-center">
-            <BtnBack className="" />
+            <BtnBack />
           </Link>
           <div className="flex flex-1 justify-center">
             <span className="text-lg font-bold">공개 프로필</span>
