@@ -26,29 +26,20 @@ export default function MeetieBadge({
   commentcount: number
   hostcount: number
 }) {
-  if (point > 500 && badgename === '밋티 마스터') {
-    point = 500
-  } else if (point > 300 && badgename === '밋티 러너') {
-    point = 300
-  } else if (point > 100 && badgename === '밋티 뉴비') {
-    point = 100
-  }
+  const maxPoint =
+    badgename === '밋티 마스터' ? 500 : badgename === '밋티 러너' ? 300 : 100
+  const maxCommentcount =
+    badgename === '밋티 마스터' ? 50 : badgename === '밋티 러너' ? 30 : 10
+  const maxHostcount =
+    badgename === '밋티 마스터' ? 5 : badgename === '밋티 러너' ? 3 : 1
 
-  if (commentcount > 50 && badgename === '밋티 마스터') {
-    commentcount = 50
-  } else if (commentcount > 30 && badgename === '밋티 러너') {
-    commentcount = 30
-  } else if (commentcount > 10 && badgename === '밋티 뉴비') {
-    commentcount = 10
-  }
+  point = point > maxPoint ? maxPoint : point
+  commentcount = commentcount > maxCommentcount ? maxCommentcount : commentcount
+  hostcount = hostcount > maxHostcount ? maxHostcount : hostcount
 
-  if (hostcount > 5 && badgename === '밋티 마스터') {
-    hostcount = 5
-  } else if (hostcount > 3 && badgename === '밋티 러너') {
-    hostcount = 3
-  } else if (hostcount > 1 && badgename === '밋티 뉴비') {
-    hostcount = 1
-  }
+  const Point_progressPercentage = (point / maxPoint) * 100
+  const Commentcount_progressPercentage = (commentcount / maxCommentcount) * 100
+  const Hostcount_progressPercentage = (hostcount / maxHostcount) * 100
 
   return (
     <>
@@ -128,7 +119,10 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Point_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
                 <span className="text-xs text-white">{point}</span>
                 <span className="text-xs text-white">
@@ -152,7 +146,10 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Commentcount_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
                 <span className="text-xs text-white">{commentcount}</span>
                 <span className="text-xs text-white">
@@ -176,7 +173,10 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Hostcount_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
                 <span className="text-xs text-white">{hostcount}</span>
                 <span className="text-xs text-white">
