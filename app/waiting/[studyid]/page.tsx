@@ -112,7 +112,9 @@ export default function WaitingListPage({
 
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      {/* 토스터 메시지 */}
+      <div className="fixed bottom-[80px] mx-[50px] -translate-x-1/2 transform">
+        <Toaster />
+      </div>
       <StudyHeader href="search" />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
@@ -127,8 +129,18 @@ export default function WaitingListPage({
             <div key={applicant.user_id}>
               <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
                 <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
-                  <Link href={`${applicant.user_id}/open-profile`}>
-                    <MpProfile />
+                  <Link href={`/${applicant.user_id}/open-profile`}>
+                    {matchedProfile?.profile_img ? (
+                      <Image
+                        src={matchedProfile.profile_img} // profile_img가 있는 경우
+                        alt="프로필 이미지"
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <MpProfile /> // profile_img가 없을 경우 기본 이미지
+                    )}
                   </Link>
                   <div className="text-base text-black">
                     <p className="text-base">

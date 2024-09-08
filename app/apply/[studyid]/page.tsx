@@ -12,7 +12,7 @@ import { getUser } from '~/apis/user-rls'
 import Image from 'next/image'
 const supabase = createClient()
 
-export default function TempPage({ params }: { params: { studyid: string } }) {
+export default function ApplyPage({ params }: { params: { studyid: string } }) {
   const [studyData, setStudyData] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [username, setUsername] = useState<string | null>(null) // username
