@@ -99,6 +99,8 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             / {studyData.max_member}명
           </p>
         </div>
+
+        {/* 스터디룸으로 이동 */}
         <Button
           className="border-1 w-60 flex-[2] border-solid"
           onClick={handleSubmit}

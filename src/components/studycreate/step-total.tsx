@@ -199,7 +199,7 @@ export default function TotalInput({
         {/* <Button className="w-[200px]">스터디 등록하기</Button> */}
         <AlertDialog>
           <AlertDialogTrigger
-            className="h-[50px] w-[200px] whitespace-nowrap rounded-lg font-semibold text-white"
+            className="h-[50px] w-[300px] whitespace-nowrap rounded-lg font-semibold text-white"
             style={{ background: '#6326FD' }}
           >
             스터디 등록하기

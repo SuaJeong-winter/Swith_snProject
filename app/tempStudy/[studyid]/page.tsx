@@ -9,12 +9,14 @@ import { useEffect, useState } from 'react'
 import { createClient } from '~/utils/supabase/client'
 import { useRouter } from 'next/router'
 import { getUser } from '~/apis/user-rls'
+import Image from 'next/image'
 const supabase = createClient()
 
 export default function TempPage({ params }: { params: { studyid: string } }) {
   const [studyData, setStudyData] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [username, setUsername] = useState<string | null>(null) // username 저장 상태
+  const [userimg, setUserImg] = useState<string | null>(null) // username 저장 상태
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +37,7 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
         if (studyData && studyData.owner) {
           const { data: profileData, error: profileError } = await supabase
             .from('profiles') // Assuming the profiles table name is "profiles"
-            .select('id,username')
+            .select('id,username,profile_img')
             .eq('id', studyData.owner)
             .single()
 
@@ -45,7 +47,9 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
             // owner와 profiles.id가 일치하는 경우 true 출력
             if (profileData) {
               console.log(profileData.username)
+              console.log(profileData.profile_img)
               setUsername(profileData.username) // 상태에 username 저장
+              setUserImg(profileData.profile_img)
             }
           }
         }
@@ -97,6 +101,7 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
         </div>
         <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
           {/* <MpProfile /> */}
+          <Image width={56} height={56} src={userimg} alt="프로필 이미지" />
           <div className="text-base text-black">
             <p>{username}</p>
             {/* <p>작성일 {new Date(studyData.writing_datetime).toLocaleDateString()}</p> */}
