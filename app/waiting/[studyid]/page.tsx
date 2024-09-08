@@ -50,7 +50,7 @@ export default function WaitingListPage({
             // Study 테이블에서 기존 applied_member 가져오기
             const { data: studyData, error: studyError } = await supabase
               .from('Study')
-              .select('applied_member')
+              .select('applied_member,max_member')
               .eq('id', params.studyid)
               .single()
 
@@ -162,6 +162,70 @@ export default function WaitingListPage({
       console.log('User accepted:', user_id)
     } catch (error) {
       console.error('Error in onAccept:', error)
+    }
+  }
+
+  // 전체 수락
+  const onAcceptAll = async () => {
+    try {
+      const { data: studyData, error: studyError } = await supabase
+        .from('Study')
+        .select('member, applied_member, max_member')
+        .eq('id', params.studyid)
+        .single()
+
+      if (!studyError) {
+        const potentialTotal =
+          (studyData.member?.length || 0) + studyApplyData.length
+
+        if (potentialTotal > studyData.max_member) {
+          toast({
+            description: (
+              <div className="flex items-center">
+                <IconBell />
+                <span>신청자가 수락 가능 인원보다 많습니다</span>
+              </div>
+            ),
+            style: {
+              background: 'gray-300',
+              width: '300px',
+              height: '30px',
+              marginBottom: '10px',
+            },
+          })
+          return
+        }
+
+        const newMembers = [
+          ...(studyData.member || []),
+          ...studyApplyData.map((user) => user.user_id),
+        ]
+
+        const updatedAppliedMembers = studyData.applied_member.filter(
+          (id: string) => !studyApplyData.some((user) => user.user_id === id),
+        )
+
+        const { error: updateError } = await supabase
+          .from('Study')
+          .update({ member: newMembers, applied_member: updatedAppliedMembers })
+          .eq('id', params.studyid)
+
+        if (!updateError) {
+          const userIds = studyApplyData.map((user) => user.user_id)
+
+          const { error: statusUpdateError } = await supabase
+            .from('Study-apply')
+            .update({ status: '수락됨' })
+            .in('user_id', userIds)
+            .eq('study_id', params.studyid)
+
+          if (!statusUpdateError) {
+            setStudyApplyData([])
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error in handleAcceptAll:', error)
     }
   }
 
@@ -298,6 +362,21 @@ export default function WaitingListPage({
             </div>
           )
         })}
+      </div>
+      <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+        <div>
+          <p>참여 가능 인원</p>
+          <p>
+            <span className="text-meetie-blue-4">{applynum}명 </span>/
+            {/* {studyData.max_member}명 */}
+          </p>
+        </div>
+        <Button
+          className="w-60 flex-[2] rounded-md border border-solid"
+          onClick={onAcceptAll}
+        >
+          전체 수락하기
+        </Button>
       </div>
     </section>
   )
