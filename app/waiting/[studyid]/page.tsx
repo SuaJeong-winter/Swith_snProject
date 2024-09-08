@@ -65,15 +65,15 @@ export default function WaitingListPage({
             console.log('New User IDs:', newUserIds)
 
             // 중복 허용하여 배열 합치기 (정상작동하면 삭제)
-            const updatedAppliedMembers = [
-              ...existingAppliedMembers,
-              ...newUserIds,
-            ]
+            // const updatedAppliedMembers = [
+            //   ...existingAppliedMembers,
+            //   ...newUserIds,
+            // ]
 
             // 중복을 방지하기 위해 Set을 사용하여 유니크한 값만 추가(정상 작동하면 추가)
-            // const updatedAppliedMembers = Array.from(
-            //   new Set([...existingAppliedMembers, ...newUserIds])
-            // )
+            const updatedAppliedMembers = Array.from(
+              new Set([...existingAppliedMembers, ...newUserIds]),
+            )
 
             // Study 테이블의 applied_member 컬럼 업데이트
             const { error: updateError } = await supabase
@@ -109,6 +109,115 @@ export default function WaitingListPage({
 
     memberListData()
   }, [params.studyid]) // 의존성 배열이 비어있으므로, 이 효과는 컴포넌트가 처음 렌더링될 때 한 번만 실행
+
+  // 수락과 거절
+  const onAccept = async (user_id: string) => {
+    try {
+      // Study 테이블에서 member 컬럼 업데이트
+      const { data: studyData, error: studyError } = await supabase
+        .from('Study')
+        .select('member,applied_member')
+        .eq('id', params.studyid)
+        .single()
+
+      if (studyError) {
+        console.error('Error fetching study data:', studyError)
+        return
+      }
+
+      const updatedMembers = [...(studyData.member || []), user_id]
+
+      // applied_member 배열에서 user_id 제거
+      const updatedAppliedMembers = studyData.applied_member.filter(
+        (id: string) => id !== user_id,
+      )
+
+      const { error: updateError } = await supabase
+        .from('Study')
+        .update({ member: updatedMembers })
+        .eq('id', params.studyid)
+
+      if (updateError) {
+        console.error('Error updating member:', updateError)
+        return
+      }
+
+      // Study-apply 테이블에서 status를 '수락됨'으로 업데이트
+      const { error: statusUpdateError } = await supabase
+        .from('Study-apply')
+        .update({ status: '수락됨' })
+        .eq('study_id', params.studyid)
+        .eq('user_id', user_id)
+
+      if (statusUpdateError) {
+        console.error('Error updating status to "수락됨":', statusUpdateError)
+        return
+      }
+
+      // 화면에서 신청자 제거
+      setStudyApplyData((prevData) =>
+        prevData.filter((applicant) => applicant.user_id !== user_id),
+      )
+
+      console.log('User accepted:', user_id)
+    } catch (error) {
+      console.error('Error in onAccept:', error)
+    }
+  }
+
+  // 거절 함수
+  const onReject = async (user_id: string) => {
+    try {
+      // Study 테이블에서 applied_member 업데이트 (삭제)
+      const { data: studyData, error: studyError } = await supabase
+        .from('Study')
+        .select('applied_member') // applied_member 가져오기
+        .eq('id', params.studyid)
+        .single()
+
+      if (studyError) {
+        console.error('Error fetching study data:', studyError)
+        return
+      }
+
+      // applied_member 배열에서 user_id 제거
+      const updatedAppliedMembers = studyData.applied_member.filter(
+        (id: string) => id !== user_id,
+      )
+
+      // Study 테이블 업데이트
+      const { error: updateError } = await supabase
+        .from('Study')
+        .update({ applied_member: updatedAppliedMembers }) // applied_member 업데이트
+        .eq('id', params.studyid)
+
+      if (updateError) {
+        console.error('Error updating Study table:', updateError)
+        return
+      }
+
+      // Study-apply 테이블에서 status를 '거절됨'로 업데이트
+      const { error: statusUpdateError } = await supabase
+        .from('Study-apply')
+        .update({ status: '거절됨' })
+        .eq('study_id', params.studyid)
+        .eq('user_id', user_id)
+
+      if (statusUpdateError) {
+        console.error('Error updating status to "거절":', statusUpdateError)
+        return
+      }
+
+      // 화면에서 신청자 제거
+      setStudyApplyData((prevData) =>
+        prevData.filter((applicant) => applicant.user_id !== user_id),
+      )
+
+      console.log('User rejected:', user_id)
+    } catch (error) {
+      console.error('Error in onReject:', error)
+    }
+  }
 
   // =========================================================
 
@@ -156,10 +265,16 @@ export default function WaitingListPage({
                   </div>
 
                   <div className="h-[30px] space-x-2 pl-[70px]">
-                    <Button className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black">
+                    <Button
+                      className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
+                      onClick={() => onReject(applicant.user_id)}
+                    >
                       거절
                     </Button>
-                    <Button className="h-[30px] w-[60px] rounded-2xl text-xs">
+                    <Button
+                      className="h-[30px] w-[60px] rounded-2xl text-xs"
+                      onClick={() => onAccept(applicant.user_id)}
+                    >
                       수락
                     </Button>
                   </div>
@@ -168,7 +283,7 @@ export default function WaitingListPage({
                   {applicant.introduce || '소개가 없습니다'}
                 </p>
                 <div className="mt-3 grid grid-cols-3 gap-1">
-                  {(matchedProfile.study_style || []).map(
+                  {(matchedProfile?.study_style || []).map(
                     (style: string, index: number) => (
                       <Chip
                         key={index}
