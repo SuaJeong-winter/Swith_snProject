@@ -9,16 +9,30 @@ import { useEffect, useState } from 'react'
 import { createClient } from '~/utils/supabase/client'
 import { useRouter } from 'next/router'
 import { getUser } from '~/apis/user-rls'
+import Image from 'next/image'
 const supabase = createClient()
 
 export default function TempPage({ params }: { params: { studyid: string } }) {
   const [studyData, setStudyData] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
-  const [username, setUsername] = useState<string | null>(null) // username 저장 상태
+  const [username, setUsername] = useState<string | null>(null) // username
+  const [userimg, setUserImg] = useState<string | null>(null) // user프로필
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
+
+  const LogInUser = async () => {
+    const user = await getUser()
+    console.log(user)
+    if (user) {
+      setLoggedInUser(user.id)
+    } else {
+      console.log('no user data found')
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        await LogInUser()
         // Study 테이블에서 데이터를 가져옵니다.
         const { data: studyData, error: studyError } = await supabase
           .from('Study')
@@ -35,7 +49,7 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
         if (studyData && studyData.owner) {
           const { data: profileData, error: profileError } = await supabase
             .from('profiles') // Assuming the profiles table name is "profiles"
-            .select('id,username')
+            .select('id,username,profile_img')
             .eq('id', studyData.owner)
             .single()
 
@@ -46,6 +60,7 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
             if (profileData) {
               console.log(profileData.username)
               setUsername(profileData.username) // 상태에 username 저장
+              setUserImg(profileData.profile_img)
             }
           }
         }
@@ -96,8 +111,13 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
           ))}
         </div>
         <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
-          <MpProfile />
-          {/* profile_img={userData?.['profile_img']} */}
+          <Image
+            style={{ borderRadius: 50 }}
+            width={56}
+            height={56}
+            src={userimg}
+            alt="프로필 이미지"
+          />
           <div className="text-base text-black">
             <p>{username}</p>
             {/* <p>작성일 {new Date(studyData.writing_datetime).toLocaleDateString()}</p> */}
@@ -160,11 +180,27 @@ export default function TempPage({ params }: { params: { studyid: string } }) {
             / {studyData.max_member}명
           </p>
         </div>
-        <Link href={`/apply/${params.studyid}/application`}>
-          <Button className="border-1 w-60 flex-[2] border-solid">
-            스터디 신청하기
-          </Button>
-        </Link>
+        {/* 로그인한 사람과 owner의 아이디를 비교 */}
+        {loggedInUser === studyData.owner ? (
+          studyData.max_member - studyData.member.length === 0 ? (
+            <Button className="border-1 w-[240px] border-solid bg-gray-400">
+              아직 대기 인원이 없습니다
+            </Button>
+          ) : (
+            <Link href={`/waiting/${params.studyid}`}>
+              <Button className="border-1 w-60 flex-[2] border-solid">
+                대기중인 요청 확인
+              </Button>
+            </Link>
+          )
+        ) : (
+          <Link href={`/apply/${params.studyid}/application`}>
+            <Button className="border-1 w-60 flex-[2] border-solid">
+              스터디 신청하기
+            </Button>
+          </Link>
+        )}
+        {/* user_id: user?.id, // 현재 로그인된 사용자의 ID */}
       </div>
     </section>
   )
