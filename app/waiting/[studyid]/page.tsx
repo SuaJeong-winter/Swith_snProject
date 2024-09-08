@@ -12,6 +12,8 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '~/utils/supabase/client'
+import { Chip } from '~/components/ui/chip'
+import { match } from 'assert'
 const supabase = createClient()
 
 export default function WaitingListPage({
@@ -120,6 +122,7 @@ export default function WaitingListPage({
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
       <div className="mt-6 space-y-4 px-3">
         {studyApplyData.map((applicant) => {
+          console.log('신청자', applicant)
           // user_id와 매칭되는 profile 데이터 찾기
           const matchedProfile = profileData.find(
             (p) => p.id === applicant.user_id,
@@ -127,7 +130,7 @@ export default function WaitingListPage({
 
           return (
             <div key={applicant.user_id}>
-              <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
+              <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-1">
                 <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
                   <Link href={`/${applicant.user_id}/open-profile`}>
                     {matchedProfile?.profile_img ? (
@@ -164,53 +167,23 @@ export default function WaitingListPage({
                 <p className="text-sm">
                   {applicant.introduce || '소개가 없습니다'}
                 </p>
+                <div className="mt-3 grid grid-cols-3 gap-1">
+                  {(matchedProfile.study_style || []).map(
+                    (style: string, index: number) => (
+                      <Chip
+                        key={index}
+                        className="border-transparent bg-meetie-blue-1 text-xs"
+                      >
+                        {style}
+                      </Chip>
+                    ),
+                  )}
+                </div>
               </div>
             </div>
           )
         })}
       </div>
-      {/* <div className="mt-6 space-y-4 px-3">
-        {studyApplyData.map((applicant) => 
-        (
-          <div key={applicant.user_id}>
-            <div>2024년 06월 07일</div>
-            <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-2">
-              <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
-                <Link href={`${applicant.user_id}/open-profile`}>
-                  <MpProfile />
-                </Link>
-                <div className="text-base text-black">
-                  <p className="text-base">{profile?.name}</p>
-                  <p className="text-sm">{profile?.job_type}</p>
-                  <p className="text-xs">스터디 8회</p>
-                </div>
-
-                <div className="h-[30px] space-x-2 pl-[70px]">
-                  <Button
-                    className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
-                    // onClick={() => onReject(user.user_id)}
-                  >
-                    거절
-                  </Button>
-                  <Button
-                    className="h-[30px] w-[60px] rounded-2xl text-xs"
-                    // onClick={() => onAccept(user.user_id)}
-                  >
-                    수락
-                  </Button>
-                </div>
-              </div>
-              <p className="text-sm">
-                {applicant.introduce || '소개가 없습니다'}
-              </p>
-              <div className="grid h-[10px] grid-cols-4 gap-1 text-xs">
-
-              </div>
-            </div>
-          </div>
-        )
-        )}
-      </div> */}
     </section>
   )
 }
