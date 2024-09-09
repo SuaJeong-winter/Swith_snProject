@@ -2,7 +2,7 @@ import MpProfile from '~/assets/mp_profile.svg'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { Chip } from '~/components/ui/chip'
-import { StudyHeaderNoText } from '~/components/studycreate/study-header'
+import StudyHeader from '~/components/studycreate/study-header'
 
 import { createClient } from '~/utils/supabase/client'
 import { useEffect, useState } from 'react'
@@ -19,6 +19,7 @@ import {
 } from '~/components/ui/alert-dialog'
 import { getProfile } from '~/apis/user-rls'
 import useUserController from '~/hooks/useUserController'
+import Image from 'next/image'
 
 type TotalInputProps = {
   id: string
@@ -95,7 +96,7 @@ export default function TotalInput({
   const applynum: number = 1
   return (
     <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <StudyHeaderNoText />
+      <StudyHeader title="스터디 미리보기" />
       <div className="px-3">
         <div className="flex flex-row items-center space-x-4 space-y-2 pt-[60px]">
           <h2 className="text-lg font-bold"> {studyData.title}</h2>
@@ -130,7 +131,13 @@ export default function TotalInput({
         </div>
 
         <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
-          <MpProfile />
+          <Image
+            style={{ borderRadius: 50 }}
+            width={56}
+            height={56}
+            src={userData?.profile_img}
+            alt="프로필 이미지"
+          />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
             <p>{userData?.username}</p>
