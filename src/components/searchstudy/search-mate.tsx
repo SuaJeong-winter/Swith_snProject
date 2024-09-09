@@ -35,7 +35,7 @@ export default function SearchMate() {
     '해당 분야의 네트워킹 확장',
     '취미',
   ]
-  const PERIODS = ['1개월 이내', '1개월~3개월', '3개월~6개월', '6개월 이상']
+
   const STUDYSTYLE = [
     '주도적인',
     '열정적인',
@@ -192,6 +192,7 @@ export default function SearchMate() {
                   key={style}
                   value={style}
                   className="data-[state=on]:text-primary"
+                  disabled={studyStyle.length >= 4}
                 >
                   {style}
                 </ToggleGroupItem>
@@ -201,12 +202,26 @@ export default function SearchMate() {
         </DropdownMenu>
       </section>
       <div className="flex flex-wrap gap-2 bg-background p-2">
-        {jobType ? <Badge key={jobType}>{jobType}</Badge> : false}
-        {purpose?.map((pur) => <Badge key={pur}>{pur}</Badge>)}
-        {studyStyle?.map((style) => <Badge key={style}>{style}</Badge>)}
+        {jobType ? (
+          <Badge variant="outline" key={jobType}>
+            {jobType}
+          </Badge>
+        ) : (
+          false
+        )}
+        {purpose?.map((pur) => (
+          <Badge variant="outline" key={pur}>
+            {pur}
+          </Badge>
+        ))}
+        {studyStyle?.map((style) => (
+          <Badge variant="outline" key={style}>
+            {style}
+          </Badge>
+        ))}
       </div>
       {/* 팀원 리스트 */}
-      <section className="bg-[#F5F5FF] p-3">
+      <section className="bg-[#F5F5FF] pb-12 pt-3">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {/* page1 */}
@@ -221,6 +236,7 @@ export default function SearchMate() {
                     jobType={mate['job_type']}
                     userType={mate['study_style']}
                     profileImg={mate['profile_img']}
+                    userId={mate.id}
                     key={mate.id}
                   />
                 ))
@@ -235,6 +251,7 @@ export default function SearchMate() {
                     jobType={user['job_type']}
                     userType={user['study_style']}
                     profileImg={user['profile_img']}
+                    userId={user.id}
                     key={user.id}
                   />
                 ))

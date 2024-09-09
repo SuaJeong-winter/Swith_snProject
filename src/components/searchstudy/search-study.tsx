@@ -11,6 +11,8 @@ import StudyCard from '~/components/searchstudy/study-card'
 import Link from 'next/link'
 import useStudysController from '~/hooks/useStudysController'
 import NoResult from '../common/no-result'
+import useUserController from '~/hooks/useUserController'
+import { getUserBookmark } from '~/apis/user-rls'
 
 const AllTags = [
   '온라인',
@@ -26,20 +28,13 @@ const AllTags = [
 
 export default function SearchStudy() {
   const [tags, setTag] = useState<string[]>([])
-  // console.log(tags)
 
-  const {
-    loading,
-    studys,
-    onFilterStudys,
-    onSearchStudys,
-    onUserBookmark,
-    bookmark,
-  } = useStudysController()
+  const { loading, studys, onFilterStudys, onSearchStudys } =
+    useStudysController()
 
   useEffect(() => {
     onFilterStudys(tags)
-  }, [tags, onFilterStudys])
+  }, [tags])
 
   return (
     <>
@@ -64,11 +59,16 @@ export default function SearchStudy() {
         onValueChange={(tag) => setTag(tag)}
         className="flex flex-wrap justify-evenly gap-2 bg-background px-3 py-4"
       >
-        <Chip defaultPressed={true} className="p-2 text-sm">
+        <Chip pressed={tags.length === 0} className="p-2 text-sm">
           #전체
         </Chip>
         {AllTags.map((tag) => (
-          <ChipGroupItem key={tag} value={tag} className="p-2 text-sm">
+          <ChipGroupItem
+            key={tag}
+            value={tag}
+            className="p-2 text-sm"
+            // disabled={!tags.includes(tag) && tags.length >= 4}
+          >
             #{tag}
           </ChipGroupItem>
         ))}
@@ -91,17 +91,15 @@ export default function SearchStudy() {
           )}
           {studys.length === 0 && <NoResult />}
           {studys.map((study) => (
-            <Link href={`apply/${study.id}`} key={study.id}>
-              <StudyCard
-                title={study.title}
-                types={study['recruit_type']}
-                tags={study.tags}
-                startdate={study['start_date']}
-                enddate={study['end_date']}
-                sutdyId={study.id}
-                key={study.id}
-              />
-            </Link>
+            <StudyCard
+              title={study.title}
+              types={study['recruit_type']}
+              tags={study.tags}
+              startdate={study['start_date']}
+              enddate={study['end_date']}
+              studyId={study.id}
+              key={study.id}
+            />
           ))}
         </div>
         {/* 플로팅 버튼 -> 스터디 생성 */}

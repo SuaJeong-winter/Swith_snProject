@@ -16,18 +16,31 @@ import {
 } from '~/components/ui/drawer'
 
 export default function MeetieBadge({
-  level,
   badgename,
   point,
   commentcount,
   hostcount,
 }: {
-  level: string
   badgename: string
-  point: string
-  commentcount: string
-  hostcount: string
+  point: number
+  commentcount: number
+  hostcount: number
 }) {
+  const maxPoint =
+    badgename === '밋티 마스터' ? 500 : badgename === '밋티 러너' ? 300 : 100
+  const maxCommentcount =
+    badgename === '밋티 마스터' ? 50 : badgename === '밋티 러너' ? 30 : 10
+  const maxHostcount =
+    badgename === '밋티 마스터' ? 5 : badgename === '밋티 러너' ? 3 : 1
+
+  point = point > maxPoint ? maxPoint : point
+  commentcount = commentcount > maxCommentcount ? maxCommentcount : commentcount
+  hostcount = hostcount > maxHostcount ? maxHostcount : hostcount
+
+  const Point_progressPercentage = (point / maxPoint) * 100
+  const Commentcount_progressPercentage = (commentcount / maxCommentcount) * 100
+  const Hostcount_progressPercentage = (hostcount / maxHostcount) * 100
+
   return (
     <>
       <Drawer>
@@ -81,7 +94,14 @@ export default function MeetieBadge({
                     )}
                   </div>
                   <Card className="flex flex-col items-center justify-center border-2 border-purple-500 bg-[#FDFBFF] p-1 pl-2 pr-2 text-center">
-                    <span className="text-xs text-purple-500">레벨{level}</span>
+                    <span className="text-xs text-purple-500">
+                      레벨
+                      {badgename === '밋티 뉴비'
+                        ? 1
+                        : badgename === '밋티 러너'
+                          ? 2
+                          : 3}
+                    </span>
                   </Card>
                   <span className="pb-7 pt-2 text-base font-semibold">
                     {badgename}
@@ -99,15 +119,12 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Point_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">
-                  {Number(point) < 101
-                    ? 100
-                    : Number(point) < 301
-                      ? 300
-                      : Number(point)}
-                </span>
+                <span className="text-xs text-white">{point}</span>
                 <span className="text-xs text-white">
                   /
                   {badgename === '밋티 뉴비'
@@ -129,15 +146,12 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Commentcount_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">
-                  {Number(commentcount) < 11
-                    ? 10
-                    : Number(commentcount) < 31
-                      ? 30
-                      : Number(commentcount)}
-                </span>
+                <span className="text-xs text-white">{commentcount}</span>
                 <span className="text-xs text-white">
                   /
                   {badgename === '밋티 뉴비'
@@ -159,15 +173,12 @@ export default function MeetieBadge({
             </div>
             <div className="relative h-4 w-64">
               <div className="absolute left-1/2 top-1/2 h-4 w-64 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-50"></div>
-              <div className="absolute left-1/2 top-1/2 h-3 w-60 -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-purple-100 bg-purple-600"></div>
+              <div
+                className="absolute top-1/2 ml-1 mr-1 h-3 -translate-y-1/2 rounded-full border border-purple-100 bg-purple-600"
+                style={{ width: `${Hostcount_progressPercentage * 0.97}%` }}
+              ></div>
               <div className="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center space-x-1">
-                <span className="text-xs text-white">
-                  {Number(hostcount) < 2
-                    ? 1
-                    : Number(hostcount) < 4
-                      ? 3
-                      : Number(hostcount)}
-                </span>
+                <span className="text-xs text-white">{hostcount}</span>
                 <span className="text-xs text-white">
                   /
                   {badgename === '밋티 뉴비'

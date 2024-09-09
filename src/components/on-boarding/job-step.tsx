@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '~/components/ui/button'
 import { Progress } from '~/components/ui/progress'
@@ -8,6 +8,8 @@ import { ChipGroup, ChipGroupItem } from '~/components/ui/chip-group'
 import ChipDesigner from '~/assets/on-boarding/chip_designer.svg'
 import ChipDeveloper from '~/assets/on-boarding/chip_developer.svg'
 import ChipPM from '~/assets/on-boarding/chip_pm.svg'
+import useUserController from '~/hooks/useUserController'
+import { getUser } from '~/apis/user-rls'
 
 const JOBS = [
   { value: '디자이너', icon: ChipDesigner },
@@ -17,6 +19,9 @@ const JOBS = [
 
 export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
   const [job, setJob] = useState<string | null>(null)
+
+  const { user } = useUserController()
+  const [userData] = user
 
   return (
     <div className="flex min-h-dvh flex-col items-center bg-background">
@@ -28,7 +33,7 @@ export default function JobStep({ onNext }: { onNext: (job: string) => void }) {
       </div>
       <div className="flex w-full flex-col px-4">
         <h2 className="mt-16 text-2xl font-semibold text-meetie-gray-90">
-          김서희님이 관심있는
+          {userData?.username}님이 관심있는
           <br />
           직무는 무엇인가요?
         </h2>

@@ -1,9 +1,11 @@
 'use client'
+import { useState } from 'react'
 import { createClient } from '~/utils/supabase/client'
 
 export const getUser = async () => {
   const supabase = createClient()
   const user = await supabase.auth.getUser()
+
   return user?.data?.user
 }
 
@@ -15,9 +17,17 @@ export const getProfile = async () => {
   return result.data
 }
 
-export const getUserAll = async () => {
+export const getOpenProfile = async (userId: any) => {
   const supabase = createClient()
-  const result = await supabase.from('profiles').select('*')
+  const result = await supabase.from('profiles').select().eq('id', userId)
+
+  return result.data
+}
+
+export const getUserAll = async () => {
+  const user = await getUser()
+  const supabase = createClient()
+  const result = await supabase.from('profiles').select().neq('id', user?.id)
 
   return result.data
 }
@@ -33,15 +43,37 @@ export const getUserBookmark = async () => {
   return result.data
 }
 
-export const postUserBookmark = async (curr: any) => {
+export const postUserBookmark = async (newList: any) => {
   const user = await getUser()
-  const prev = await getUserBookmark()
   const supabase = createClient()
-  console.log(prev)
-  // const result = await supabase
-  //   .from('profiles')
-  //   .update({ bookmark_list: [...prev, curr] })
-  //   .eq('id', user?.id)
+  const result = await supabase
+    .from('profiles')
+    .update({ bookmark_list: newList })
+    .eq('id', user?.id)
+
+  return result.data
+}
+
+export const getUserFriends = async () => {
+  const user = await getUser()
+  const supabase = createClient()
+  const result = await supabase
+    .from('profiles')
+    .select('friends')
+    .eq('id', user?.id)
+
+  return result.data
+}
+
+export const postUserFriends = async (newList: any) => {
+  const user = await getUser()
+  const supabase = createClient()
+  const result = await supabase
+    .from('profiles')
+    .update({ friends: newList })
+    .eq('id', user?.id)
+
+  return result.data
 }
 
 export const filterMatesByJob = async (filter: string) => {

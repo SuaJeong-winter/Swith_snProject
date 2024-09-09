@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getStudys, filterStudys, searchStudys } from '~/apis/studys-rls'
-import { getUserBookmark } from '~/apis/user-rls'
 import { Database } from '~/types/supabase'
 
 type StudyDto = Database['public']['Tables']['Study']['Row']
@@ -8,7 +7,6 @@ type StudyDto = Database['public']['Tables']['Study']['Row']
 const useStudysController = () => {
   const [loading, setLoading] = useState(false)
   const [studys, setStudys] = useState<StudyDto[]>([])
-  const [bookmark, setBookmark] = useState<any[]>([])
 
   const onGetStudys = async () => {
     setLoading(true)
@@ -26,7 +24,7 @@ const useStudysController = () => {
     onGetStudys()
   }, [])
 
-  const onFilterStudys = async (filters: string[]) => {
+  const onFilterStudys = useCallback(async (filters: string[]) => {
     if (filters) {
       const resultStudys = await filterStudys(filters)
       if (resultStudys) setStudys(resultStudys)
@@ -34,7 +32,7 @@ const useStudysController = () => {
     } else {
       await onGetStudys()
     }
-  }
+  }, [])
 
   const onSearchStudys = async (terms: string) => {
     if (terms) {
@@ -45,18 +43,11 @@ const useStudysController = () => {
     }
   }
 
-  const onUserBookmark = async () => {
-    const resultBookmark = await getUserBookmark()
-    if (resultBookmark) setBookmark(resultBookmark)
-  }
-
   return {
     loading,
     studys,
     onFilterStudys,
     onSearchStudys,
-    onUserBookmark,
-    bookmark,
   }
 }
 

@@ -6,6 +6,19 @@ import { StudyHeaderNoText } from '~/components/studycreate/study-header'
 
 import { createClient } from '~/utils/supabase/client'
 import { useEffect, useState } from 'react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '~/components/ui/alert-dialog'
+import { getProfile } from '~/apis/user-rls'
+import useUserController from '~/hooks/useUserController'
 
 type TotalInputProps = {
   id: string
@@ -39,6 +52,8 @@ export default function TotalInput({
   const [studyData, setStudyData] = useState<any>(null)
   const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const { user } = useUserController()
+  const [userData] = user
 
   const startDate = new Date(studyData?.start_date || start_date) // 스터디 시작일
   const currentDate = new Date() // 현재 시간
@@ -50,17 +65,6 @@ export default function TotalInput({
   console.log('D-Day 차이:', diffInDays)
 
   useEffect(() => {
-    const fetchSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession()
-
-      if (error) {
-      } else {
-        setSession(session)
-      }
-    }
     const fetchStudyData = async () => {
       const { data, error } = await supabase
         .from('Study')
@@ -77,7 +81,6 @@ export default function TotalInput({
         console.log('writing_datetime:', data.writing_datetime) // Log writing_datetime
       }
     }
-    fetchSession()
     fetchStudyData()
   }, [id])
 
@@ -130,7 +133,7 @@ export default function TotalInput({
           <MpProfile />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
-            <p>{session?.user?.email || '알 수 없는 사용자'}</p>
+            <p>{userData?.username}</p>
             {/* supabase에서 값 가져오기  */}
             {/* <p className="text-sm">{recruit_type}</p> */}
             <div className="flex flex-row">
@@ -189,50 +192,37 @@ export default function TotalInput({
             매주 {studyData.regular_days} {studyData.regular_time.slice(0, 5)}
           </h2>
         </div>
-        <div className="space-y-2 px-[120px] pt-8">
-          <Link href="established ">
-            <p className="text-meetie-blue-4 underline">스터디 마감하기</p>
-          </Link>
-        </div>
 
         <div className="space-y-2 pt-20"></div>
       </div>
-
       <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
-        <div>
-          <p>참여 가능 인원</p>
-          <p>
-            <span className="text-meetie-blue-4">
-              {studyData.max_member - applynum}명
-            </span>
-            / {studyData.max_member}명
-          </p>
-        </div>
-        {applynum === 0 ? (
-          <Button className="border-1 w-[240px] border-solid bg-gray-400">
-            아직 대기 인원이 없습니다
-          </Button>
-        ) : (
-          <Link href="/waiting">
-            <Button className="border-1 w-60 flex-[2] border-solid">
-              대기중인 요청 확인
-            </Button>
-          </Link>
-        )}
-        {/* if (applynum===0)
-      {
-        <Button className="border-1 w-60 flex-[2] border-solid">
-          아직 대기 인원이 없습니다
-        </Button>
-      }
-      else
-      {
-        <Link href="/apply">
-          <Button className="border-1 w-60 flex-[2] border-solid">
-            스터디 신청하기
-          </Button>
-        </Link>
-      } */}
+        {/* <Button className="w-[200px]">스터디 등록하기</Button> */}
+        <AlertDialog>
+          <AlertDialogTrigger
+            className="h-[50px] w-[300px] whitespace-nowrap rounded-lg font-semibold text-white"
+            style={{ background: '#6326FD' }}
+          >
+            스터디 등록하기
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                스터디가 정상적으로 등록되었습니다!{' '}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                확인 버튼을 눌러 탐색 페이지로 이동합니다
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="w-[100px]">취소</AlertDialogCancel>
+              <Link href="/search">
+                <AlertDialogAction className="w-[100px]">
+                  확인
+                </AlertDialogAction>
+              </Link>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </section>
   )

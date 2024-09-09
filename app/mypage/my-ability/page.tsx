@@ -45,23 +45,20 @@ export default function MyAbility() {
         </div>
         <div className="flex flex-row items-baseline gap-10 pl-4">
           <MeetieBadge
-            level={'1'}
             badgename={'밋티 뉴비'}
-            point={'100'}
-            commentcount={'10'}
-            hostcount={'1'}
+            point={badge[0]?.['point_hap']}
+            commentcount={badge[0]?.['comment_hap']}
+            hostcount={badge[0]?.['host_hap']}
           />
 
           <MeetieBadge
-            level={'2'}
             badgename={'밋티 러너'}
-            point={'300'}
-            commentcount={'30'}
-            hostcount={'3'}
+            point={badge[0]?.['point_hap']}
+            commentcount={badge[0]?.['comment_hap']}
+            hostcount={badge[0]?.['host_hap']}
           />
 
           <MeetieBadge
-            level={badge[0]?.level}
             badgename={'밋티 마스터'}
             point={badge[0]?.['point_hap']}
             commentcount={badge[0]?.['comment_hap']}
