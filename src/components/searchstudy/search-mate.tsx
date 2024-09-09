@@ -35,7 +35,7 @@ export default function SearchMate() {
     '해당 분야의 네트워킹 확장',
     '취미',
   ]
-  const PERIODS = ['1개월 이내', '1개월~3개월', '3개월~6개월', '6개월 이상']
+
   const STUDYSTYLE = [
     '주도적인',
     '열정적인',
@@ -236,6 +236,7 @@ export default function SearchMate() {
                     jobType={mate['job_type']}
                     userType={mate['study_style']}
                     profileImg={mate['profile_img']}
+                    userId={mate.id}
                     key={mate.id}
                   />
                 ))
@@ -250,6 +251,7 @@ export default function SearchMate() {
                     jobType={user['job_type']}
                     userType={user['study_style']}
                     profileImg={user['profile_img']}
+                    userId={user.id}
                     key={user.id}
                   />
                 ))

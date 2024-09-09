@@ -20,8 +20,8 @@ import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import { userSignout } from '~/apis/signout-rls'
 import BottomNavBar from '~/components/common/bottom-nav-bar'
 export default function Home() {
-  const { user } = useUserController()
   const { badge } = useMeetieBadgeController()
+  const { user } = useUserController()
   const [userData] = user
 
   // console.log(userData)
@@ -86,7 +86,7 @@ export default function Home() {
             <InfoVector />
 
             <div className="flex flex-col items-center pr-12">
-              <Link href="/" className="">
+              <Link href="mypage/friends" className="">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F5F1FF]">
                   <MpStudyPeople />
                 </div>
