@@ -38,6 +38,7 @@ export default function StudyCard({
   // console.log(typeof startdate)
   const { prevList, onGetBookmark, onPostBookmark } = useUserController()
 
+
   useEffect(() => {
     onGetBookmark()
   }, [])
@@ -56,15 +57,16 @@ export default function StudyCard({
     }
   }
 
+
   return (
     <>
       <Card className="relative">
         <Button
           variant="secondary"
           className="absolute right-4 top-4 p-0"
-          onClick={handleBookmark}
+          // onClick={handleBookmark}
         >
-          {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />}
+          {/* {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />} */}
         </Button>
         <Link href={`apply/${studyId}`}>
           <CardHeader>
