@@ -89,8 +89,8 @@ export default function Step2Input({
         // startdate.trim() !== '' &&
         // enddate.trim() !== '' &&
         regularTime.trim() !== '' &&
-        count > 0,
-      // selectedTags.length > 0,
+        count > 0 &&
+        selectedTags.length > 0,
     )
   }, [curriculum, startdate, enddate, regularTime, count, selectedTags])
 
@@ -207,7 +207,11 @@ export default function Step2Input({
                     )}
                   >
                     <span className="text-gray-400">
-                      {regulardays ? regulardays : '요일'}
+                      {regulardays ? (
+                        <span className="text-black">{regulardays}</span>
+                      ) : (
+                        '요일 선택'
+                      )}
                     </span>
                   </Button>
                 </PopoverTrigger>
@@ -269,7 +273,7 @@ export default function Step2Input({
               <h2 className="invisible font-bold leading-3">정기일정</h2>
               <Input
                 placeholder="시간 선택"
-                className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
+                className="required mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
                 onChange={(e) => setRegularTime(e.target.value)}
                 type="time"
                 value={regularTime} // 입력된 값을 상태로 유지
@@ -327,7 +331,7 @@ export default function Step2Input({
           <div className="space-y-2 pt-40"></div>
         </div>
 
-        <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+        <div className="fixed bottom-0 flex h-[80px] w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
           <Link href="create">
             <Button
               variant="secondary"

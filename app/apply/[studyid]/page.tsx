@@ -115,7 +115,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             style={{ borderRadius: 50 }}
             width={56}
             height={56}
-            src={userimg}
+            src={userimg ? userimg : ''}
             alt="프로필 이미지"
           />
           <div className="text-base text-black">
