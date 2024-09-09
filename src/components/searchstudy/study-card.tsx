@@ -21,14 +21,14 @@ export default function StudyCard({
   tags,
   startdate,
   enddate,
-  sutdyId,
+  studyId,
 }: {
   title: string
   types: string[]
   tags: string[]
   startdate: string | null
   enddate: string | null
-  sutdyId: any
+  studyId: any
 }) {
   const [bookmark, setBookmark] = useState(false)
 

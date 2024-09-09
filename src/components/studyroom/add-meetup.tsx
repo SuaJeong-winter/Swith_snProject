@@ -14,7 +14,8 @@ import {
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
 import { Input } from '~/components/ui/input'
-import Link from 'next/link'
+import { useParams, useRouter } from 'next/navigation'
+import useMeetupController from '~/hooks/useMeetupController'
 
 export default function MeetupAdd() {
   const {
@@ -26,6 +27,11 @@ export default function MeetupAdd() {
 
   const [regularDate, setRegularDate] = useState<Date>()
   const [inputType, setInputType] = useState('text')
+  const params = useParams()
+  const studyId = params.studyId
+  const router = useRouter()
+
+  const { handleInsertMeetup } = useMeetupController()
 
   const handleFocus = () => {
     setInputType('time')
@@ -43,11 +49,14 @@ export default function MeetupAdd() {
       `${format(data.regularDate, 'yyyy-MM-dd')}T${data.meetupTime}`,
     )
     const newObject = {
+      study_id: studyId,
       description: data.description,
       place: data.place,
-      deadline: schedule,
+      schedule: schedule,
     }
-    console.log(newObject)
+    handleInsertMeetup(newObject).then(() => {
+      router.push(`/studyroom/${studyId}`)
+    })
   }
 
   return (
@@ -57,7 +66,7 @@ export default function MeetupAdd() {
           <div className="mb-10 mt-4 space-y-2">
             <h2 className="font-bold">일정 소개</h2>
             <Textarea
-              placeholder="일정을 간단히 소개해 주세요."
+              placeholder="ex. 킥오프 미팅"
               className="resize-none border-gray-400"
               rows={1}
               {...register('description', { required: true })}
@@ -116,7 +125,7 @@ export default function MeetupAdd() {
           <div>
             <h2 className="mb-2 mt-10 font-bold">장소</h2>
             <Textarea
-              placeholder="장소를 간단히 작성해 주세요."
+              placeholder="ex. 구글 미트"
               className="resize-none border-gray-400"
               rows={1}
               {...register('place', { required: true })}
@@ -126,11 +135,9 @@ export default function MeetupAdd() {
                 장소를 입력해 주세요.
               </span>
             )}
-            {/* <Link href="/studyroom"> */}
             <Button type="submit" className="fixed bottom-8 w-[350px]">
               작성완료
             </Button>
-            {/* </Link> */}
           </div>
         </form>
       </div>

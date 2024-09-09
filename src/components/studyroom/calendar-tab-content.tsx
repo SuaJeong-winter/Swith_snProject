@@ -50,13 +50,13 @@ export default function StudyroomCalendar() {
     })
 
     return (
-      <>
+      <section className="bg-[#f9f9f9] pb-2">
         {weeklyMeetup.length || weeklyAssignment.length ? (
           <>
             {weeklyAssignment.length > 0 && (
-              <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
+              <div className="flex flex-col gap-2 px-4 pb-2">
                 {weeklyAssignment.map((content, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="border border-meetie-blue-3">
                     <div className="flex items-center">
                       <div className="ml-4 min-w-[70px] text-center">
                         {formatDeadline(content.deadline)}
@@ -75,7 +75,7 @@ export default function StudyroomCalendar() {
               </div>
             )}
             {weeklyMeetup.length > 0 && (
-              <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
+              <div className="flex flex-col gap-2 px-4 pb-2">
                 {weeklyMeetup.map((content, index) => (
                   <Card key={index}>
                     <div className="flex items-center">
@@ -93,19 +93,17 @@ export default function StudyroomCalendar() {
             )}
           </>
         ) : (
-          <div className="flex flex-col gap-2 bg-[#f9f9f9] px-4 pb-2">
+          <div className="px-4 pb-2">
             <Card>
-              <div className="flex items-center">
-                <CardHeader>
-                  <CardDescription>
-                    선택한 날짜에 일정 혹은 과제가 없습니다
-                  </CardDescription>
-                </CardHeader>
-              </div>
+              <CardHeader>
+                <CardDescription>
+                  선택한 날짜에 일정 혹은 과제가 없어요 😊
+                </CardDescription>
+              </CardHeader>
             </Card>
           </div>
         )}
-      </>
+      </section>
     )
   }
 

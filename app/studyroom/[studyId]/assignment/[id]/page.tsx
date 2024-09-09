@@ -11,10 +11,13 @@ import { Label } from '~/components/ui/label'
 import AssignmentDetail from '~/components/studyroom/assignment-detail'
 import AssignmentList from '~/components/studyroom/assignment-list'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useStudyroomController from '~/hooks/useStudyroomController'
+import useAssignmentController from '~/hooks/useAssignmentController'
+import Image from 'next/image'
+import { getUser } from '~/apis/user-rls'
 
 export default function Assignment() {
   const searchParams = useSearchParams()
@@ -23,8 +26,13 @@ export default function Assignment() {
   const [preview, setPreview] = useState('')
 
   const { register, handleSubmit, setValue, reset } = useForm()
-  const { handleAddImage, handleDeleteImage, handleInsertData } =
-    useStudyroomController()
+  const { handleAddImage, handleDeleteImage } = useStudyroomController()
+  const { handleSubmitAssignment } = useAssignmentController()
+  const [userId, setUserId] = useState('')
+
+  const router = useRouter()
+  const params = useParams()
+  const studyId = params.studyId
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -44,13 +52,27 @@ export default function Assignment() {
     setValue('file', '')
   }
 
-  const onSubmit = async (data: any) => {
-    handleInsertData(data.text, data.file)
+  const onSubmitAssignment = async (data: any) => {
+    // userId, studyId 저장 필요
+    const userData = await getUser()
+    if (userData) {
+      setUserId(userData.id)
+    }
+    handleSubmitAssignment(data.text, data.file, studyId, userId).then(
+      (id: string) => {
+        router.push(`/studyroom/${studyId}/assignment/${id}/complete`)
+      },
+    )
     reset()
   }
 
+  useEffect(() => {
+    const data = getUser()
+    console.log(data)
+  }, [])
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitAssignment)}>
       <div className="h-dvh bg-background">
         <div className="flex flex-row space-x-32 border-b-2 p-3 align-baseline">
           <a href="/studyroom">
@@ -85,7 +107,7 @@ export default function Assignment() {
             {preview && (
               <>
                 <div className="flex h-full w-full items-center justify-center">
-                  <img
+                  <Image
                     src={preview}
                     alt="미리보기"
                     className="max-h-full max-w-full object-contain"
@@ -109,16 +131,14 @@ export default function Assignment() {
               rows={6}
             />
           </div>
-          {/* <Link href="/studyroom/assignment/complete"> */}
           <Button className="mb-1 mt-8 w-full" type="submit">
             인증하기
           </Button>
-          {/* </Link> */}
-          <div className="mt-2 flex justify-center">
+          {/* <div className="mt-2 flex justify-center">
             <button className="text-sm font-normal text-meetie-gray-40 underline">
               임시 저장
             </button>
-          </div>
+          </div> */}
         </section>
 
         {/* 과제 상세 컴포넌트 - 추후 라우터 [id]로 분리 */}
