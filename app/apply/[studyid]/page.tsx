@@ -182,18 +182,23 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
         </div>
         {/* 로그인한 사람과 owner의 아이디를 비교 */}
         {loggedInUser === studyData.owner ? (
-          studyData.max_member - studyData.member.length === 0 ? (
-            <Button className="border-1 w-[240px] border-solid bg-gray-400">
-              아직 대기 인원이 없습니다
+          <Link href={`/waiting/${params.studyid}`}>
+            <Button className="border-1 w-60 flex-[2] border-solid">
+              대기중인 요청 확인
             </Button>
-          ) : (
-            <Link href={`/waiting/${params.studyid}`}>
-              <Button className="border-1 w-60 flex-[2] border-solid">
-                대기중인 요청 확인
-              </Button>
-            </Link>
-          )
+          </Link>
         ) : (
+          // studyData.max_member - studyData.member.length === 0 ? (
+          //   <Button className="border-1 w-[240px] border-solid bg-gray-400">
+          //     아직 대기 인원이 없습니다
+          //   </Button>
+          // ) : (
+          //   <Link href={`/waiting/${params.studyid}`}>
+          //     <Button className="border-1 w-60 flex-[2] border-solid">
+          //       대기중인 요청 확인
+          //     </Button>
+          //   </Link>
+          // )
           <Link href={`/apply/${params.studyid}/application`}>
             <Button className="border-1 w-60 flex-[2] border-solid">
               스터디 신청하기

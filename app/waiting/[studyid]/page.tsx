@@ -27,6 +27,7 @@ export default function WaitingListPage({
   const [profileData, setProfileData] = useState<any[]>([])
 
   const [applynum, setApplynum] = useState(1)
+  let maxMember = 0
   // const [loading, setLoading] = useState(false)
 
   // ========================================
@@ -60,6 +61,8 @@ export default function WaitingListPage({
               // return
             }
             // 기존 applied_member 배열에 새로운 user_id 추가
+            maxMember = studyData?.max_member
+            console.log(maxMember)
             const existingAppliedMembers = studyData?.applied_member || []
             const newUserIds = memberData.map((member) => member.user_id)
             console.log('New User IDs:', newUserIds)
@@ -128,9 +131,9 @@ export default function WaitingListPage({
       const updatedMembers = [...(studyData.member || []), user_id]
 
       // applied_member 배열에서 user_id 제거
-      const updatedAppliedMembers = studyData.applied_member.filter(
-        (id: string) => id !== user_id,
-      )
+      // const updatedAppliedMembers = studyData.applied_member.filter(
+      //   (id: string) => id !== user_id,
+      // )
 
       const { error: updateError } = await supabase
         .from('Study')
@@ -286,11 +289,11 @@ export default function WaitingListPage({
   // =========================================================
 
   return (
-    <section className="flex min-h-dvh flex-col bg-white pb-8">
-      <div className="fixed bottom-[80px] mx-[50px] -translate-x-1/2 transform">
+    <section className="flex min-h-dvh flex-col bg-white pb-[100px]">
+      <div className="fixed bottom-[60px] mx-[50px] -translate-x-1/2 transform">
         <Toaster />
       </div>
-      <StudyHeader href="search" />
+      <StudyHeader href={`/apply/${params.studyid}`} />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
       <div className="mt-6 space-y-4 px-3">
@@ -305,7 +308,7 @@ export default function WaitingListPage({
             <div key={applicant.user_id}>
               <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-1">
                 <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
-                  <Link href={`/${applicant.user_id}/open-profile`}>
+                  <Link href={`/open-profile/${applicant.user_id}`}>
                     {matchedProfile?.profile_img ? (
                       <Image
                         src={matchedProfile.profile_img} // profile_img가 있는 경우
@@ -363,12 +366,12 @@ export default function WaitingListPage({
           )
         })}
       </div>
-      <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-2 bg-red-400 px-[20px]">
         <div>
           <p>참여 가능 인원</p>
           <p>
             <span className="text-meetie-blue-4">{applynum}명 </span>/
-            {/* {studyData.max_member}명 */}
+            {maxMember}명
           </p>
         </div>
         <Button
