@@ -36,17 +36,20 @@ const useAssignmentController = () => {
   }
 
   // 마감 직전 과제 불러오기
-  const onGetTodayAssignment = async (studyId: string | string[]) => {
-    setLoading(true)
-    try {
-      const assignments = await getTodayAssignment(studyId)
-      if (assignments) setTodayAssignment(assignments)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const onGetTodayAssignment = useCallback(
+    async (studyId: string | string[]) => {
+      setLoading(true)
+      try {
+        const assignments = await getTodayAssignment(studyId)
+        if (assignments) setTodayAssignment(assignments)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [],
+  )
 
   // 과제 인증하기 콘텐츠 DB에 저장하기
   const handleSubmitAssignment = async (
