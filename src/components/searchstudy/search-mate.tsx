@@ -22,11 +22,11 @@ import useMatesController from '~/hooks/useMatesController'
 import NoResult from '../common/no-result'
 
 export default function SearchMate() {
-  const [emblaRef, emblaApi] = useEmblaCarousel()
+  // const [emblaRef, emblaApi] = useEmblaCarousel()
   const [jobType, setJobType] = useState('')
   const [purpose, setPurpose] = useState<string[]>([])
-  const [period, setPeriod] = useState('')
   const [studyStyle, setStudyStyle] = useState<string[]>([])
+  // const [period, setPeriod] = useState('')
 
   const JOBS = ['개발자', '기획자', '디자이너']
   const PURPOSES = [
@@ -222,93 +222,37 @@ export default function SearchMate() {
       </div>
       {/* 팀원 리스트 */}
       <section className="bg-[#F5F5FF] pb-12 pt-3">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {/* page1 */}
-            <div
-              className="flex flex-2 flex-wrap justify-center gap-3"
-              key="01"
-            >
-              {mates.length !== 0 ? (
-                mates?.map((mate) => (
-                  <MateCard
-                    userName={mate.username}
-                    jobType={mate['job_type']}
-                    userType={mate['study_style']}
-                    profileImg={mate['profile_img']}
-                    userId={mate.id}
-                    key={mate.id}
-                  />
-                ))
-              ) : jobType !== '' ||
-                purpose.length !== 0 ||
-                studyStyle.length !== 0 ? (
-                <NoResult />
-              ) : (
-                allUsers.map((user) => (
-                  <MateCard
-                    userName={user.username}
-                    jobType={user['job_type']}
-                    userType={user['study_style']}
-                    profileImg={user['profile_img']}
-                    userId={user.id}
-                    key={user.id}
-                  />
-                ))
-              )}
-            </div>
-            {/* page2 */}
-            <div
-              className="flex flex-2 flex-wrap justify-center gap-3"
-              key="02"
-            >
-              {/* <MateCard
-                userName="김선우2"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아2"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              />
-              <MateCard
-                userName="김선우2"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아2"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              /> */}
-            </div>
-            {/* page3 */}
-            <div
-              className="flex flex-2 flex-wrap justify-center gap-3"
-              key="03"
-            >
-              {/* <MateCard
-                userName="김선우3"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아3"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              />
-              <MateCard
-                userName="김선우3"
-                jobType="디자이너"
-                userType={['초급', '열정있는', '파워J']}
-              />
-              <MateCard
-                userName="이정아3"
-                jobType="디자이너"
-                userType={['고급', '꼼꼼한', '사교적인']}
-              /> */}
-            </div>
+        <div className="flex">
+          <div className="flex flex-2 flex-wrap justify-center gap-3" key="01">
+            {mates.length !== 0 ? (
+              mates?.map((mate) => (
+                <MateCard
+                  userName={mate.username}
+                  jobType={mate['job_type']}
+                  userType={mate['study_style']}
+                  profileImg={mate['profile_img']}
+                  userId={mate.id}
+                  key={mate.id}
+                  btnOpt={false}
+                />
+              ))
+            ) : jobType !== '' ||
+              purpose.length !== 0 ||
+              studyStyle.length !== 0 ? (
+              <NoResult />
+            ) : (
+              allUsers.map((user) => (
+                <MateCard
+                  userName={user.username}
+                  jobType={user['job_type']}
+                  userType={user['study_style']}
+                  profileImg={user['profile_img']}
+                  userId={user.id}
+                  key={user.id}
+                  btnOpt={false}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>

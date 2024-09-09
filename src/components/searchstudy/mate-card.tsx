@@ -18,12 +18,14 @@ export default function MateCard({
   userType,
   profileImg,
   userId,
+  btnOpt,
 }: {
   userName: string
   jobType: string
   userType: string[]
   profileImg: string
   userId: any
+  btnOpt: boolean
 }) {
   const { friends, onGetFriends, onPostFriends } = useUserController()
 
@@ -70,8 +72,9 @@ export default function MateCard({
           <Button
             variant="outline"
             size="sm"
-            className="w-full"
+            className={`w-full ${btnOpt ? 'hidden' : ''}`}
             onClick={handleFriends}
+            disabled={btnOpt}
           >
             친구 추가하기 +
           </Button>
