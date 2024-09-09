@@ -42,17 +42,19 @@ export default function StudyCard({
     useUserController()
   // console.log(prevList)
   // console.log(bookmarkList)
-  const handleBookmark = () => {
-    if (!prevList.includes(studyId)) {
-      // setBookmark([...prevList, studyId])
-      // console.log(bookmarkList)
-      // onPostBookmark(bookmarkList)
-    } else {
-      // setBookmark(bookmarkList.filter((item) => item !== studyId))
-      console.log('off')
-    }
-    console.log(bookmarkList)
-  }
+  //
+  // 주석
+  // const handleBookmark = () => {
+  //   if (!prevList.includes(studyId)) {
+  //     // setBookmark([...prevList, studyId])
+  //     // console.log(bookmarkList)
+  //     // onPostBookmark(bookmarkList)
+  //   } else {
+  //     // setBookmark(bookmarkList.filter((item) => item !== studyId))
+  //     console.log('off')
+  //   }
+  //   console.log(bookmarkList)
+  // }
 
   return (
     <>
@@ -60,9 +62,9 @@ export default function StudyCard({
         <Button
           variant="secondary"
           className="absolute right-4 top-4 p-0"
-          onClick={handleBookmark}
+          // onClick={handleBookmark}
         >
-          {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />}
+          {/* {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />} */}
         </Button>
         <Link href={`apply/${studyId}`}>
           <CardHeader>
