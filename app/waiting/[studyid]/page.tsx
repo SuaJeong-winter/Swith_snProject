@@ -131,9 +131,9 @@ export default function WaitingListPage({
       const updatedMembers = [...(studyData.member || []), user_id]
 
       // applied_member 배열에서 user_id 제거
-      // const updatedAppliedMembers = studyData.applied_member.filter(
-      //   (id: string) => id !== user_id,
-      // )
+      const updatedAppliedMembers = studyData.applied_member.filter(
+        (id: string) => id !== user_id,
+      )
 
       const { error: updateError } = await supabase
         .from('Study')
@@ -271,7 +271,7 @@ export default function WaitingListPage({
         .eq('user_id', user_id)
 
       if (statusUpdateError) {
-        console.error('Error updating status to "거절":', statusUpdateError)
+        console.error('Error updating status to "거절됨":', statusUpdateError)
         return
       }
 

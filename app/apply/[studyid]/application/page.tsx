@@ -6,6 +6,18 @@ import StudyHeader from '~/components/studycreate/study-header'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
 import { createClient } from '~/utils/supabase/client'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '~/components/ui/alert-dialog'
+import Link from 'next/link'
 
 const supabase = createClient()
 
@@ -99,14 +111,35 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             / {studyData.max_member}명
           </p>
         </div>
-
-        {/* 스터디룸으로 이동 */}
-        <Button
-          className="border-1 w-60 flex-[2] border-solid"
-          onClick={handleSubmit}
-        >
-          신청서 제출하기
-        </Button>
+        <div className="border-1 w-60 flex-[2] border-solid">
+          <AlertDialog>
+            <AlertDialogTrigger
+              className="h-[50px] w-[250px] whitespace-nowrap rounded-lg font-semibold text-white"
+              style={{ background: '#6326FD' }}
+              onClick={handleSubmit}
+            >
+              신청서 제출하기
+            </AlertDialogTrigger>
+            <AlertDialogContent className="w-[300px]">
+              <AlertDialogHeader>
+                <AlertDialogTitle>신청이 완료되었습니다!</AlertDialogTitle>
+                <AlertDialogDescription>
+                  확인 버튼을 눌러 스터디룸으로 이동합니다
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="w-[80px] px-[60px]">
+                  취소
+                </AlertDialogCancel>
+                <Link href="/studyroom">
+                  <AlertDialogAction className="w-[80px] px-[60px]">
+                    확인
+                  </AlertDialogAction>
+                </Link>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </div>
     </section>
   )
