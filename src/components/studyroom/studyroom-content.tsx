@@ -6,11 +6,11 @@ import AssignmentList from '~/components/studyroom/assignment-list'
 import ChatList from '~/components/studyroom/chatlist'
 import StudyCard from '~/components/studyroom/study-card'
 
-export default function StudyroomContent() {
+export default function StudyroomContent({ studies }: { studies: any[] }) {
   return (
     <>
       {/* 스터디 카드 */}
-      <StudyCard />
+      <StudyCard studies={studies} />
       {/* 탭 영역 */}
       <section className="bg-background">
         <Tabs defaultValue="study-calendar">

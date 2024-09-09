@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
-import StudyCard from '~/components/searchstudy/study-card'
 
 import {
   Card,
@@ -12,23 +11,65 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
-import useStudysController from '~/hooks/useStudysController'
-import { Skeleton } from '~/components/ui/skeleton'
+import { Skeleton } from '../ui/skeleton'
+import StudyCard from '~/components/searchstudy/study-card'
+import useStudyroomController from '~/hooks/useStudyroomController'
+import { useCallback, useEffect, useState } from 'react'
 
-export default function InactiveStudyRoom() {
-  const { loading, studys } = useStudysController()
+interface ActiveStudyRoomListProps {
+  studyroomList: string[]
+}
+
+export default function ActiveStudyRoomList({
+  studyroomList,
+}: ActiveStudyRoomListProps) {
+  const { loading, onGetStudy } = useStudyroomController()
+  const [studies, setStudies] = useState<any[]>([])
+  const fetchStudies = useCallback(async () => {
+    const studyData = await Promise.all(
+      studyroomList.map(async (studyId) => {
+        const study = await onGetStudy(studyId)
+        return study || null
+      }),
+    )
+    setStudies(studyData.filter((study) => study !== null))
+  }, [])
+
+  useEffect(() => {
+    fetchStudies()
+  }, [studyroomList])
 
   return (
-    <section className="bg-[#f6f6f6]">
+    <section className="mb-14 bg-[#f6f6f6]">
       <section>
         <h1 className="p-4 text-lg font-bold">스터디룸</h1>
-        <p className="pl-4 text-lg font-bold">
-          아직 스터디룸이
-          <br />
-          존재하지 않아요!
-        </p>
-        <p className="p-4 text-meetie-gray-40">
-          원하는 스터디룸을 탐색해 볼까요?
+        <section>
+          {/* 스터디 리스트 */}
+          <div className="flex flex-col gap-2 px-3 pb-4">
+            {loading && (
+              <div className="flex flex-col gap-3">
+                <Skeleton className="h-[150px] w-full rounded-sm bg-slate-200" />
+                <Skeleton className="h-[150px] w-full rounded-sm bg-slate-200" />
+                <Skeleton className="h-[150px] w-full rounded-sm bg-slate-200" />
+              </div>
+            )}
+            {studies.map((study: any) => (
+              <Link href={`studyroom/${study.id}`} key={study.id}>
+                <StudyCard
+                  title={study.title}
+                  types={study['recruit_type']}
+                  tags={study.tags}
+                  startdate={study['start_date']}
+                  enddate={study['end_date']}
+                  key={study.id}
+                  studyId={study.id}
+                />
+              </Link>
+            ))}
+          </div>
+        </section>
+        <p className="p-4 font-bold text-meetie-gray-90">
+          다른 스터디룸을 탐색해 볼까요?
         </p>
         <section className="flex flex-col gap-2 p-3">
           <Card className="p-2">
@@ -75,36 +116,6 @@ export default function InactiveStudyRoom() {
             </Card>
           </Link>
         </section>
-      </section>
-      <section className="p-3">
-        <h1 className="mb-6 mt-3 pl-1 text-lg font-bold">
-          지금 떠오르고 있는
-          <br />
-          스터디룸
-        </h1>
-        {/* 스터디 리스트 */}
-        <div className="flex flex-col gap-2 pb-16">
-          {loading && (
-            <div className="flex flex-col gap-3">
-              <Skeleton className="h-[150px] w-full rounded-xl bg-slate-200" />
-              <Skeleton className="h-[150px] w-full rounded-xl bg-slate-200" />
-            </div>
-          )}
-          {studys.slice(0, 4).map((study) => (
-            <Link href={`apply/${study.id}`} key={study.id}>
-              <StudyCard
-                title={study.title}
-                types={study['recruit_type']}
-                tags={study.tags}
-                startdate={study['start_date']}
-                enddate={study['end_date']}
-                studyId={study.id}
-                key={study.id}
-                studyId={study.id}
-              />
-            </Link>
-          ))}
-        </div>
       </section>
     </section>
   )

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { format } from 'date-fns'
 import { ko } from 'date-fns/locale'
 import AssignmentItem from './assignment-item'
@@ -12,7 +12,7 @@ export default function AssignmentList() {
     format(new Date(), 'M월 d일 EEEE', { locale: ko }),
   )
 
-  const { loading, studyroom } = useStudyroomController()
+  const { loading, studyroomAssignment } = useStudyroomController()
 
   return (
     <>
@@ -36,14 +36,14 @@ export default function AssignmentList() {
               <Skeleton className="h-[150px] w-[350px] bg-meetie-gray-20" />
             </div>
           )}
-          {studyroom.length === 0 && (
+          {studyroomAssignment.length === 0 && (
             <div className="flex h-60 items-center justify-center bg-background">
               <div className="text-sm text-meetie-gray-60">
                 아직 제출된 과제가 없습니다!
               </div>
             </div>
           )}
-          {studyroom.map((item) => (
+          {studyroomAssignment.map((item) => (
             <AssignmentItem
               key={item.id}
               description={item.description}

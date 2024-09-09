@@ -15,6 +15,8 @@ import { Input } from '~/components/ui/input'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { useParams, useRouter } from 'next/navigation'
+import useAssignmentController from '~/hooks/useAssignmentController'
 
 export default function AssignmentAdd() {
   const {
@@ -26,6 +28,11 @@ export default function AssignmentAdd() {
 
   const [regularDate, setRegularDate] = useState<Date>()
   const [inputType, setInputType] = useState('text')
+  const params = useParams()
+  const studyId = params.studyId
+  const router = useRouter()
+
+  const { handleInsertAssignment } = useAssignmentController()
 
   const handleFocus = () => {
     setInputType('time')
@@ -43,11 +50,14 @@ export default function AssignmentAdd() {
       `${format(data.regularDate, 'yyyy-MM-dd')}T${data.submissionTime}`,
     )
     const newObject = {
+      study_id: studyId,
       description: data.description,
       verificationMethod: data.verificationMethod,
       deadline: deadline,
     }
-    console.log(newObject)
+    handleInsertAssignment(newObject).then(() => {
+      router.push(`/studyroom/${studyId}`)
+    })
   }
 
   return (
@@ -57,7 +67,7 @@ export default function AssignmentAdd() {
           <div className="mb-10 mt-4 space-y-2">
             <h2 className="font-bold">과제 소개</h2>
             <Textarea
-              placeholder="과제를 간단히 소개해 주세요."
+              placeholder="ex. 자바스크립트 딥다이브 챕터1 읽기"
               className="resize-none border-gray-400"
               rows={1}
               {...register('description', { required: true })}
@@ -116,7 +126,7 @@ export default function AssignmentAdd() {
           <div>
             <h2 className="mb-2 mt-10 font-bold">인증 방식</h2>
             <Textarea
-              placeholder="과제의 인증 방식을 간단히 작성해 주세요."
+              placeholder="ex. 공부한 내용 사진 찍어 올리기"
               className="resize-none border-gray-400"
               rows={1}
               {...register('verificationMethod', { required: true })}
@@ -126,11 +136,9 @@ export default function AssignmentAdd() {
                 인증 방식을 입력해 주세요.
               </span>
             )}
-            {/* <Link href="/studyroom"> */}
             <Button type="submit" className="fixed bottom-8 w-[350px]">
               작성완료
             </Button>
-            {/* </Link> */}
           </div>
         </form>
       </div>

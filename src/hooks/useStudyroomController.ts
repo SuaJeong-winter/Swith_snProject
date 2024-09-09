@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react'
-import { getStudyroom } from '~/apis/studyroom-rls'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  getStudyById,
+  getStudyroomAssignment,
+  getStudyroomList,
+} from '~/apis/studyroom-rls'
 import { Database } from '~/types/supabase'
 import { v4 as uuid } from 'uuid'
 import { createClient } from '~/utils/supabase/client'
@@ -9,15 +13,45 @@ type StudyroomDto = Database['public']['Tables']['StudyroomTest']['Row']
 const useStudyroomController = () => {
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
-  const [studyroom, setStudyroom] = useState<StudyroomDto[]>([])
+  const [studyroomAssignment, setStudyroomAssignment] = useState<
+    StudyroomDto[]
+  >([])
   const [uploadedFileName, setUploadedFileName] = useState('')
+  const [studyroomList, setStudyroomList] = useState([])
 
-  // 과제 리스트 불러오기
-  const onGetStudyroom = async () => {
+  // 스터디룸 리스트 (아이디 값들) 불러오기
+  const onGetStudyroomList = async () => {
     setLoading(true)
     try {
-      const resultStudyroom = await getStudyroom()
-      if (resultStudyroom) setStudyroom(resultStudyroom)
+      const resultStudyroomList = await getStudyroomList()
+      if (resultStudyroomList)
+        setStudyroomList(resultStudyroomList[0].study_list)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // id값을 통한 study 정보 불러오기
+  const onGetStudy = useCallback(async (id: string) => {
+    setLoading(true)
+    try {
+      return await getStudyById(id)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  // 과제 리스트 불러오기
+  const onGetStudyroomAssignment = async () => {
+    setLoading(true)
+    try {
+      const resultStudyroomAssignment = await getStudyroomAssignment()
+      if (resultStudyroomAssignment)
+        setStudyroomAssignment(resultStudyroomAssignment)
     } catch (error) {
       console.error(error)
     } finally {
@@ -65,27 +99,19 @@ const useStudyroomController = () => {
     }
   }
 
-  // 과제 인증하기 콘텐츠 DB에 저장하기
-  const handleInsertData = async (description: string, photo: string) => {
-    const { error } = await supabase
-      .from('StudyroomTest')
-      .insert({ description, photo })
-
-    if (error) {
-      console.error('과제 제출에 실패했습니다.', error)
-    }
-  }
-
   useEffect(() => {
-    onGetStudyroom()
+    onGetStudyroomAssignment()
+    onGetStudyroomList()
   }, [])
 
   return {
     loading,
-    studyroom,
+    studyroomAssignment,
+    studyroomList,
     handleAddImage,
     handleDeleteImage,
-    handleInsertData,
+    onGetStudy,
+    onGetStudyroomList,
   }
 }
 

@@ -6,12 +6,16 @@ import { startOfWeek, format, addDays, isSameDay } from 'date-fns'
 import { ko } from 'date-fns/locale'
 import AddIcon from '~/assets/icon_add.svg'
 import CalendarIcon from '~/assets/icon_calendar.svg'
+import { useParams } from 'next/navigation'
 
 interface WeekMonthCalendarProps {
   category: 'calendar' | 'assignment'
   onSelectDate: any
-  handleWeeklyMeetup?: (date: Date) => Promise<void>
-  handleWeeklyAssignment?: (date: Date) => Promise<void>
+  handleWeeklyMeetup?: (date: Date, studyId: string | string[]) => Promise<void>
+  handleWeeklyAssignment?: (
+    date: Date,
+    studyId: string | string[],
+  ) => Promise<void>
 }
 
 export default function WeekMonthCalendar({
@@ -90,12 +94,15 @@ export default function WeekMonthCalendar({
     return format(date, 'MMMM', { locale: ko })
   }
 
+  const params = useParams()
+  const studyId = params.studyId
+
   useEffect(() => {
     if (selectedDate && handleWeeklyMeetup && handleWeeklyAssignment) {
-      handleWeeklyMeetup(selectedDate)
-      handleWeeklyAssignment(selectedDate)
+      handleWeeklyMeetup(selectedDate, studyId)
+      handleWeeklyAssignment(selectedDate, studyId)
     }
-  }, [selectedDate, handleWeeklyMeetup, handleWeeklyAssignment])
+  }, [selectedDate, studyId, handleWeeklyMeetup, handleWeeklyAssignment])
 
   return (
     <div className="bg-[#f9f9f9] py-4">
@@ -106,7 +113,7 @@ export default function WeekMonthCalendar({
           </div>
           {/* + / 캘린더 아이콘 */}
           <div className="flex gap-1">
-            <Link href="/studyroom/calendarAdd">
+            <Link href={`/studyroom/${studyId}/calendarAdd`}>
               <AddIcon />
             </Link>
             <button onClick={toggleView}>
