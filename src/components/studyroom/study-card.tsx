@@ -101,7 +101,7 @@ export default function StudyCard({ studies }: { studies: any[] }) {
                       {currentStudy.recruit_type.join(', ')} | 멤버{' '}
                       {currentStudy.member.length}
                     </CardDescription>
-                    <div className="rounded-full border border-meetie-blue-4 px-1 text-xs font-semibold text-meetie-blue-4">
+                    <div className="rounded-full border border-meetie-blue-4 px-1 pt-[1px] text-xs font-semibold text-meetie-blue-4">
                       D-{getRemainingDays(currentStudy.end_date)}
                     </div>
                   </div>

@@ -102,7 +102,7 @@ export default function WeekMonthCalendar({
       handleWeeklyMeetup(selectedDate, studyId)
       handleWeeklyAssignment(selectedDate, studyId)
     }
-  }, [selectedDate, studyId, handleWeeklyMeetup, handleWeeklyAssignment])
+  }, [selectedDate, studyId])
 
   return (
     <div className="bg-[#f9f9f9] py-4">
