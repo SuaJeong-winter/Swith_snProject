@@ -206,12 +206,12 @@ export default function TotalInput({
         {/* <Button className="w-[200px]">스터디 등록하기</Button> */}
         <AlertDialog>
           <AlertDialogTrigger
-            className="h-[50px] w-[300px] whitespace-nowrap rounded-lg font-semibold text-white"
+            className="h-[50px] w-[250px] whitespace-nowrap rounded-lg font-semibold text-white"
             style={{ background: '#6326FD' }}
           >
             스터디 등록하기
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent className="w-[300px]">
             <AlertDialogHeader>
               <AlertDialogTitle>
                 스터디가 정상적으로 등록되었습니다!{' '}
@@ -221,9 +221,11 @@ export default function TotalInput({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="w-[100px]">취소</AlertDialogCancel>
+              <AlertDialogCancel className="w-[80px] px-[60px]">
+                취소
+              </AlertDialogCancel>
               <Link href="/search">
-                <AlertDialogAction className="w-[100px]">
+                <AlertDialogAction className="w-[80px] px-[60px]">
                   확인
                 </AlertDialogAction>
               </Link>
