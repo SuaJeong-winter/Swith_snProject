@@ -366,7 +366,7 @@ export default function WaitingListPage({
           )
         })}
       </div>
-      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-2 bg-red-400 px-[20px]">
+      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
         <div>
           <p>참여 가능 인원</p>
           <p>
