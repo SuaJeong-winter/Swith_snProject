@@ -210,7 +210,7 @@ export default function Step2Input({
                       {regulardays ? (
                         <span className="text-black">{regulardays}</span>
                       ) : (
-                        '요일'
+                        '요일 선택'
                       )}
                     </span>
                   </Button>
@@ -273,7 +273,7 @@ export default function Step2Input({
               <h2 className="invisible font-bold leading-3">정기일정</h2>
               <Input
                 placeholder="시간 선택"
-                className="required mr-0 mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
+                className="required mt-3 h-[55px] w-[170px] border-gray-400 text-base focus:outline-none"
                 onChange={(e) => setRegularTime(e.target.value)}
                 type="time"
                 value={regularTime} // 입력된 값을 상태로 유지
