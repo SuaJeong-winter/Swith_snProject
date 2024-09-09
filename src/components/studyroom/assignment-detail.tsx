@@ -5,14 +5,14 @@ import SendIcon from '~/assets/icon_send.svg'
 export default function AssignmentDetail() {
   return (
     <>
-      <div className="flex flex-row space-x-32 border-b-2 bg-background p-3 align-baseline">
+      <div className="flex flex-row space-x-32 border-b-2 p-3 align-baseline">
         <a href="/studyroom">
           <BtnBackIcon />
         </a>
         <h2 className="font-bold">과제 상세</h2>
         <BtnMoreVertical />
       </div>
-      <section className="bg-background">
+      <section className="flex h-screen flex-col">
         <div className="flex items-center justify-start px-3 py-2">
           {/* 임시 프로필 이미지 dummy */}
           <div className="mb-2 h-10 w-10 rounded-full bg-black">
@@ -24,8 +24,8 @@ export default function AssignmentDetail() {
           </div>
         </div>
         <p className="border-t-2 border-meetie-gray-20"></p>
-        <div className="bg-[#FAFAFA] px-3 py-10">
-          <p>
+        <div className="flex-grow bg-[#FAFAFA] px-3 py-10">
+          <p className="">
             강의 듣기 끝! 실습 과정에서 어려움이 있었어요. 피그마 링크
             공유합니다~ 피드백 환영 :)
           </p>
@@ -68,7 +68,7 @@ export default function AssignmentDetail() {
           </div>
         </div>
         {/* 댓글 입력창 */}
-        <div className="flex items-center justify-between border-t-2 border-meetie-gray-20 px-3 py-5">
+        <div className="mb-16 flex items-center justify-between border-t-2 border-meetie-gray-20 px-3 py-5">
           {/* 임시 프로필 이미지 dummy */}
           <div className="mr-2 h-8 w-8 rounded-full bg-black">
             <p> </p>

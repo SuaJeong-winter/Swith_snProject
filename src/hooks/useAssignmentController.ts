@@ -55,10 +55,11 @@ const useAssignmentController = () => {
   const handleSubmitAssignment = async (
     desc: string,
     image: string,
-    studyId: string | string[],
-    userId: string,
+    study_id: string | string[],
+    user_id: string | undefined,
+    assignment_id: string | string[],
   ) => {
-    return await submitAssignment(desc, image, studyId, userId)
+    return await submitAssignment(desc, image, study_id, user_id, assignment_id)
   }
 
   return {

@@ -52,12 +52,13 @@ export const getTodayAssignment = async (studyId: string | string[]) => {
 export const submitAssignment = async (
   desc: string,
   image: string,
-  studyId: string | string[],
-  userId: string,
+  study_id: string | string[],
+  user_id: string | undefined,
+  assignment_id: string | string[],
 ): Promise<string> => {
   const { data, error } = await supabase
     .from('SubmitAssignment')
-    .insert({ desc, image, studyId, userId })
+    .insert({ desc, image, study_id, user_id, assignment_id })
     .select('id')
 
   if (error) {

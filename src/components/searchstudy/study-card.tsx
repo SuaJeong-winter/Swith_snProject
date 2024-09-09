@@ -26,6 +26,7 @@ export default function StudyCard({
   startdate,
   enddate,
   studyId,
+  path,
 }: {
   title: string
   types: string[]
@@ -33,11 +34,11 @@ export default function StudyCard({
   startdate: string | null
   enddate: string | null
   studyId: any
+  path?: string
 }) {
   // console.log(today)
   // console.log(typeof startdate)
   const { prevList, onGetBookmark, onPostBookmark } = useUserController()
-
 
   useEffect(() => {
     onGetBookmark()
@@ -57,7 +58,6 @@ export default function StudyCard({
     }
   }
 
-
   return (
     <>
       <Card className="relative">
@@ -68,7 +68,9 @@ export default function StudyCard({
         >
           {/* {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />} */}
         </Button>
-        <Link href={`apply/${studyId}`}>
+        <Link
+          href={`${path === 'studyroom' ? 'studyroom' : 'apply'}/${studyId}`}
+        >
           <CardHeader>
             <div className="flex justify-between">
               <CardDescription>
