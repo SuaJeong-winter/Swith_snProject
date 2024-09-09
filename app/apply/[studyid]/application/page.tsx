@@ -140,13 +140,6 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        {/* 스터디룸으로 이동 */}
-        {/* <Button
-          className="border-1 w-60 flex-[2] border-solid"
-          onClick={handleSubmit}
-        >
-          신청서 제출하기
-        </Button> */}
       </div>
     </section>
   )

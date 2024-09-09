@@ -18,6 +18,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
   const [username, setUsername] = useState<string | null>(null) // username
   const [userimg, setUserImg] = useState<string | null>(null) // user프로필
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
+  const currentDate = new Date()
 
   const LogInUser = async () => {
     const user = await getUser()
@@ -83,7 +84,9 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
   if (!studyData) {
     return <p>Study not found</p>
   }
-
+  const startDate = new Date(studyData.start_date)
+  const diffInMilliseconds = startDate.getTime() - currentDate.getTime()
+  const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24)) // D-Day 계산
   const applynum: number = 1
 
   return (
@@ -97,7 +100,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             variant="outline"
             size="sm"
           >
-            D-12
+            D-{diffInDays}
           </Button>
         </div>
         <div className="mt-3 grid grid-cols-4 gap-1">
