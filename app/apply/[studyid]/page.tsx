@@ -171,45 +171,52 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             매주 {studyData.regular_days} {studyData.regular_time}
           </h2>
         </div>
-        <div className="space-y-2 pt-20"></div>
+        <div className="space-y-2 pt-[130px]"></div>
       </div>
-      <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
-        <div>
-          <p>참여 가능 인원</p>
-          <p>
-            <span className="text-meetie-blue-4">
-              {studyData.max_member - studyData.member.length}명
-            </span>
-            / {studyData.max_member}명
-          </p>
+
+      {/* 로그인한 사람과 owner의 아이디를 비교 */}
+      {loggedInUser === studyData.owner ? (
+        <div className="fixed bottom-0 h-[120px] w-[375px] items-center justify-center space-x-5 space-y-3 bg-white">
+          <div className="px-[120px] pt-2">
+            <Link href={`/${params.studyid}/established`}>
+              <p className="text-meetie-blue-4 underline">스터디 마감하기</p>
+            </Link>
+          </div>
+          <div className="flex space-x-2">
+            <div>
+              <p>참여 가능 인원</p>
+              <p>
+                <span className="text-meetie-blue-4">
+                  {studyData.max_member - studyData.member.length}명
+                </span>
+                / {studyData.max_member}명
+              </p>
+            </div>
+            <Link href={`/waiting/${params.studyid}`}>
+              <Button className="border-1 w-60 flex-[2] border-solid">
+                대기중인 요청 확인
+              </Button>
+            </Link>
+          </div>
         </div>
-        {/* 로그인한 사람과 owner의 아이디를 비교 */}
-        {loggedInUser === studyData.owner ? (
-          <Link href={`/waiting/${params.studyid}`}>
-            <Button className="border-1 w-60 flex-[2] border-solid">
-              대기중인 요청 확인
-            </Button>
-          </Link>
-        ) : (
-          // studyData.max_member - studyData.member.length === 0 ? (
-          //   <Button className="border-1 w-[240px] border-solid bg-gray-400">
-          //     아직 대기 인원이 없습니다
-          //   </Button>
-          // ) : (
-          //   <Link href={`/waiting/${params.studyid}`}>
-          //     <Button className="border-1 w-60 flex-[2] border-solid">
-          //       대기중인 요청 확인
-          //     </Button>
-          //   </Link>
-          // )
+      ) : (
+        <div className="fixed bottom-0 flex h-[100px] w-[375px] items-center justify-center space-x-4 bg-white">
+          <div>
+            <p>참여 가능 인원</p>
+            <p>
+              <span className="text-meetie-blue-4">
+                {studyData.max_member - studyData.member.length}명
+              </span>
+              / {studyData.max_member}명
+            </p>
+          </div>
           <Link href={`/apply/${params.studyid}/application`}>
             <Button className="border-1 w-60 flex-[2] border-solid">
               스터디 신청하기
             </Button>
           </Link>
-        )}
-        {/* user_id: user?.id, // 현재 로그인된 사용자의 ID */}
-      </div>
+        </div>
+      )}
     </section>
   )
 }

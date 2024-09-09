@@ -271,7 +271,7 @@ export default function WaitingListPage({
         .eq('user_id', user_id)
 
       if (statusUpdateError) {
-        console.error('Error updating status to "거절":', statusUpdateError)
+        console.error('Error updating status to "거절됨":', statusUpdateError)
         return
       }
 
