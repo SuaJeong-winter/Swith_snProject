@@ -131,9 +131,9 @@ export default function WaitingListPage({
       const updatedMembers = [...(studyData.member || []), user_id]
 
       // applied_member 배열에서 user_id 제거
-      // const updatedAppliedMembers = studyData.applied_member.filter(
-      //   (id: string) => id !== user_id,
-      // )
+      const updatedAppliedMembers = studyData.applied_member.filter(
+        (id: string) => id !== user_id,
+      )
 
       const { error: updateError } = await supabase
         .from('Study')
