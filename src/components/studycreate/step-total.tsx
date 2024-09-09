@@ -19,6 +19,7 @@ import {
 } from '~/components/ui/alert-dialog'
 import { getProfile } from '~/apis/user-rls'
 import useUserController from '~/hooks/useUserController'
+import Image from 'next/image'
 
 type TotalInputProps = {
   id: string
@@ -130,7 +131,13 @@ export default function TotalInput({
         </div>
 
         <div className="space mt-[10px] flex h-[70px] flex-row items-center justify-start space-x-2">
-          <MpProfile />
+          <Image
+            style={{ borderRadius: 50 }}
+            width={56}
+            height={56}
+            src={userData.profile_img ? userData.profile_img : ''}
+            alt="프로필 이미지"
+          />
           <div className="text-base text-black">
             {/* <p>김서희</p> */}
             <p>{userData?.username}</p>

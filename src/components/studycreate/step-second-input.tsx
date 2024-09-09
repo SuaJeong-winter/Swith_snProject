@@ -89,8 +89,8 @@ export default function Step2Input({
         // startdate.trim() !== '' &&
         // enddate.trim() !== '' &&
         regularTime.trim() !== '' &&
-        count > 0,
-      // selectedTags.length > 0,
+        count > 0 &&
+        selectedTags.length > 0,
     )
   }, [curriculum, startdate, enddate, regularTime, count, selectedTags])
 
@@ -207,7 +207,11 @@ export default function Step2Input({
                     )}
                   >
                     <span className="text-gray-400">
-                      {regulardays ? regulardays : '요일'}
+                      {regulardays ? (
+                        <span className="text-black">{regulardays}</span>
+                      ) : (
+                        '요일'
+                      )}
                     </span>
                   </Button>
                 </PopoverTrigger>
@@ -327,7 +331,7 @@ export default function Step2Input({
           <div className="space-y-2 pt-40"></div>
         </div>
 
-        <div className="fixed bottom-8 flex w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+        <div className="fixed bottom-0 flex h-[80px] w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
           <Link href="create">
             <Button
               variant="secondary"
