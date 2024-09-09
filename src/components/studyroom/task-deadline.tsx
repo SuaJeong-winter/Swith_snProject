@@ -82,7 +82,7 @@ export default function TaskDeadline() {
     const intervalId = setInterval(updateRemainingTimes, 60000)
     // 컴포넌트가 언마운트될 때 interval을 정리
     return () => clearInterval(intervalId)
-  }, [todayAssignment, studyId])
+  }, [todayAssignment, studyId, onGetTodayAssignment])
 
   return (
     <section className="bg-background px-3 pt-5">
