@@ -38,23 +38,34 @@ export default function Home() {
 
         <div className="items-left flex justify-between">
           <div className="items-left flex py-3">
-            <Image
-              width={56}
-              height={56}
-              src={userData?.['profile_img']}
-              alt={`${userData?.username} profile image`}
-              className="rounded-full"
-            />
+            <div>
+              <Image
+                width={56}
+                height={56}
+                src={userData?.['profile_img']}
+                alt={`${userData?.username} profile image`}
+                className="rounded-full"
+              />
+            </div>
             <div className="items-left flex flex-col pl-3">
               <span className="text-lg">{userData?.['job_type']}</span>
               <span className="text-lg font-bold">{userData?.username} 님</span>
             </div>
           </div>
-          <div className="items-right flex pl-8 pt-3">
-            <div className="items-left flex flex-col pt-7">
+          <div className="items-right flex pl-8 pt-4">
+            <div className="items-left flex flex-col gap-1">
               <Link href="/open-profile">
                 <Button variant="outline" size="sm" className="w-4/1">
                   공개 프로필
+                </Button>
+              </Link>
+              <Link href="/on-boarding">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-4/1 border-meetie-gray-40 text-meetie-gray-40"
+                >
+                  프로필 수정
                 </Button>
               </Link>
             </div>
