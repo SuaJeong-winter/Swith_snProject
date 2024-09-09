@@ -91,18 +91,16 @@ export default function InactiveStudyRoom() {
             </div>
           )}
           {studys.slice(0, 4).map((study) => (
-            <Link href={`apply/${study.id}`} key={study.id}>
-              <StudyCard
-                title={study.title}
-                types={study['recruit_type']}
-                tags={study.tags}
-                startdate={study['start_date']}
-                enddate={study['end_date']}
-                studyId={study.id}
-                key={study.id}
-                studyId={study.id}
-              />
-            </Link>
+            <StudyCard
+              title={study.title}
+              types={study['recruit_type']}
+              tags={study.tags}
+              startdate={study['start_date']}
+              enddate={study['end_date']}
+              studyId={study.id}
+              key={study.id}
+              path="studyroom"
+            />
           ))}
         </div>
       </section>

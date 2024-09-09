@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import ThinkingFace from '~/assets/studyRoom/thinkingFace.svg'
 import WavingHand from '~/assets/studyRoom/wavingHand.svg'
@@ -13,34 +11,21 @@ import {
 } from '~/components/ui/card'
 import { Skeleton } from '../ui/skeleton'
 import StudyCard from '~/components/searchstudy/study-card'
-import useStudyroomController from '~/hooks/useStudyroomController'
-import { useCallback, useEffect, useState } from 'react'
+import useStudyroomController, {
+  StudyDto,
+} from '~/hooks/useStudyroomController'
 
 interface ActiveStudyRoomListProps {
-  studyroomList: string[]
+  studyroomList: StudyDto[]
 }
 
 export default function ActiveStudyRoomList({
   studyroomList,
 }: ActiveStudyRoomListProps) {
-  const { loading, onGetStudy } = useStudyroomController()
-  const [studies, setStudies] = useState<any[]>([])
-  const fetchStudies = useCallback(async () => {
-    const studyData = await Promise.all(
-      studyroomList.map(async (studyId) => {
-        const study = await onGetStudy(studyId)
-        return study || null
-      }),
-    )
-    setStudies(studyData.filter((study) => study !== null))
-  }, [])
-
-  useEffect(() => {
-    fetchStudies()
-  }, [studyroomList])
+  const { loading } = useStudyroomController()
 
   return (
-    <section className="mb-14 bg-[#f6f6f6]">
+    <section className="mb-14 min-h-dvh bg-[#f6f6f6]">
       <section>
         <h1 className="p-4 text-lg font-bold">스터디룸</h1>
         <section>
@@ -53,18 +38,17 @@ export default function ActiveStudyRoomList({
                 <Skeleton className="h-[150px] w-full rounded-sm bg-slate-200" />
               </div>
             )}
-            {studies.map((study: any) => (
-              <Link href={`studyroom/${study.id}`} key={study.id}>
-                <StudyCard
-                  title={study.title}
-                  types={study['recruit_type']}
-                  tags={study.tags}
-                  startdate={study['start_date']}
-                  enddate={study['end_date']}
-                  key={study.id}
-                  studyId={study.id}
-                />
-              </Link>
+            {studyroomList.map((study: any) => (
+              <StudyCard
+                title={study.title}
+                types={study['recruit_type']}
+                tags={study.tags}
+                startdate={study['start_date']}
+                enddate={study['end_date']}
+                key={study.id}
+                studyId={study.id}
+                path="studyroom"
+              />
             ))}
           </div>
         </section>

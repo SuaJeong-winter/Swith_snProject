@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid'
 import { createClient } from '~/utils/supabase/client'
 
 type StudyroomDto = Database['public']['Tables']['StudyroomTest']['Row']
+export type StudyDto = Database['public']['Tables']['Study']['Row']
 
 const useStudyroomController = () => {
   const supabase = createClient()
@@ -17,15 +18,14 @@ const useStudyroomController = () => {
     StudyroomDto[]
   >([])
   const [uploadedFileName, setUploadedFileName] = useState('')
-  const [studyroomList, setStudyroomList] = useState([])
+  const [studyroomList, setStudyroomList] = useState<StudyDto[]>([])
 
   // 스터디룸 리스트 (아이디 값들) 불러오기
   const onGetStudyroomList = async () => {
     setLoading(true)
     try {
       const resultStudyroomList = await getStudyroomList()
-      if (resultStudyroomList)
-        setStudyroomList(resultStudyroomList[0].study_list)
+      if (resultStudyroomList) setStudyroomList(resultStudyroomList)
     } catch (error) {
       console.error(error)
     } finally {
@@ -34,7 +34,7 @@ const useStudyroomController = () => {
   }
 
   // id값을 통한 study 정보 불러오기
-  const onGetStudy = useCallback(async (id: string) => {
+  const onGetStudy = async (id: string) => {
     setLoading(true)
     try {
       return await getStudyById(id)
@@ -43,7 +43,7 @@ const useStudyroomController = () => {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
 
   // 과제 리스트 불러오기
   const onGetStudyroomAssignment = async () => {

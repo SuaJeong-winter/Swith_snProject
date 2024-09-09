@@ -10,7 +10,6 @@ import { Label } from '~/components/ui/label'
 
 import AssignmentDetail from '~/components/studyroom/assignment-detail'
 import AssignmentList from '~/components/studyroom/assignment-list'
-import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -28,11 +27,11 @@ export default function Assignment() {
   const { register, handleSubmit, setValue, reset } = useForm()
   const { handleAddImage, handleDeleteImage } = useStudyroomController()
   const { handleSubmitAssignment } = useAssignmentController()
-  const [userId, setUserId] = useState('')
 
   const router = useRouter()
   const params = useParams()
-  const studyId = params.studyId
+  const study_id = params.studyId
+  const assignment_id = params.id
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -53,16 +52,17 @@ export default function Assignment() {
   }
 
   const onSubmitAssignment = async (data: any) => {
-    // userId, studyId 저장 필요
     const userData = await getUser()
-    if (userData) {
-      setUserId(userData.id)
-    }
-    handleSubmitAssignment(data.text, data.file, studyId, userId).then(
-      (id: string) => {
-        router.push(`/studyroom/${studyId}/assignment/${id}/complete`)
-      },
-    )
+    const user_id = userData?.id
+    handleSubmitAssignment(
+      data.text,
+      data.file,
+      study_id,
+      user_id,
+      assignment_id,
+    ).then((id: string) => {
+      router.push(`/studyroom/${study_id}/assignment/complete/${id}`)
+    })
     reset()
   }
 
@@ -108,6 +108,8 @@ export default function Assignment() {
               <>
                 <div className="flex h-full w-full items-center justify-center">
                   <Image
+                    width={360}
+                    height={240}
                     src={preview}
                     alt="미리보기"
                     className="max-h-full max-w-full object-contain"

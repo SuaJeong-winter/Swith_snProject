@@ -6,20 +6,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import useStudyroomController from '~/hooks/useStudyroomController'
 
 export default function StudyRoomIdPage() {
-  const { studyroomList, onGetStudy } = useStudyroomController()
+  const { studyroomList } = useStudyroomController()
   const [activeStudies, setActiveStudies] = useState<any[]>([])
   const [inactiveStudies, setInactiveStudies] = useState<any[]>([])
 
   const fetchAndFilterStudies = async () => {
     try {
-      const studyData = await Promise.all(
-        studyroomList.map(async (studyId) => {
-          return await onGetStudy(studyId)
-        }),
-      )
       const now = new Date()
       // 종료 이전인 (진행중, 활성화된) 스터디들 필터링
-      const activeFiltered = studyData.filter((study) => {
+      const activeFiltered = studyroomList.filter((study) => {
         if (study && study.end_date) {
           const endDate = new Date(study.end_date)
           return endDate > now || endDate == now
@@ -28,7 +23,7 @@ export default function StudyRoomIdPage() {
       })
       setActiveStudies(activeFiltered)
       // 종료된 스터디들 필터링
-      const inactiveFiltered = studyData.filter((study) => {
+      const inactiveFiltered = studyroomList.filter((study) => {
         if (study && study.end_date) {
           const endDate = new Date(study.end_date)
           return endDate < now
