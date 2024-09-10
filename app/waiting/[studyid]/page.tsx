@@ -26,7 +26,7 @@ export default function WaitingListPage({
   const [studyApplyData, setStudyApplyData] = useState<any[]>([])
   const [profileData, setProfileData] = useState<any[]>([])
 
-  const [applynum, setApplynum] = useState(1)
+  const [applynum, setApplynum] = useState(0)
   const [maxMember, setMaxMember] = useState(0)
   // const [loading, setLoading] = useState(false)
 
@@ -47,6 +47,7 @@ export default function WaitingListPage({
           if (memberData && memberData.length > 0) {
             console.log('Study-apply 데이터', memberData)
             setStudyApplyData(memberData)
+            setApplynum(memberData.length)
 
             // Study 테이블에서 기존 applied_member 가져오기
             const { data: studyData, error: studyError } = await supabase
@@ -61,8 +62,8 @@ export default function WaitingListPage({
               // return
             }
             // 기존 applied_member 배열에 새로운 user_id 추가
-            // maxMember = studyData?.max_member
-            console.log(maxMember)
+            setMaxMember(studyData?.max_member || 0) // max_member 상태에 저장
+            console.log('Max Member:', studyData?.max_member)
             const existingAppliedMembers = studyData?.applied_member || []
             const newUserIds = memberData.map((member) => member.user_id)
             console.log('New User IDs:', newUserIds)
@@ -156,6 +157,7 @@ export default function WaitingListPage({
         console.error('Error updating status to "수락됨":', statusUpdateError)
         return
       }
+      setApplynum((prev) => prev + 1)
 
       // 화면에서 신청자 제거
       setStudyApplyData((prevData) =>
@@ -307,7 +309,7 @@ export default function WaitingListPage({
           return (
             <div key={applicant.user_id}>
               <div className="h-[180px] space-y-3 rounded-md border-[2px] border-solid border-gray-200 p-1">
-                <div className="mt-[3px] flex h-[70px] flex-row items-center justify-start space-x-4">
+                <div className="flex h-[70px] w-[300px] flex-row items-center justify-start space-x-4">
                   <Link href={`/open-profile/${applicant.user_id}`}>
                     {matchedProfile?.profile_img ? (
                       <Image
@@ -370,8 +372,10 @@ export default function WaitingListPage({
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">{applynum}명 </span>/
-            {maxMember}명
+            <span className="text-meetie-blue-4">
+              {maxMember - applynum}명{' '}
+            </span>
+            /{maxMember}명
           </p>
         </div>
         <Button
