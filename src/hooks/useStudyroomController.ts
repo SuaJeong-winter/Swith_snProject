@@ -18,7 +18,8 @@ const useStudyroomController = () => {
     StudyroomDto[]
   >([])
   const [uploadedFileName, setUploadedFileName] = useState('')
-  const [studyroomList, setStudyroomList] = useState<StudyDto[]>([])
+  const [studyroomList, setStudyroomList] = useState<string[]>([])
+  const [studyData, setStudyData] = useState<StudyDto>()
 
   // 스터디룸 리스트 (아이디 값들) 불러오기
   const onGetStudyroomList = async () => {
@@ -34,16 +35,17 @@ const useStudyroomController = () => {
   }
 
   // id값을 통한 study 정보 불러오기
-  const onGetStudy = async (id: string) => {
+  const onGetStudy = useCallback(async (id: string | string[]) => {
     setLoading(true)
     try {
-      return await getStudyById(id)
+      const resultStudy = await getStudyById(id)
+      if (resultStudy) setStudyData(resultStudy)
     } catch (error) {
       console.error(error)
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   // 과제 리스트 불러오기
   const onGetStudyroomAssignment = async () => {
@@ -100,7 +102,7 @@ const useStudyroomController = () => {
   }
 
   useEffect(() => {
-    onGetStudyroomAssignment()
+    // onGetStudyroomAssignment()
     onGetStudyroomList()
   }, [])
 
@@ -108,10 +110,11 @@ const useStudyroomController = () => {
     loading,
     studyroomAssignment,
     studyroomList,
+    studyData,
     handleAddImage,
     handleDeleteImage,
-    onGetStudy,
     onGetStudyroomList,
+    onGetStudy,
   }
 }
 

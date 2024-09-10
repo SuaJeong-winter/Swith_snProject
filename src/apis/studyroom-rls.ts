@@ -28,8 +28,13 @@ export const getStudyroomList = async () => {
   return result.data
 }
 
-export const getStudyById = async (id: string) => {
-  const result = await supabase.from('Study').select('*').eq('id', id).single() // 단일 row를 가져오기 위해 .single() 사용
+// study_id 를 통해 study 정보 불러오기
+export const getStudyById = async (id: string | string[]) => {
+  const result = await supabase.from('Study').select('*').eq('id', id).single()
 
-  return result.data
+  if (result.data) {
+    return result.data
+  } else {
+    return null
+  }
 }

@@ -2,10 +2,12 @@ import { useCallback, useState } from 'react'
 import { Database } from '~/types/supabase'
 import {
   addAssignment,
+  checkAssignmentExists,
   getAssignment,
   getTodayAssignment,
   submitAssignment,
 } from '~/apis/assignment-rls'
+import { getUser } from '~/apis/user-rls'
 
 type AssignmentDto = Database['public']['Tables']['Assignment']['Row']
 
@@ -62,6 +64,12 @@ const useAssignmentController = () => {
     return await submitAssignment(desc, image, study_id, user_id, assignment_id)
   }
 
+  const onCheckDoneAssignment = async (assignment_id: string | string[]) => {
+    const userData = await getUser()
+    const user_id = userData?.id
+    return checkAssignmentExists(assignment_id, user_id)
+  }
+
   return {
     loading,
     assignment,
@@ -70,6 +78,7 @@ const useAssignmentController = () => {
     handleInsertAssignment,
     onGetTodayAssignment,
     handleSubmitAssignment,
+    onCheckDoneAssignment,
   }
 }
 

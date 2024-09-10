@@ -71,3 +71,35 @@ export const submitAssignment = async (
   }
   return data[0].id
 }
+
+export const checkAssignmentExists = async (
+  assignmentId: string | string[],
+  myId: string | undefined,
+) => {
+  const { count, error } = await supabase
+    .from('SubmitAssignment')
+    .select('*', { count: 'exact' })
+    .eq('assignment_id', assignmentId)
+    .eq('user_id', myId)
+
+  if (error) {
+    console.error('Error checking assignment:', error)
+    return false
+  }
+
+  return (count ?? 0) > 0
+}
+
+export const countAssignments = async (assignmentId: string | string[]) => {
+  const { count, error } = await supabase
+    .from('SubmitAssignment')
+    .select('*', { count: 'exact' })
+    .eq('assignment_id', assignmentId)
+
+  if (error) {
+    console.error('Error checking assignment:', error)
+    return 0
+  }
+
+  return count ?? 0
+}

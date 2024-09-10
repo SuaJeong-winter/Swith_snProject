@@ -96,7 +96,7 @@ export default function MeetupAdd() {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
+                <PopoverContent className="ml-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     initialFocus
@@ -119,7 +119,7 @@ export default function MeetupAdd() {
           </div>
           {(errors.regularDate || errors.meetupTime) && (
             <span className="pl-2 text-sm text-red-500">
-              마감기한을 선택해 주세요.
+              일시를 선택해 주세요.
             </span>
           )}
           <div>
