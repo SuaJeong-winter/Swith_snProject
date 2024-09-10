@@ -63,13 +63,7 @@ export default function Assignment() {
     ).then((id: string) => {
       router.push(`/studyroom/${study_id}/assignment/complete/${id}`)
     })
-    reset()
   }
-
-  useEffect(() => {
-    const data = getUser()
-    console.log(data)
-  }, [])
 
   return (
     <form onSubmit={handleSubmit(onSubmitAssignment)}>

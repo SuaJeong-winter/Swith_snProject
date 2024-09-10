@@ -147,7 +147,7 @@ export default function TaskDeadline() {
                       </div>
                     ) : (
                       <div className="text-sm font-medium">
-                        <span className="pl-2 text-meetie-blue-4">첫번째 </span>
+                        <span className="pl-2 text-meetie-blue-4">첫번째</span>
                         로 과제를 인증해 보세요!🔥
                       </div>
                     )}

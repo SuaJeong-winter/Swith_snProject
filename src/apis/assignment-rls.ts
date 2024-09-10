@@ -33,11 +33,11 @@ export const addAssignment = async (newObject: any) => {
   }
 }
 
-// 오늘 날짜의 시작과 끝을 계산
-const todayStart = new Date().setHours(0, 0, 0, 0) // 오늘의 00:00:00
-const todayEnd = new Date().setHours(23, 59, 59, 999) // 오늘의 23:59:59
-
 export const getTodayAssignment = async (studyId: string | string[]) => {
+  // 오늘 날짜의 시작과 끝을 계산
+  const todayStart = new Date().setHours(0, 0, 0, 0) // 오늘의 00:00:00
+  const todayEnd = new Date().setHours(23, 59, 59, 999) // 오늘의 23:59:59
+
   const result = await supabase
     .from('Assignment')
     .select('*')
@@ -102,4 +102,42 @@ export const countAssignments = async (assignmentId: string | string[]) => {
   }
 
   return count ?? 0
+}
+
+export const getAssignmentSubmitList = async (
+  date: Date,
+  studyId: string | string[],
+) => {
+  // 이번 주 일요일과 토요일 날짜 계산
+  const startOfThisWeek = startOfWeek(date, { weekStartsOn: 0 }) // 일요일 시작
+  const endOfThisWeek = endOfWeek(date, { weekStartsOn: 0 }) // 토요일 끝
+
+  // 날짜를 ISO 8601 문자열로 변환 (UTC 기준)
+  const startDate = startOfThisWeek.toISOString()
+  const endDate = endOfThisWeek.toISOString()
+
+  const result = await supabase
+    .from('SubmitAssignment')
+    .select('*')
+    .eq('study_id', studyId)
+    .gte('writing_datetime', startDate)
+    .lte('writing_datetime', endDate)
+    .order('writing_datetime', { ascending: false })
+
+  return result.data
+}
+
+export const getWriterData = async (userId: string | null) => {
+  const result = await supabase.from('profiles').select('*').eq('id', userId)
+
+  return result.data
+}
+
+export const getAssignmentData = async (assignmentId: string | null) => {
+  const result = await supabase
+    .from('Assignment')
+    .select('*')
+    .eq('id', assignmentId)
+
+  return result.data
 }

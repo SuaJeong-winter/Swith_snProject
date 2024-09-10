@@ -16,6 +16,10 @@ interface WeekMonthCalendarProps {
     date: Date,
     studyId: string | string[],
   ) => Promise<void>
+  handleWeeklySubmitAssignment?: (
+    date: Date,
+    studyId: string | string[],
+  ) => Promise<void>
 }
 
 export default function WeekMonthCalendar({
@@ -23,6 +27,7 @@ export default function WeekMonthCalendar({
   onSelectDate,
   handleWeeklyMeetup,
   handleWeeklyAssignment,
+  handleWeeklySubmitAssignment,
 }: WeekMonthCalendarProps) {
   const [isMonthView, setIsMonthView] = useState(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
@@ -102,6 +107,11 @@ export default function WeekMonthCalendar({
       handleWeeklyMeetup(selectedDate, studyId)
       handleWeeklyAssignment(selectedDate, studyId)
     }
+  }, [selectedDate, studyId])
+
+  useEffect(() => {
+    if (selectedDate && handleWeeklySubmitAssignment)
+      handleWeeklySubmitAssignment(selectedDate, studyId)
   }, [selectedDate, studyId])
 
   return (
