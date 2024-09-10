@@ -27,7 +27,7 @@ export default function WaitingListPage({
   const [profileData, setProfileData] = useState<any[]>([])
 
   const [applynum, setApplynum] = useState(1)
-  let maxMember = 0
+  const [maxMember, setMaxMember] = useState(0)
   // const [loading, setLoading] = useState(false)
 
   // ========================================
@@ -61,7 +61,7 @@ export default function WaitingListPage({
               // return
             }
             // 기존 applied_member 배열에 새로운 user_id 추가
-            maxMember = studyData?.max_member
+            // maxMember = studyData?.max_member
             console.log(maxMember)
             const existingAppliedMembers = studyData?.applied_member || []
             const newUserIds = memberData.map((member) => member.user_id)
@@ -296,7 +296,7 @@ export default function WaitingListPage({
       <StudyHeader href={`/apply/${params.studyid}`} />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
-      <div className="mt-6 space-y-4 px-3">
+      <div className="mt-6 space-y-2 px-3">
         {studyApplyData.map((applicant) => {
           console.log('신청자', applicant)
           // user_id와 매칭되는 profile 데이터 찾기
@@ -306,8 +306,8 @@ export default function WaitingListPage({
 
           return (
             <div key={applicant.user_id}>
-              <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-1">
-                <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
+              <div className="h-[180px] space-y-3 rounded-md border-[2px] border-solid border-gray-200 p-1">
+                <div className="mt-[3px] flex h-[70px] flex-row items-center justify-start space-x-4">
                   <Link href={`/open-profile/${applicant.user_id}`}>
                     {matchedProfile?.profile_img ? (
                       <Image
@@ -328,7 +328,7 @@ export default function WaitingListPage({
                     <p className="text-sm">
                       {matchedProfile?.job_type || '직업 정보 없음'}
                     </p>
-                    <p className="text-xs">스터디 8회</p>
+                    {/* <p className="text-xs">스터디 8회</p> */}
                   </div>
 
                   <div className="h-[30px] space-x-2 pl-[70px]">
@@ -349,7 +349,7 @@ export default function WaitingListPage({
                 <p className="text-sm">
                   {applicant.introduce || '소개가 없습니다'}
                 </p>
-                <div className="mt-3 grid grid-cols-3 gap-1">
+                <div className="mt-3 grid grid-cols-4 gap-1">
                   {(matchedProfile?.study_style || []).map(
                     (style: string, index: number) => (
                       <Chip
