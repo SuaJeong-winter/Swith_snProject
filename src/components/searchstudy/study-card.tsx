@@ -85,9 +85,9 @@ export default function StudyCard({
               <CardDescription>
                 <div className="flex flex-row">
                   {types?.map((type, idx) => (
-                    <span key={type + idx}>
+                    <span key={idx}>
                       {type}
-                      {idx < type.length - 1 && ' | '}
+                      {idx < types.length - 1 && ` |${'\u00A0'} `}
                     </span>
                   ))}
                 </div>
