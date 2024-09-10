@@ -8,17 +8,14 @@ import { Database } from '~/types/supabase'
 import { v4 as uuid } from 'uuid'
 import { createClient } from '~/utils/supabase/client'
 
-type StudyroomDto = Database['public']['Tables']['StudyroomTest']['Row']
 export type StudyDto = Database['public']['Tables']['Study']['Row']
 
 const useStudyroomController = () => {
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
-  const [studyroomAssignment, setStudyroomAssignment] = useState<
-    StudyroomDto[]
-  >([])
+  const [studyroomAssignment, setStudyroomAssignment] = useState([])
   const [uploadedFileName, setUploadedFileName] = useState('')
-  const [studyroomList, setStudyroomList] = useState<StudyroomDto[]>([])
+  const [studyroomList, setStudyroomList] = useState<StudyDto[]>([])
   const [studyData, setStudyData] = useState<StudyDto>()
 
   // 로그인한 유저가 참여하고 있는 스터디룸들 불러오기
@@ -48,18 +45,18 @@ const useStudyroomController = () => {
   }, [])
 
   // 과제 리스트 불러오기
-  const onGetStudyroomAssignment = async () => {
-    setLoading(true)
-    try {
-      const resultStudyroomAssignment = await getStudyroomAssignment()
-      if (resultStudyroomAssignment)
-        setStudyroomAssignment(resultStudyroomAssignment)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  // const onGetStudyroomAssignment = async () => {
+  //   setLoading(true)
+  //   try {
+  //     const resultStudyroomAssignment = await getStudyroomAssignment()
+  //     if (resultStudyroomAssignment)
+  //       setStudyroomAssignment(resultStudyroomAssignment)
+  //   } catch (error) {
+  //     console.error(error)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   // 과제 인증 과정 중 이미지 업로드
   const handleAddImage = async (file: File): Promise<string | ''> => {
