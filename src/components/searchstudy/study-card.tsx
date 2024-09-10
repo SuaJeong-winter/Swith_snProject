@@ -39,6 +39,7 @@ export default function StudyCard({
   // console.log(today)
   // console.log(typeof startdate)
   const { prevList, onGetBookmark, onPostBookmark } = useUserController()
+  const currentDate = new Date()
 
   useEffect(() => {
     onGetBookmark()
@@ -57,6 +58,14 @@ export default function StudyCard({
       onPostBookmark([studyId])
     }
   }
+
+  const startDate = startdate ? new Date(startdate) : null
+  const diffInMilliseconds = startDate
+    ? startDate.getTime() - currentDate.getTime()
+    : 0
+  const diffInDays = startDate
+    ? Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24))
+    : 0 // D-Day 계산
 
   return (
     <>
@@ -89,7 +98,9 @@ export default function StudyCard({
           <CardContent>
             {/* 태그 */}
             <div>{tags?.map((tag) => <Badge key={tag}>{tag}</Badge>)}</div>
-            <span className="font-bold text-primary">마감 0일 전</span>
+            <span className="font-bold text-primary">
+              {diffInDays > 0 ? `마감${diffInDays}일 전` : '오늘 마감'}
+            </span>
             <CalendarMini className="mb-1 ml-3 mr-1 inline" />
             <span>
               {startdate} ~ {enddate}
