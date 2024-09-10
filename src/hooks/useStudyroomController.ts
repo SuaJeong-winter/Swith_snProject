@@ -18,10 +18,10 @@ const useStudyroomController = () => {
     StudyroomDto[]
   >([])
   const [uploadedFileName, setUploadedFileName] = useState('')
-  const [studyroomList, setStudyroomList] = useState<string[]>([])
+  const [studyroomList, setStudyroomList] = useState<StudyroomDto[]>([])
   const [studyData, setStudyData] = useState<StudyDto>()
 
-  // 스터디룸 리스트 (아이디 값들) 불러오기
+  // 로그인한 유저가 참여하고 있는 스터디룸들 불러오기
   const onGetStudyroomList = async () => {
     setLoading(true)
     try {
