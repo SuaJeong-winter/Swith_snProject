@@ -7,11 +7,8 @@ import { Textarea } from '~/components/ui/textarea'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-
-import AssignmentDetail from '~/components/studyroom/assignment-detail'
-import AssignmentList from '~/components/studyroom/assignment-list'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useStudyroomController from '~/hooks/useStudyroomController'
 import useAssignmentController from '~/hooks/useAssignmentController'
@@ -69,7 +66,7 @@ export default function Assignment() {
     <form onSubmit={handleSubmit(onSubmitAssignment)}>
       <div className="h-dvh bg-background">
         <div className="flex flex-row space-x-32 border-b-2 p-3 align-baseline">
-          <a href="/studyroom">
+          <a href={`/studyroom/${study_id}`}>
             <BtnBackIcon />
           </a>
           <h2 className="font-bold">과제 인증</h2>
@@ -136,11 +133,6 @@ export default function Assignment() {
             </button>
           </div> */}
         </section>
-
-        {/* 과제 상세 컴포넌트 - 추후 라우터 [id]로 분리 */}
-        {/* <AssignmentDetail /> */}
-        {/* 과제 리스트 */}
-        {/* <AssignmentList /> */}
       </div>
     </form>
   )

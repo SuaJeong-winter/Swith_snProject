@@ -5,6 +5,7 @@ import useAssignmentController from '~/hooks/useAssignmentController'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Skeleton } from '../ui/skeleton'
+import Link from 'next/link'
 
 export default function AssignmentItem({
   desc,
@@ -12,12 +13,16 @@ export default function AssignmentItem({
   writing_datetime,
   user_id,
   assignment_id,
+  study_id,
+  id,
 }: {
   desc: string | null
   image: string | null
   writing_datetime: Date
   user_id: string | null
   assignment_id: string | null
+  study_id: string | null
+  id: string
 }) {
   const formattedDate = format(writing_datetime, 'yyyy.MM.dd HH:mm')
   const [isLoading, setIsLoading] = useState(true)
@@ -70,25 +75,26 @@ export default function AssignmentItem({
               </p>
               <BtnMore className="" />
             </div>
-            <p className="mt-2 line-clamp-5">{desc}</p>
-            <div>
-              {isLoading && (
-                <div className="flex flex-col items-center gap-3">
-                  <Skeleton className="h-[150px] w-[300px] animate-pulse bg-meetie-gray-20" />
-                </div>
-              )}
-              <Image
-                alt="과제 사진"
-                width={360}
-                height={240}
-                className="block w-full"
-                src={image || ''}
-                onLoad={() => {
-                  console.log('Image loaded')
-                  setIsLoading(false)
-                }}
-              />
-            </div>
+            <Link href={`/studyroom/${study_id}/assignment/submit/${id}`}>
+              <p className="mt-2 line-clamp-5 cursor-pointer">{desc}</p>
+              <div className="cursor-pointer">
+                {isLoading && (
+                  <div className="flex flex-col items-center gap-3">
+                    <Skeleton className="h-[150px] w-[300px] animate-pulse bg-meetie-gray-20" />
+                  </div>
+                )}
+                <Image
+                  alt="과제 사진"
+                  width={360}
+                  height={240}
+                  className="w-full rounded-md"
+                  src={image || ''}
+                  onLoad={() => {
+                    setIsLoading(false)
+                  }}
+                />
+              </div>
+            </Link>
             <div className="flex items-end justify-between">
               <span className="mt-3 text-xs">{formattedDate}</span>
               <div className="flex gap-1 text-xs">

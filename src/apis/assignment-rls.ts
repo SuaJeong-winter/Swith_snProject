@@ -141,3 +141,12 @@ export const getAssignmentData = async (assignmentId: string | null) => {
 
   return result.data
 }
+
+export const getSubmitAssignmentDetail = async (id: string | string[]) => {
+  const result = await supabase
+    .from('SubmitAssignment')
+    .select('*')
+    .eq('id', id)
+
+  return result.data
+}

@@ -49,6 +49,8 @@ export default function AssignmentList() {
             writing_datetime={item.writing_datetime}
             user_id={item.user_id}
             assignment_id={item.assignment_id}
+            study_id={item.study_id}
+            id={item.id}
           />
         ))}
       </ul>

@@ -6,6 +6,7 @@ import {
   getAssignment,
   getAssignmentData,
   getAssignmentSubmitList,
+  getSubmitAssignmentDetail,
   getTodayAssignment,
   getWriterData,
   submitAssignment,
@@ -25,6 +26,8 @@ const useAssignmentController = () => {
   >([])
   const [writerData, setWriterData] = useState<any>([])
   const [assignmentData, setAssignmentData] = useState<AssignmentDto[]>([])
+  const [submitAssignmentData, setSubmitAssignmentData] =
+    useState<SubmitAssignmentDto[]>()
 
   // 과제 일정 리스트 불러오기
   const onGetAssignmentCalendar = async (
@@ -126,6 +129,19 @@ const useAssignmentController = () => {
     }
   }
 
+  // 과제 제출 아이디로 제출 과제 정보 불러오기
+  const onGetSubmitAssignmentData = async (id: string | string[]) => {
+    setLoading(true)
+    try {
+      const result = await getSubmitAssignmentDetail(id)
+      if (result) setSubmitAssignmentData(result)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return {
     loading,
     assignment,
@@ -133,6 +149,7 @@ const useAssignmentController = () => {
     assignmentSubmitList,
     writerData,
     assignmentData,
+    submitAssignmentData,
     onGetAssignmentCalendar,
     handleInsertAssignment,
     onGetTodayAssignment,
@@ -141,6 +158,7 @@ const useAssignmentController = () => {
     onGetAssignmentSubmitList,
     onGetSubmitWriterData,
     onGetAssignmentData,
+    onGetSubmitAssignmentData,
   }
 }
 
