@@ -1,26 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
-import {
-  getStudyById,
-  getStudyroomAssignment,
-  getStudyroomList,
-} from '~/apis/studyroom-rls'
+import { getStudyById, getStudyroomList } from '~/apis/studyroom-rls'
 import { Database } from '~/types/supabase'
 import { v4 as uuid } from 'uuid'
 import { createClient } from '~/utils/supabase/client'
 
-type StudyroomDto = Database['public']['Tables']['StudyroomTest']['Row']
 export type StudyDto = Database['public']['Tables']['Study']['Row']
 
 const useStudyroomController = () => {
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
-  const [studyroomAssignment, setStudyroomAssignment] = useState<
-    StudyroomDto[]
-  >([])
   const [uploadedFileName, setUploadedFileName] = useState('')
   const [studyroomList, setStudyroomList] = useState<StudyDto[]>([])
+  const [studyData, setStudyData] = useState<StudyDto>()
 
-  // 스터디룸 리스트 (아이디 값들) 불러오기
+  // 로그인한 유저가 참여하고 있는 스터디룸들 불러오기
   const onGetStudyroomList = async () => {
     setLoading(true)
     try {
@@ -34,30 +27,17 @@ const useStudyroomController = () => {
   }
 
   // id값을 통한 study 정보 불러오기
-  const onGetStudy = async (id: string) => {
+  const onGetStudy = useCallback(async (id: string | string[]) => {
     setLoading(true)
     try {
-      return await getStudyById(id)
+      const resultStudy = await getStudyById(id)
+      if (resultStudy) setStudyData(resultStudy)
     } catch (error) {
       console.error(error)
     } finally {
       setLoading(false)
     }
-  }
-
-  // 과제 리스트 불러오기
-  const onGetStudyroomAssignment = async () => {
-    setLoading(true)
-    try {
-      const resultStudyroomAssignment = await getStudyroomAssignment()
-      if (resultStudyroomAssignment)
-        setStudyroomAssignment(resultStudyroomAssignment)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [])
 
   // 과제 인증 과정 중 이미지 업로드
   const handleAddImage = async (file: File): Promise<string | ''> => {
@@ -100,18 +80,17 @@ const useStudyroomController = () => {
   }
 
   useEffect(() => {
-    onGetStudyroomAssignment()
     onGetStudyroomList()
   }, [])
 
   return {
     loading,
-    studyroomAssignment,
     studyroomList,
+    studyData,
     handleAddImage,
     handleDeleteImage,
-    onGetStudy,
     onGetStudyroomList,
+    onGetStudy,
   }
 }
 

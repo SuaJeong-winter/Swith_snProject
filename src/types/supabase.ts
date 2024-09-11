@@ -215,7 +215,7 @@ export type Database = {
           study_id: string | null
           temp_status: boolean[] | null
           user_id: string | null
-          writing_datetime: string | null
+          writing_datetime: Date
         }
         Insert: {
           assignment_id?: string | null

@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { useParams, useRouter } from 'next/navigation'
 import useAssignmentController from '~/hooks/useAssignmentController'
+import { getUser } from '~/apis/user-rls'
 
 export default function AssignmentAdd() {
   const {
@@ -97,7 +98,7 @@ export default function AssignmentAdd() {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto bg-white p-0">
+                <PopoverContent className="ml-[105px] w-auto bg-white p-0">
                   <Calendar
                     mode="single"
                     initialFocus
@@ -120,7 +121,7 @@ export default function AssignmentAdd() {
           </div>
           {(errors.regularDate || errors.submissionTime) && (
             <span className="pl-2 text-sm text-red-500">
-              마감기한을 선택해 주세요.
+              마감 기한을 선택해 주세요.
             </span>
           )}
           <div>
