@@ -97,6 +97,7 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
             rows={6}
             value={introduce}
             onChange={(e) => setIntroduce(e.target.value)}
+            maxLength={50}
           />
         </div>
       </div>

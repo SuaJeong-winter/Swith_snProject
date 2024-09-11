@@ -26,8 +26,8 @@ export default function WaitingListPage({
   const [studyApplyData, setStudyApplyData] = useState<any[]>([])
   const [profileData, setProfileData] = useState<any[]>([])
 
-  const [applynum, setApplynum] = useState(1)
-  let maxMember = 0
+  const [applynum, setApplynum] = useState(0)
+  const [maxMember, setMaxMember] = useState(0)
   // const [loading, setLoading] = useState(false)
 
   // ========================================
@@ -47,6 +47,7 @@ export default function WaitingListPage({
           if (memberData && memberData.length > 0) {
             console.log('Study-apply 데이터', memberData)
             setStudyApplyData(memberData)
+            setApplynum(memberData.length)
 
             // Study 테이블에서 기존 applied_member 가져오기
             const { data: studyData, error: studyError } = await supabase
@@ -61,8 +62,8 @@ export default function WaitingListPage({
               // return
             }
             // 기존 applied_member 배열에 새로운 user_id 추가
-            maxMember = studyData?.max_member
-            console.log(maxMember)
+            setMaxMember(studyData?.max_member || 0) // max_member 상태에 저장
+            console.log('Max Member:', studyData?.max_member)
             const existingAppliedMembers = studyData?.applied_member || []
             const newUserIds = memberData.map((member) => member.user_id)
             console.log('New User IDs:', newUserIds)
@@ -113,6 +114,24 @@ export default function WaitingListPage({
     memberListData()
   }, [params.studyid]) // 의존성 배열이 비어있으므로, 이 효과는 컴포넌트가 처음 렌더링될 때 한 번만 실행
 
+  const handleCloseStudy = async () => {
+    try {
+      const { error } = await supabase
+        .from('Study')
+        .update({ status: true })
+        .eq('id', params.studyid)
+
+      if (error) {
+        console.error('스터디 상태 업데이트 오류:', error)
+        return
+      }
+
+      console.log('스터디 상태가 마감으로 업데이트되었습니다.')
+    } catch (error) {
+      console.error('handleCloseStudy 오류:', error)
+    }
+  }
+
   // 수락과 거절
   const onAccept = async (user_id: string) => {
     try {
@@ -156,6 +175,7 @@ export default function WaitingListPage({
         console.error('Error updating status to "수락됨":', statusUpdateError)
         return
       }
+      setApplynum((prev) => prev + 1)
 
       // 화면에서 신청자 제거
       setStudyApplyData((prevData) =>
@@ -296,7 +316,7 @@ export default function WaitingListPage({
       <StudyHeader href={`/apply/${params.studyid}`} />
 
       <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
-      <div className="mt-6 space-y-4 px-3">
+      <div className="mt-6 space-y-2 px-3">
         {studyApplyData.map((applicant) => {
           console.log('신청자', applicant)
           // user_id와 매칭되는 profile 데이터 찾기
@@ -306,32 +326,34 @@ export default function WaitingListPage({
 
           return (
             <div key={applicant.user_id}>
-              <div className="h-[180px] space-y-1 rounded-md border-[2px] border-solid border-gray-200 p-1">
-                <div className="mt-[8px] flex h-[70px] flex-row items-center justify-start space-x-2">
-                  <Link href={`/open-profile/${applicant.user_id}`}>
-                    {matchedProfile?.profile_img ? (
-                      <Image
-                        src={matchedProfile.profile_img} // profile_img가 있는 경우
-                        alt="프로필 이미지"
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <MpProfile /> // profile_img가 없을 경우 기본 이미지
-                    )}
-                  </Link>
-                  <div className="text-base text-black">
+              <div className="flex h-full flex-col space-y-3 rounded-md border-[2px] border-solid border-gray-200 bg-white">
+                <div className="flex h-[70px] items-center space-x-4 p-2">
+                  <div className="flex-[0.2]">
+                    <Link href={`/open-profile/${applicant.user_id}`}>
+                      {matchedProfile?.profile_img ? (
+                        <Image
+                          src={matchedProfile.profile_img} // profile_img가 있는 경우
+                          alt="프로필 이미지"
+                          width={50}
+                          height={50}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <MpProfile /> // profile_img가 없을 경우 기본 이미지
+                      )}
+                    </Link>
+                  </div>
+                  <div className="flex-[0.5] text-base text-black">
                     <p className="text-base">
                       {matchedProfile?.username || '이름 없음'}
                     </p>
                     <p className="text-sm">
                       {matchedProfile?.job_type || '직업 정보 없음'}
                     </p>
-                    <p className="text-xs">스터디 8회</p>
+                    {/* <p className="text-xs">스터디 8회</p> */}
                   </div>
 
-                  <div className="h-[30px] space-x-2 pl-[70px]">
+                  <div className="h-[30px] flex-[0.8] space-x-2 pl-[10px]">
                     <Button
                       className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
                       onClick={() => onReject(applicant.user_id)}
@@ -346,10 +368,10 @@ export default function WaitingListPage({
                     </Button>
                   </div>
                 </div>
-                <p className="text-sm">
+                <p className="px-3 text-sm">
                   {applicant.introduce || '소개가 없습니다'}
                 </p>
-                <div className="mt-3 grid grid-cols-3 gap-1">
+                <div className="mt-3 grid grid-cols-4 gap-1 p-3">
                   {(matchedProfile?.study_style || []).map(
                     (style: string, index: number) => (
                       <Chip
@@ -370,16 +392,29 @@ export default function WaitingListPage({
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">{applynum}명 </span>/
-            {maxMember}명
+            <span className="text-meetie-blue-4">
+              {maxMember - applynum}명{' '}
+            </span>
+            /{maxMember}명
           </p>
         </div>
-        <Button
-          className="w-60 flex-[2] rounded-md border border-solid"
-          onClick={onAcceptAll}
-        >
-          전체 수락하기
-        </Button>
+        {maxMember - applynum === 0 ? (
+          <Link href={`/${params.studyid}/established`}>
+            <Button
+              className="w-60 flex-[2] rounded-md border border-solid"
+              onClick={handleCloseStudy}
+            >
+              스터디 마감하기
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            className="w-60 flex-[2] rounded-md border border-solid"
+            onClick={onAcceptAll}
+          >
+            전체 수락하기
+          </Button>
+        )}
       </div>
     </section>
   )
