@@ -114,6 +114,24 @@ export default function WaitingListPage({
     memberListData()
   }, [params.studyid]) // 의존성 배열이 비어있으므로, 이 효과는 컴포넌트가 처음 렌더링될 때 한 번만 실행
 
+  const handleCloseStudy = async () => {
+    try {
+      const { error } = await supabase
+        .from('Study')
+        .update({ status: true })
+        .eq('id', params.studyid)
+
+      if (error) {
+        console.error('스터디 상태 업데이트 오류:', error)
+        return
+      }
+
+      console.log('스터디 상태가 마감으로 업데이트되었습니다.')
+    } catch (error) {
+      console.error('handleCloseStudy 오류:', error)
+    }
+  }
+
   // 수락과 거절
   const onAccept = async (user_id: string) => {
     try {
@@ -380,12 +398,23 @@ export default function WaitingListPage({
             /{maxMember}명
           </p>
         </div>
-        <Button
-          className="w-60 flex-[2] rounded-md border border-solid"
-          onClick={onAcceptAll}
-        >
-          전체 수락하기
-        </Button>
+        {maxMember - applynum === 0 ? (
+          <Link href={`/${params.studyid}/established`}>
+            <Button
+              className="w-60 flex-[2] rounded-md border border-solid"
+              onClick={handleCloseStudy}
+            >
+              스터디 마감하기
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            className="w-60 flex-[2] rounded-md border border-solid"
+            onClick={onAcceptAll}
+          >
+            전체 수락하기
+          </Button>
+        )}
       </div>
     </section>
   )
