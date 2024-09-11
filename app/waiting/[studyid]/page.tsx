@@ -26,8 +26,9 @@ export default function WaitingListPage({
   const [studyApplyData, setStudyApplyData] = useState<any[]>([])
   const [profileData, setProfileData] = useState<any[]>([])
 
-  const [applynum, setApplynum] = useState(0)
+  const [applynum, setApplynum] = useState(0) //신청자
   const [maxMember, setMaxMember] = useState(0)
+  const [acceptedMembers, setAcceptedMembers] = useState<string[]>([]) //수락된 인원 수
   // const [loading, setLoading] = useState(false)
 
   // ========================================
@@ -52,7 +53,7 @@ export default function WaitingListPage({
             // Study 테이블에서 기존 applied_member 가져오기
             const { data: studyData, error: studyError } = await supabase
               .from('Study')
-              .select('applied_member,max_member')
+              .select('applied_member,max_member,member')
               .eq('id', params.studyid)
               .single()
 
@@ -63,6 +64,7 @@ export default function WaitingListPage({
             }
             // 기존 applied_member 배열에 새로운 user_id 추가
             setMaxMember(studyData?.max_member || 0) // max_member 상태에 저장
+            setAcceptedMembers(studyData?.member || []) // 수락된 멤버 목록 저장
             console.log('Max Member:', studyData?.max_member)
             const existingAppliedMembers = studyData?.applied_member || []
             const newUserIds = memberData.map((member) => member.user_id)
@@ -135,54 +137,47 @@ export default function WaitingListPage({
   // 수락과 거절
   const onAccept = async (user_id: string) => {
     try {
-      // Study 테이블에서 member 컬럼 업데이트
       const { data: studyData, error: studyError } = await supabase
         .from('Study')
-        .select('member,applied_member')
+        .select('member, applied_member')
         .eq('id', params.studyid)
         .single()
 
-      if (studyError) {
-        console.error('Error fetching study data:', studyError)
-        return
+      if (!studyError) {
+        const updatedMembers = [...(studyData.member || []), user_id]
+
+        // applied_member 배열에서 user_id 제거
+        const updatedAppliedMembers = studyData.applied_member.filter(
+          (id: string) => id !== user_id,
+        )
+
+        const { error: updateError } = await supabase
+          .from('Study')
+          .update({
+            member: updatedMembers,
+            applied_member: updatedAppliedMembers,
+          })
+          .eq('id', params.studyid)
+
+        if (!updateError) {
+          const { error: statusUpdateError } = await supabase
+            .from('Study-apply')
+            .update({ status: '수락됨' })
+            .eq('study_id', params.studyid)
+            .eq('user_id', user_id)
+
+          if (!statusUpdateError) {
+            setAcceptedMembers(updatedMembers) // 수락된 멤버 목록 업데이트
+
+            // 신청자 제거
+            setStudyApplyData((prevData) =>
+              prevData.filter((applicant) => applicant.user_id !== user_id),
+            )
+
+            console.log('User accepted:', user_id)
+          }
+        }
       }
-
-      const updatedMembers = [...(studyData.member || []), user_id]
-
-      // applied_member 배열에서 user_id 제거
-      const updatedAppliedMembers = studyData.applied_member.filter(
-        (id: string) => id !== user_id,
-      )
-
-      const { error: updateError } = await supabase
-        .from('Study')
-        .update({ member: updatedMembers })
-        .eq('id', params.studyid)
-
-      if (updateError) {
-        console.error('Error updating member:', updateError)
-        return
-      }
-
-      // Study-apply 테이블에서 status를 '수락됨'으로 업데이트
-      const { error: statusUpdateError } = await supabase
-        .from('Study-apply')
-        .update({ status: '수락됨' })
-        .eq('study_id', params.studyid)
-        .eq('user_id', user_id)
-
-      if (statusUpdateError) {
-        console.error('Error updating status to "수락됨":', statusUpdateError)
-        return
-      }
-      setApplynum((prev) => prev + 1)
-
-      // 화면에서 신청자 제거
-      setStudyApplyData((prevData) =>
-        prevData.filter((applicant) => applicant.user_id !== user_id),
-      )
-
-      console.log('User accepted:', user_id)
     } catch (error) {
       console.error('Error in onAccept:', error)
     }
@@ -198,27 +193,6 @@ export default function WaitingListPage({
         .single()
 
       if (!studyError) {
-        const potentialTotal =
-          (studyData.member?.length || 0) + studyApplyData.length
-
-        if (potentialTotal > studyData.max_member) {
-          toast({
-            description: (
-              <div className="flex items-center">
-                <IconBell />
-                <span>신청자가 수락 가능 인원보다 많습니다</span>
-              </div>
-            ),
-            style: {
-              background: 'gray-300',
-              width: '300px',
-              height: '30px',
-              marginBottom: '10px',
-            },
-          })
-          return
-        }
-
         const newMembers = [
           ...(studyData.member || []),
           ...studyApplyData.map((user) => user.user_id),
@@ -243,6 +217,7 @@ export default function WaitingListPage({
             .eq('study_id', params.studyid)
 
           if (!statusUpdateError) {
+            setAcceptedMembers(newMembers)
             setStudyApplyData([])
           }
         }
@@ -305,6 +280,8 @@ export default function WaitingListPage({
       console.error('Error in onReject:', error)
     }
   }
+
+  const remainingSlots = maxMember - acceptedMembers.length
 
   // =========================================================
 
@@ -388,17 +365,15 @@ export default function WaitingListPage({
           )
         })}
       </div>
-      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-2 bg-white px-[20px]">
+      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-1 bg-white px-[20px]">
         <div>
           <p>참여 가능 인원</p>
           <p>
-            <span className="text-meetie-blue-4">
-              {maxMember - applynum}명{' '}
-            </span>
-            /{maxMember}명
+            <span className="text-meetie-blue-4">{remainingSlots}명 </span>/
+            {maxMember}명
           </p>
         </div>
-        {maxMember - applynum === 0 ? (
+        {remainingSlots === 0 ? (
           <Link href={`/${params.studyid}/established`}>
             <Button
               className="w-60 flex-[2] rounded-md border border-solid"
