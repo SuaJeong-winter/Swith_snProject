@@ -308,22 +308,24 @@ export default function WaitingListPage({
 
           return (
             <div key={applicant.user_id}>
-              <div className="h-[180px] space-y-3 rounded-md border-[2px] border-solid border-gray-200 p-1">
-                <div className="flex h-[70px] w-[300px] flex-row items-center justify-start space-x-4">
-                  <Link href={`/open-profile/${applicant.user_id}`}>
-                    {matchedProfile?.profile_img ? (
-                      <Image
-                        src={matchedProfile.profile_img} // profile_img가 있는 경우
-                        alt="프로필 이미지"
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <MpProfile /> // profile_img가 없을 경우 기본 이미지
-                    )}
-                  </Link>
-                  <div className="text-base text-black">
+              <div className="flex h-full flex-col space-y-3 rounded-md border-[2px] border-solid border-gray-200 bg-white">
+                <div className="flex h-[70px] items-center space-x-4 p-2">
+                  <div className="flex-[0.2]">
+                    <Link href={`/open-profile/${applicant.user_id}`}>
+                      {matchedProfile?.profile_img ? (
+                        <Image
+                          src={matchedProfile.profile_img} // profile_img가 있는 경우
+                          alt="프로필 이미지"
+                          width={50}
+                          height={50}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <MpProfile /> // profile_img가 없을 경우 기본 이미지
+                      )}
+                    </Link>
+                  </div>
+                  <div className="flex-[0.5] text-base text-black">
                     <p className="text-base">
                       {matchedProfile?.username || '이름 없음'}
                     </p>
@@ -333,7 +335,7 @@ export default function WaitingListPage({
                     {/* <p className="text-xs">스터디 8회</p> */}
                   </div>
 
-                  <div className="h-[30px] space-x-2 pl-[70px]">
+                  <div className="h-[30px] flex-[0.8] space-x-2 pl-[10px]">
                     <Button
                       className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
                       onClick={() => onReject(applicant.user_id)}
@@ -348,10 +350,10 @@ export default function WaitingListPage({
                     </Button>
                   </div>
                 </div>
-                <p className="text-sm">
+                <p className="px-3 text-sm">
                   {applicant.introduce || '소개가 없습니다'}
                 </p>
-                <div className="mt-3 grid grid-cols-4 gap-1">
+                <div className="mt-3 grid grid-cols-4 gap-1 p-3">
                   {(matchedProfile?.study_style || []).map(
                     (style: string, index: number) => (
                       <Chip
