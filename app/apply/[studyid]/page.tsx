@@ -77,6 +77,24 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
     fetchData()
   }, [params.studyid])
 
+  const handleCloseStudy = async () => {
+    try {
+      const { error } = await supabase
+        .from('Study')
+        .update({ status: true })
+        .eq('id', params.studyid)
+
+      if (error) {
+        console.error('스터디 상태 업데이트 오류:', error)
+        return
+      }
+
+      console.log('스터디 상태가 마감으로 업데이트되었습니다.')
+    } catch (error) {
+      console.error('handleCloseStudy 오류:', error)
+    }
+  }
+
   if (loading) {
     return <p>Loading...</p>
   }
@@ -176,11 +194,20 @@ export default function ApplyPage({ params }: { params: { studyid: string } }) {
 
       {/* 로그인한 사람과 owner의 아이디를 비교 */}
       {loggedInUser === studyData.owner ? (
-        <div className="fixed bottom-0 h-[120px] w-[375px] items-center justify-center space-x-5 space-y-3 bg-white">
-          <div className="px-[120px] pt-2">
+        <div className="fixed bottom-0 h-[120px] w-[375px] items-center justify-center space-x-5 space-y-1 bg-white">
+          <div className="px-[120px]">
             <Link href={`/${params.studyid}/established`}>
-              <p className="text-meetie-blue-4 underline">스터디 마감하기</p>
+              <Button
+                className="bg-white text-meetie-blue-4 underline outline-none"
+                onClick={handleCloseStudy}
+              >
+                스터디 마감하기
+              </Button>
             </Link>
+
+            {/* <Link href={`/${params.studyid}/established`}>
+              <p className="text-meetie-blue-4 underline">스터디 마감하기</p>
+            </Link> */}
           </div>
           <div className="flex space-x-2">
             <div>
