@@ -19,12 +19,22 @@ import useUserController from '~/hooks/useUserController'
 import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import { userSignout } from '~/apis/signout-rls'
 import BottomNavBar from '~/components/common/bottom-nav-bar'
+import useStudysController from '~/hooks/useStudysController'
+import { useEffect } from 'react'
 export default function Home() {
   const { badge } = useMeetieBadgeController()
+  const { ownStudys, onGetOwnStudys, userStudys, onGetUserStudys } =
+    useStudysController()
   const { user } = useUserController()
   const [userData] = user
 
-  // console.log(userData)
+  useEffect(() => {
+    onGetOwnStudys(userData?.id)
+    onGetUserStudys(userData?.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData, user])
+
+  // console.log(userStudys)
 
   return (
     <>
@@ -54,7 +64,7 @@ export default function Home() {
           </div>
           <div className="items-right flex pl-8 pt-4">
             <div className="items-left flex flex-col gap-1">
-              <Link href="/open-profile">
+              <Link href={`/open-profile/${userData?.id}`}>
                 <Button variant="outline" size="sm" className="w-4/1">
                   공개 프로필
                 </Button>
@@ -79,17 +89,15 @@ export default function Home() {
         <div>
           <Card className="flex items-center justify-between border-purple-200 bg-[#FDFBFF] p-5">
             <div className="flex flex-col items-center pl-12">
-              <Link href="/" className="">
+              <Link href="mypage/studylist/own" className="">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F5F1FF]">
                   <MpStudyIcon />
                 </div>
               </Link>
               <div className="pt-2 text-center">
-                <div className="text-sm text-gray-400">스터디</div>
+                <div className="text-sm text-gray-400">개설한 스터디</div>
                 <div className="text-base font-bold">
-                  {userData?.['study_list']
-                    ? userData?.['study_list'].length
-                    : 0}
+                  {ownStudys ? ownStudys.length : 0}
                 </div>
               </div>
             </div>
@@ -142,25 +150,29 @@ export default function Home() {
           <span className="text-lg font-bold">내 스터디</span>
         </div>
         <div className="relative pt-3">
-          <button className="flex w-full items-center rounded bg-white py-2 text-sm text-black">
+          <Link
+            href="mypage/studylist/now"
+            className="flex w-full items-center rounded bg-white py-2 text-sm text-black"
+          >
             <div className="flex items-center">
               <MyStudyIconBlack className="mr-2" />
               <span className="mr-2">참여 중인 스터디</span>
               <div className="flex items-center gap-2">
                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#EDF1FF]">
                   <span className="font-bold text-purple-600">
-                    {userData?.['study_list']
-                      ? userData?.['study_list'].length
-                      : 0}
+                    {userStudys ? userStudys.length : 0}
                   </span>
                 </div>
               </div>
             </div>
             <MyStudyOpen className="absolute right-4 top-1/2 -translate-y-1/2 transform" />
-          </button>
+          </Link>
         </div>
         <div className="relative">
-          <button className="flex w-full items-center rounded bg-white py-2 text-sm text-black">
+          <Link
+            href="mypage/studylist/waiting"
+            className="flex w-full items-center rounded bg-white py-2 text-sm text-black"
+          >
             <div className="flex items-center">
               <MyStudyIconBlack className="mr-2" />
               <span className="mr-2">모집 중인 스터디</span>
@@ -175,10 +187,13 @@ export default function Home() {
               </div>
             </div>
             <MyStudyOpen className="absolute right-4 top-1/2 -translate-y-1/2 transform" />
-          </button>
+          </Link>
         </div>
         <div className="relative">
-          <button className="flex w-full items-center rounded bg-white py-2 text-sm text-black">
+          <Link
+            href="mypage/studylist/prev"
+            className="flex w-full items-center rounded bg-white py-2 text-sm text-black"
+          >
             <div className="flex items-center">
               <MyStudyPrev className="mr-2" />
               <span className="mr-2">지난 스터디</span>
@@ -191,17 +206,20 @@ export default function Home() {
               </div>
             </div>
             <MyStudyOpen className="absolute right-4 top-1/2 -translate-y-1/2 transform" />
-          </button>
+          </Link>
         </div>
         <div className="pb-16 pt-5">
           <p className="text-lg font-bold">관심 보인 스터디</p>
           <div className="relative pt-3">
-            <button className="flex w-full items-center rounded bg-white py-2 text-sm text-black">
+            <Link
+              href="mypage/studylist/bookmark"
+              className="flex w-full items-center rounded bg-white py-2 text-sm text-black"
+            >
               <div className="flex items-center">
                 <BookMark className="mr-2" /> 관심 스터디
               </div>
               <MyStudyOpen className="absolute right-4 top-1/2 -translate-y-1/2 transform" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

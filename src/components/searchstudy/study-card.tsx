@@ -42,6 +42,7 @@ export default function StudyCard({
 
   useEffect(() => {
     onGetBookmark()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 북마크 기능 완성X 버그 수정 필요
@@ -64,9 +65,9 @@ export default function StudyCard({
         <Button
           variant="secondary"
           className="absolute right-4 top-4 p-0"
-          // onClick={handleBookmark}
+          onClick={handleBookmark}
         >
-          {/* {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />} */}
+          {prevList.includes(studyId) ? <BookmarkOn /> : <BookmarkOff />}
         </Button>
         <Link
           href={`${path === 'studyroom' ? 'studyroom' : 'apply'}/${studyId}`}

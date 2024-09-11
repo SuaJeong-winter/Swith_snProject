@@ -29,7 +29,7 @@ export default function Done() {
       </div>
       <div className="absolute bottom-10 flex w-full flex-col gap-3 px-4">
         <div>
-          <Link href="/mypage" className="block">
+          <Link href="/search" className="block">
             <Button className="w-full font-semibold">확인하러 가기</Button>
           </Link>
         </div>

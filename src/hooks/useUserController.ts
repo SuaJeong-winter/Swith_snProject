@@ -107,7 +107,7 @@ const useUserController = () => {
       if (resultFriends) setFriends(resultFriends.friends)
       // console.log('fetch--getFriends')
     }
-  }, [friends])
+  }, [])
 
   const onPostFriends = async (newList: any) => {
     try {
