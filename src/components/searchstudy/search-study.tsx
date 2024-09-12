@@ -34,16 +34,14 @@ export default function SearchStudy() {
 
   useEffect(() => {
     onFilterStudys(tags)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags])
 
   return (
     <>
       {/* 스터디 검색 인풋 */}
       <section className="bg-background py-5">
-        <form
-          action=""
-          className="relative flex w-full items-center justify-center"
-        >
+        <form className="relative flex w-full items-center justify-center">
           <input
             type="text"
             placeholder={`어떤 스터디를 찾고 싶나요?`}

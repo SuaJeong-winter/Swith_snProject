@@ -70,7 +70,7 @@ export default function SearchMate() {
 
   return (
     <>
-      <section className="bg-background py-5">
+      {/* <section className="bg-background py-5">
         <form
           action=""
           className="relative flex w-full items-center justify-center"
@@ -82,7 +82,7 @@ export default function SearchMate() {
           />
           <SearchIcon className="absolute left-6 top-1/4 h-5 w-5" />
         </form>
-      </section>
+      </section> */}
       {/* 팀원 검색 필터 */}
       <section className="flex flex-wrap justify-evenly gap-2 bg-background py-3">
         <RefreshBtn onClick={filterReset} />

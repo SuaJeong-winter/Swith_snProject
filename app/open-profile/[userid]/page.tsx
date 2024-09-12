@@ -11,14 +11,17 @@ import useUserController from '~/hooks/useUserController'
 import useMeetieBadgeController from '~/hooks/useMeetieBadgeController'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import useStudysController from '~/hooks/useStudysController'
 
 export default function OpenProfile({ params }: { params: { userid: any } }) {
   const { openUser, onGetOpenProfile } = useUserController()
+  const { studyData, onGetStudyData } = useStudysController()
   const { badge } = useMeetieBadgeController()
   const [userData] = openUser
 
   useEffect(() => {
     onGetOpenProfile(params.userid)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -118,7 +121,7 @@ export default function OpenProfile({ params }: { params: { userid: any } }) {
             # 성실함과 관심사가 보이는 기록이에요
           </span>
         </div>
-        {userData?.['study_list'] ? (
+        {/* {userData?.['study_list'] ? (
           userData?.['study_list'].map((list: any, idx: number) => (
             <div
               key={list + idx}
@@ -132,7 +135,7 @@ export default function OpenProfile({ params }: { params: { userid: any } }) {
           ))
         ) : (
           <p>아직 참여한 스터디가 없어요.</p>
-        )}
+        )} */}
       </div>
     </div>
   )

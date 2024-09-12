@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -200,
-    "scrollLeft": -155.0535,
+    "scrollTop": -78,
+    "scrollLeft": -800,
     "zoomLevel": 1,
     "show": 431,
     "database": 4,
@@ -49,22 +49,19 @@
     "tableEntities": {
       "FKjB6rxXNgevRqmqNFt3v": {
         "id": "FKjB6rxXNgevRqmqNFt3v",
-        "name": "User",
+        "name": "profiles",
         "comment": "사용자",
         "columnIds": [
           "GH0Jn22hPqYtUmlnW0FDR",
           "zzak_M2t-pA28LYicARyU",
           "JNmLBMLjNxXpKoq0nvrV1",
           "c-tif7CGxEOCZ7uHldQAV",
-          "2IxTLssVZFy3Aww37WEg1",
-          "jomLz6wvtpnFjmJeF6cHx",
           "K2E8F4-rixTFKkzhI9kGW",
           "7FVedY_gYCjZmzhlOv3SQ",
           "cMnueM8DuFrWFKQZNM_bw",
           "BCEjIod59F6pWvloEFXKk",
           "CrzBXTjDqV0xQZtmUHk9m",
-          "mr6KAtJFPuGYz_HQ5ASkS",
-          "eLuDrmiNgdnTqshUQxvli"
+          "mr6KAtJFPuGYz_HQ5ASkS"
         ],
         "seqColumnIds": [
           "GH0Jn22hPqYtUmlnW0FDR",
@@ -91,7 +88,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1724044118863,
+          "updateAt": 1725984172018,
           "createAt": 1724035785620
         }
       },
@@ -239,15 +236,15 @@
           "Uhgp5Lm93l0rcFHB56ugn"
         ],
         "ui": {
-          "x": 1197,
-          "y": 434,
+          "x": 1201,
+          "y": 441,
           "zIndex": 337,
           "widthName": 64,
           "widthComment": 65,
           "color": ""
         },
         "meta": {
-          "updateAt": 1724158612092,
+          "updateAt": 1725984237981,
           "createAt": 1724039269343
         }
       },
@@ -398,7 +395,7 @@
         "tableId": "_2iBI9mTpizqcDWW1e_2Q",
         "name": "id",
         "comment": "",
-        "dataType": "",
+        "dataType": "uuid",
         "default": "",
         "options": 0,
         "ui": {
@@ -409,7 +406,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1724036871436,
+          "updateAt": 1725984203187,
           "createAt": 1724036103258
         }
       },
@@ -418,7 +415,7 @@
         "tableId": "_2iBI9mTpizqcDWW1e_2Q",
         "name": "owner",
         "comment": "",
-        "dataType": "",
+        "dataType": "uuid",
         "default": "",
         "options": 0,
         "ui": {
@@ -429,7 +426,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1724036116357,
+          "updateAt": 1725984209082,
           "createAt": 1724036110994
         }
       },
@@ -438,7 +435,7 @@
         "tableId": "_2iBI9mTpizqcDWW1e_2Q",
         "name": "member",
         "comment": "",
-        "dataType": "",
+        "dataType": "uuid[]",
         "default": "[owner.id]",
         "options": 0,
         "ui": {
@@ -449,7 +446,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1724037155193,
+          "updateAt": 1725984213958,
           "createAt": 1724036119000
         }
       },
@@ -1598,7 +1595,7 @@
       1724035785618,
       -1,
       {
-        "name": 1724035961832,
+        "name": 1725984160570,
         "comment": 1724044118862
       }
     ],
@@ -1641,7 +1638,7 @@
     "2IxTLssVZFy3Aww37WEg1": [
       "tableColumnEntities",
       1724035968713,
-      -1,
+      1725984164487,
       {
         "name": 1724035976695,
         "dataType": 1724039053614,
@@ -1681,7 +1678,7 @@
       -1,
       {
         "name": 1724036108000,
-        "dataType": 1724036871435
+        "dataType": 1725984203186
       }
     ],
     "Q52MTLmOdxYPyDPYjnJy1": [
@@ -1689,7 +1686,8 @@
       1724036110993,
       -1,
       {
-        "name": 1724036116355
+        "name": 1724036116355,
+        "dataType": 1725984209081
       }
     ],
     "bjZHJBjWJjeykjmvok-H3": [
@@ -1698,7 +1696,8 @@
       -1,
       {
         "name": 1724036217362,
-        "default": 1724037155192
+        "default": 1724037155192,
+        "dataType": 1725984213956
       }
     ],
     "cMnueM8DuFrWFKQZNM_bw": [
@@ -1748,7 +1747,7 @@
     "jomLz6wvtpnFjmJeF6cHx": [
       "tableColumnEntities",
       1724036243225,
-      -1,
+      1725984166349,
       {
         "name": 1724036254483,
         "dataType": 1724039065469
@@ -1757,7 +1756,7 @@
     "eLuDrmiNgdnTqshUQxvli": [
       "tableColumnEntities",
       1724036311810,
-      -1,
+      1725984172018,
       {
         "name": 1724036320980
       }
