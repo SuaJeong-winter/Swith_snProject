@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { createClient } from '~/utils/supabase/client'
 import { Chip } from '~/components/ui/chip'
 import { match } from 'assert'
+import BottomNavBar from '~/components/common/bottom-nav-bar'
 const supabase = createClient()
 
 export default function WaitingListPage({
@@ -136,6 +137,25 @@ export default function WaitingListPage({
 
   // 수락과 거절
   const onAccept = async (user_id: string) => {
+    if (remainingSlots === 0) {
+      toast({
+        description: (
+          <div className="flex items-center">
+            <IconBell />
+            <span>참여 가능한 인원이 없습니다</span>
+          </div>
+        ),
+        style: {
+          background: 'gray-300',
+          width: '300px',
+          height: '30px',
+          marginBottom: '10px',
+        },
+      })
+
+      return // 더 이상 수락하지 않도록 함수 종료
+    }
+
     try {
       const { data: studyData, error: studyError } = await supabase
         .from('Study')
@@ -144,6 +164,24 @@ export default function WaitingListPage({
         .single()
 
       if (!studyError) {
+        if (studyData.member.includes(user_id)) {
+          toast({
+            description: (
+              <div className="flex items-center">
+                <IconBell />
+                <span>이미 수락된 멤버입니다</span>
+              </div>
+            ),
+            style: {
+              background: 'gray-300',
+              width: '300px',
+              height: '30px',
+              marginBottom: '5px',
+            },
+          })
+          return // 이미 수락된 경우 함수 종료
+        }
+
         const updatedMembers = [...(studyData.member || []), user_id]
 
         // applied_member 배열에서 user_id 제거
@@ -185,6 +223,23 @@ export default function WaitingListPage({
 
   // 전체 수락
   const onAcceptAll = async () => {
+    if (studyApplyData.length + acceptedMembers.length > maxMember) {
+      toast({
+        description: (
+          <div className="flex items-center">
+            <IconBell />
+            <span>신청자가 수락 가능 인원을 초과합니다</span>
+          </div>
+        ),
+        style: {
+          background: 'gray-300',
+          width: '300px',
+          height: '30px',
+          marginBottom: '10px',
+        },
+      })
+      return // 수락 중단
+    }
     try {
       const { data: studyData, error: studyError } = await supabase
         .from('Study')
@@ -286,111 +341,114 @@ export default function WaitingListPage({
   // =========================================================
 
   return (
-    <section className="flex min-h-dvh flex-col bg-white pb-[100px]">
-      <div className="fixed bottom-[60px] mx-[50px] -translate-x-1/2 transform">
-        <Toaster />
-      </div>
-      <StudyHeader href={`/apply/${params.studyid}`} />
+    <>
+      <section className="flex min-h-dvh flex-col bg-white pb-[100px]">
+        <div className="fixed bottom-[120px] mx-[50px] -translate-x-1/2 transform">
+          <Toaster />
+        </div>
+        <StudyHeader href={`/apply/${params.studyid}`} />
 
-      <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
-      <div className="mt-6 space-y-2 px-3">
-        {studyApplyData.map((applicant) => {
-          console.log('신청자', applicant)
-          // user_id와 매칭되는 profile 데이터 찾기
-          const matchedProfile = profileData.find(
-            (p) => p.id === applicant.user_id,
-          ) // profile 변수명을 matchedProfile로 변경
+        <div className="mt-[70px] h-1 w-[375px] border-transparent bg-slate-200"></div>
+        <div className="mt-6 space-y-2 px-3">
+          {studyApplyData.map((applicant) => {
+            console.log('신청자', applicant)
+            // user_id와 매칭되는 profile 데이터 찾기
+            const matchedProfile = profileData.find(
+              (p) => p.id === applicant.user_id,
+            ) // profile 변수명을 matchedProfile로 변경
 
-          return (
-            <div key={applicant.user_id}>
-              <div className="flex h-full flex-col space-y-3 rounded-md border-[2px] border-solid border-gray-200 bg-white">
-                <div className="flex h-[70px] items-center space-x-4 p-2">
-                  <div className="flex-[0.2]">
-                    <Link href={`/open-profile/${applicant.user_id}`}>
-                      {matchedProfile?.profile_img ? (
-                        <Image
-                          src={matchedProfile.profile_img} // profile_img가 있는 경우
-                          alt="프로필 이미지"
-                          width={50}
-                          height={50}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <MpProfile /> // profile_img가 없을 경우 기본 이미지
-                      )}
-                    </Link>
-                  </div>
-                  <div className="flex-[0.5] text-base text-black">
-                    <p className="text-base">
-                      {matchedProfile?.username || '이름 없음'}
-                    </p>
-                    <p className="text-sm">
-                      {matchedProfile?.job_type || '직업 정보 없음'}
-                    </p>
-                    {/* <p className="text-xs">스터디 8회</p> */}
-                  </div>
+            return (
+              <div key={applicant.user_id}>
+                <div className="flex h-full flex-col space-y-3 rounded-md border-[2px] border-solid border-gray-200 bg-white">
+                  <div className="flex h-[70px] items-center space-x-4 p-2">
+                    <div className="flex-[0.2]">
+                      <Link href={`/open-profile/${applicant.user_id}`}>
+                        {matchedProfile?.profile_img ? (
+                          <Image
+                            src={matchedProfile.profile_img} // profile_img가 있는 경우
+                            alt="프로필 이미지"
+                            width={50}
+                            height={50}
+                            className="rounded-full"
+                          />
+                        ) : (
+                          <MpProfile /> // profile_img가 없을 경우 기본 이미지
+                        )}
+                      </Link>
+                    </div>
+                    <div className="flex-[0.5] text-base text-black">
+                      <p className="text-base">
+                        {matchedProfile?.username || '이름 없음'}
+                      </p>
+                      <p className="text-sm">
+                        {matchedProfile?.job_type || '직업 정보 없음'}
+                      </p>
+                      {/* <p className="text-xs">스터디 8회</p> */}
+                    </div>
 
-                  <div className="h-[30px] flex-[0.8] space-x-2 pl-[10px]">
-                    <Button
-                      className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
-                      onClick={() => onReject(applicant.user_id)}
-                    >
-                      거절
-                    </Button>
-                    <Button
-                      className="h-[30px] w-[60px] rounded-2xl text-xs"
-                      onClick={() => onAccept(applicant.user_id)}
-                    >
-                      수락
-                    </Button>
-                  </div>
-                </div>
-                <p className="px-3 text-sm">
-                  {applicant.introduce || '소개가 없습니다'}
-                </p>
-                <div className="mt-3 grid grid-cols-4 gap-1 p-3">
-                  {(matchedProfile?.study_style || []).map(
-                    (style: string, index: number) => (
-                      <Chip
-                        key={index}
-                        className="border-transparent bg-meetie-blue-1 text-xs"
+                    <div className="h-[30px] flex-[0.8] space-x-2 pl-[10px]">
+                      <Button
+                        className="h-[30px] w-[60px] rounded-2xl bg-gray-300 text-xs text-black"
+                        onClick={() => onReject(applicant.user_id)}
                       >
-                        {style}
-                      </Chip>
-                    ),
-                  )}
+                        거절
+                      </Button>
+                      <Button
+                        className="h-[30px] w-[60px] rounded-2xl text-xs"
+                        onClick={() => onAccept(applicant.user_id)}
+                      >
+                        수락
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="px-3 text-sm">
+                    {applicant.introduce || '소개가 없습니다'}
+                  </p>
+                  <div className="mt-3 grid grid-cols-4 gap-1 p-3">
+                    {(matchedProfile?.study_style || []).map(
+                      (style: string, index: number) => (
+                        <Chip
+                          key={index}
+                          className="border-transparent bg-meetie-blue-1 text-xs"
+                        >
+                          {style}
+                        </Chip>
+                      ),
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
-      </div>
-      <div className="fixed bottom-0 flex h-[70px] w-[375px] items-center justify-center space-x-1 bg-white px-[20px]">
-        <div>
-          <p>참여 가능 인원</p>
-          <p>
-            <span className="text-meetie-blue-4">{remainingSlots}명 </span>/
-            {maxMember}명
-          </p>
+            )
+          })}
         </div>
-        {remainingSlots === 0 ? (
-          <Link href={`/${params.studyid}/established`}>
+        <div className="fixed bottom-[60px] flex h-[70px] w-[375px] items-center justify-center space-x-1 bg-white px-[20px]">
+          <div>
+            <p>참여 가능 인원</p>
+            <p>
+              <span className="text-meetie-blue-4">{remainingSlots}명 </span>/
+              {maxMember}명
+            </p>
+          </div>
+          {remainingSlots != 0 ? (
             <Button
               className="w-60 flex-[2] rounded-md border border-solid"
-              onClick={handleCloseStudy}
+              onClick={onAcceptAll}
             >
-              스터디 마감하기
+              전체 수락하기
             </Button>
-          </Link>
-        ) : (
-          <Button
-            className="w-60 flex-[2] rounded-md border border-solid"
-            onClick={onAcceptAll}
-          >
-            전체 수락하기
-          </Button>
-        )}
-      </div>
-    </section>
+          ) : (
+            <Link href={`/${params.studyid}/established`}>
+              <Button
+                className="w-60 flex-[2] rounded-md border border-solid"
+                onClick={handleCloseStudy}
+              >
+                스터디 마감하기
+              </Button>
+            </Link>
+          )}
+        </div>
+      </section>
+      <BottomNavBar />
+    </>
   )
 }
