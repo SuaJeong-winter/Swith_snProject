@@ -1,5 +1,7 @@
 # ✏️  유데미-스터디 그룹 생성 플랫폼 서비스 Meetie
 
+<img width="528" alt="image" src="https://github.com/user-attachments/assets/fadc1bb2-c8bf-46aa-8eaa-a1cbcf1894f3">
+
 - 배포 URL
 - Test ID:
 - Test PW:
