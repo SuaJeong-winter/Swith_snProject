@@ -1,1 +1,1 @@
-# swith-client
+# ✏️  유데미 - 스터디 그룹 생성 플랫폼 서비스 README
